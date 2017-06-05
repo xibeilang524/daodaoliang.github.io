@@ -1,0 +1,1653 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="刀刀亮, 极客, daodaoliang" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="刀刀亮的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="本文转载自这里是原文 《深入篇》我们主要围绕 RPC 的功能目标和实现考量去展开，一个基本的 RPC 框架应该提供什么功能，满足什么要求以及如何去实现它？">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入浅出RPC——深入篇(转载)">
+<meta property="og:url" content="http://daodaoliang.com/进程间通信/2015/08/27/进程间通信-2015-08-27-深入浅出RPC-深入篇/index.html">
+<meta property="og:site_name" content="刀刀亮的博客">
+<meta property="og:description" content="本文转载自这里是原文 《深入篇》我们主要围绕 RPC 的功能目标和实现考量去展开，一个基本的 RPC 框架应该提供什么功能，满足什么要求以及如何去实现它？">
+<meta property="og:image" content="http://daodaoliang.com/res/img/blog/进程间通信/2014-09-22-1.svg">
+<meta property="og:image" content="http://daodaoliang.com/res/img/blog/进程间通信/2014-09-22-2.png">
+<meta property="og:updated_time" content="2017-05-03T16:07:44.963Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入浅出RPC——深入篇(转载)">
+<meta name="twitter:description" content="本文转载自这里是原文 《深入篇》我们主要围绕 RPC 的功能目标和实现考量去展开，一个基本的 RPC 框架应该提供什么功能，满足什么要求以及如何去实现它？">
+<meta name="twitter:image" content="http://daodaoliang.com/res/img/blog/进程间通信/2014-09-22-1.svg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://daodaoliang.com/进程间通信/2015/08/27/进程间通信-2015-08-27-深入浅出RPC-深入篇/"/>
+
+
+
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+
+  <title>深入浅出RPC——深入篇(转载) | 刀刀亮的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">刀刀亮的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">一切源于内心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-telegram"></i> <br />
+            
+            生活
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/进程间通信/2015/08/27/进程间通信-2015-08-27-深入浅出RPC-深入篇/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                深入浅出RPC——深入篇(转载)
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-08-27T00:00:00+08:00">
+                2015-08-27
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
+                2017-05-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/进程间通信/" itemprop="url" rel="index">
+                    <span itemprop="name">进程间通信</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/进程间通信/2015/08/27/进程间通信-2015-08-27-深入浅出RPC-深入篇/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  3,600
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  13
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p>本文转载自<a href="http://mindwind.me/blog/2014/09/22/%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BARPC%E2%80%94%E2%80%94%E6%B7%B1%E5%85%A5%E7%AF%87.html" target="_blank" rel="external">这里是原文</a></p>
+<p>《深入篇》我们主要围绕 RPC 的功能目标和实现考量去展开，一个基本的 RPC 框架应该提供什么功能，满足什么要求以及如何去实现它？</p>
+<a id="more"></a>
+<h2 id="RPC-功能目标"><a href="#RPC-功能目标" class="headerlink" title="RPC 功能目标"></a>RPC 功能目标</h2><p><strong>RPC的主要功能呢个目标是让构建分布式计算更加容易，在提供强大的远程调用能力时不损失本地调用的语义简洁性</strong>。为实现该目标，RPC框架提供一种透明的调用机制让使用者不必显式的区分本地调用和远程调用，在前文《浅出篇》给出了一种时间结构，基于stub的是结构来实现，下面我们将细化stub结构的实现。</p>
+<h2 id="RPC调用分类"><a href="#RPC调用分类" class="headerlink" title="RPC调用分类"></a>RPC调用分类</h2><p>RPC调用分以下两种：</p>
+<ul>
+<li><p>同步调用</p>
+<blockquote>
+<p>客户方等待调用执行完成并返回结果</p>
+</blockquote>
+</li>
+<li><p>异步调用</p>
+<blockquote>
+<p>客户调用后不用等待执行结果返回，但依然可以通过回调通知等方式获取返回结果，若客户方不关系调用返回结果，则变成单向异步调用，单向调用不用返回结果。</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="RPC结构拆解"><a href="#RPC结构拆解" class="headerlink" title="RPC结构拆解"></a>RPC结构拆解</h2><p>《浅出篇》给出了一个比较粗粒度的RPC实现概念结构，这里我们进一步细化它该由哪些组件构成，如下图所示：<br><img src="/res/img/blog/进程间通信/2014-09-22-1.svg" alt="示例"></p>
+<p>RPC服务方通过RpcServer导出远程接口方法，而客户方通过RpcClient去引入远程接口方法。客户方向调用本地方法一样去调用远程方法，RPC框架提供接口的代理实现，实际的调用委托给RpcProxy。代理封装调用信用信息将调用转交给RpcInvoker去实际执行，在客户端的RpcInvoker通过连接器RpcConnector去维持服务器端的通道RpcChannel，并使用RpcProtocol执行协议编码(encode)并将编码后的消息通过通道发给服务方。</p>
+<p>RPC服务方的RpcAcceptor去接受客户方的调用请求，同样使用RPCProtocol执行协议解码(decode)。解码后的信息传递给RPCProcessor去控制处理调用过程，最后在委托调用给RPCInvoker去实际执行并返回调用结果。</p>
+<h2 id="RPC组件职责"><a href="#RPC组件职责" class="headerlink" title="RPC组件职责"></a>RPC组件职责</h2><p>上面我们进一步拆解了RPC实现结构的哥哥组件部分，下面我们详细说明每个部分的职责：</p>
+<ul>
+<li><ol>
+<li>RPCServer<blockquote>
+<p>负责导出接口</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol>
+<li>RpcClient<blockquote>
+<p>负责导入接口</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol>
+<li>RpcProxy<blockquote>
+<p>远程接口代理实现</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol>
+<li>RpcInvoker<blockquote>
+<p>客户方实现：负责编码调用信息，并发送调用信息并等待调用返回。<br>服务方实现：负责调用服务端接口的具体实现并返回调用结果。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol>
+<li>RpcProtocol<blockquote>
+<p>负责协议编解码</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol>
+<li>RpcConnector<blockquote>
+<p>负责维持客户方和服务方的谅解通道和发送数据到服务方</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol>
+<li>RpcAcceptor<blockquote>
+<p>负责接收客户方的请求并返回处理结果</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol>
+<li>RpcProcessor<blockquote>
+<p>负责在服务方管理调用过程，包括线程池和调用的超时时间等。</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><ol>
+<li>RpcChannel<blockquote>
+<p>数据传输通道</p>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<h2 id="RPC实现分析"><a href="#RPC实现分析" class="headerlink" title="RPC实现分析"></a>RPC实现分析</h2><p>在进一步拆解了组件并划分了职责以后，这里以在Java平台实现该RPC框架概念模型为例，详细分析下实现中需要考虑的因素：</p>
+<h3 id="导出远程接口"><a href="#导出远程接口" class="headerlink" title="导出远程接口"></a>导出远程接口</h3><p>导出远程接口的意思指的只有导出的接口可以供远程调用，而未导出的接口则不能用，在java中导出接口的代码片段可能如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">DemoServer demo = <span class="keyword">new</span> ...;</div><div class="line">   RpcSerber server = <span class="keyword">new</span> ...;</div><div class="line">   server.export(Demoserver.class, demo, options)</div></pre></td></tr></table></figure>
+<p>我们可以导出整个接口也可以更细粒度一点只导出接口中的某些方法，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//只导出Demoserver中签名为hi(string s) 的方法</span></div><div class="line">   server.export(DemoServer.class, demo, <span class="string">"hi"</span>, <span class="keyword">new</span> Class&lt;?&gt;[] &#123;String.class&#125;,options)</div></pre></td></tr></table></figure>
+<p>java 中还有一种比较特殊的调用就是多态，也就是一个接口可能有多个实现，那么远程调用时到底调用哪个？ 这个本地调用的语义是通过 jvm 提供的引用多态性隐式实现的，那么对于 RPC 来说跨进程的调用就没法隐式实现了。 如果前面 DemoService 接口有 2 个实现，那么在导出接口时就需要特殊标记不同的实现，如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">DemoService demo   = <span class="keyword">new</span> ...;</div><div class="line">DemoService demo2  = <span class="keyword">new</span> ...;</div><div class="line">RpcServer   server = <span class="keyword">new</span> ...;</div><div class="line">server.export(DemoService.class, demo, options);</div><div class="line">server.export(<span class="string">"demo2"</span>, DemoService.class, demo2, options);</div></pre></td></tr></table></figure>
+<p>上面 demo2 是另一个实现，我们标记为 demo2 来导出， 那么远程调用时也需要传递该标记才能调用到正确的实现类，这样就解决了多态调用的语义。</p>
+<h3 id="导入远程接口与客户端代理"><a href="#导入远程接口与客户端代理" class="headerlink" title="导入远程接口与客户端代理"></a>导入远程接口与客户端代理</h3><p>导入相对于导出远程接口，客户端代码为了能够发起调用必须要获得远程接口的方法或过程定义。 目前，大部分跨语言平台 RPC 框架采用根据 IDL 定义通过 code generator 去生成 stub 代码， 这种方式下实际导入的过程就是通过代码生成器在编译期完成的。 我所使用过的一些跨语言平台 RPC 框架如 CORBAR、WebService、ICE、Thrift 均是此类方式。</p>
+<p>代码生成的方式对跨语言平台 RPC 框架而言是必然的选择，而对于同一语言平台的 RPC 则可以通过共享接口定义来实现。 在 java 中导入接口的代码片段可能如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">RpcClient client = <span class="keyword">new</span> ...;</div><div class="line">   DemoServer 	demo = client.refer(DemoServer.class);</div><div class="line">   demo.hi(<span class="string">"how are you"</span>);</div></pre></td></tr></table></figure>
+<p>在 java 中 import 是关键字，所以代码片段中我们用 refer 来表达导入接口的意思。 这里的导入方式本质也是一种代码生成技术，只不过是在运行时生成，比静态编译期的代码生成看起来更简洁些。 java 里至少提供了两种技术来提供动态代码生成，一种是 jdk 动态代理，另外一种是字节码生成。 动态代理相比字节码生成使用起来更方便，但动态代理方式在性能上是要逊色于直接的字节码生成的，而字节码生成在代码可读性上要差很多。 两者权衡起来，个人认为牺牲一些性能来获得代码可读性和可维护性显得更重要。</p>
+<h3 id="协议编解码"><a href="#协议编解码" class="headerlink" title="协议编解码"></a>协议编解码</h3><p>客户端代理在发起调用前需要对调用信息进行编码，这就要考虑需要编码些什么信息并以什么格式传输到服务端才能让服务端完成调用。 出于效率考虑，编码的信息越少越好（传输数据少），编码的规则越简单越好（执行效率高）。 我们先看下需要编码些什么信息：</p>
+<h4 id="调用编码"><a href="#调用编码" class="headerlink" title="调用编码"></a>调用编码</h4><ol>
+<li>接口方法</li>
+</ol>
+<blockquote>
+<p>包括接口名、方法名</p>
+</blockquote>
+<ol>
+<li>方法参数</li>
+</ol>
+<blockquote>
+<p>包括参数类型、参数值</p>
+</blockquote>
+<ol>
+<li>调用属性</li>
+</ol>
+<blockquote>
+<p>包括调用属性信息，例如调用附件隐式参数、调用超时时间等</p>
+</blockquote>
+<h4 id="返回编码"><a href="#返回编码" class="headerlink" title="返回编码"></a>返回编码</h4><ol>
+<li>返回结果</li>
+</ol>
+<blockquote>
+<p>接口方法中定义的返回值</p>
+</blockquote>
+<ol>
+<li>返回码</li>
+</ol>
+<blockquote>
+<p>异常返回码</p>
+</blockquote>
+<ol>
+<li>返回异常信息</li>
+</ol>
+<blockquote>
+<p>调用异常信息</p>
+</blockquote>
+<p>除了以上这些必须的调用信息，我们可能还需要一些元信息以方便程序编解码以及未来可能的扩展。 这样我们的编码消息里面就分成了两部分，一部分是元信息、另一部分是调用的必要信息。 如果设计一种 RPC 协议消息的话，元信息我们把它放在协议消息头中，而必要信息放在协议消息体中。 下面给出一种概念上的 RPC 协议消息设计格式：</p>
+<p><strong>消息头</strong></p>
+<p><img src="/res/img/blog/进程间通信/2014-09-22-2.png" alt="头信息"></p>
+<ul>
+<li>magic：协议魔数，为解码设计</li>
+<li>header size: 协议头长度，为扩展设计</li>
+<li>version: 协议版本，为扩展时使用</li>
+<li>st: 消息体序列化类型</li>
+<li>hb: 心跳信息标记，为长连接传输层心跳设计</li>
+<li>ow: 单向消息标记</li>
+<li>rp: 相应消息标记。不置位默认是请求消息</li>
+<li>status code： 响应消息状态码</li>
+<li>reserved: 为字节对齐保留</li>
+<li>message id：消息id</li>
+<li>body size:消息体长度</li>
+</ul>
+<p><strong>消息体</strong></p>
+<p>采用序列化编码，常见有以下格式：</p>
+<ul>
+<li>XML:如webservice(SOAP)</li>
+<li>json: 如json-RPC</li>
+<li>binary: 如thrift,hession,kryo等</li>
+</ul>
+<p>格式确定后编解码就简单了，由于头长度一定所以我们比较关心的就是消息体的序列化方式。 序列化我们关心三个方面：</p>
+<ul>
+<li>序列化和反序列化的效率，越快越好。</li>
+<li>序列化后的字节长度，越小越好。</li>
+<li>序列化和反序列化的兼容性，接口参数对象若增加了字段，是否兼容。</li>
+</ul>
+<p>上面这三点有时是鱼与熊掌不可兼得，这里面涉及到具体的序列化库实现细节，就不在本文进一步展开分析了。</p>
+<h4 id="传输服务"><a href="#传输服务" class="headerlink" title="传输服务"></a>传输服务</h4><p>协议编码之后，自然就是需要将编码后的 RPC 请求消息传输到服务方，服务方执行后返回结果消息或确认消息给客户方。 RPC 的应用场景实质是一种可靠的请求应答消息流，和 HTTP 类似。 因此选择长连接方式的 TCP 协议会更高效，与 HTTP 不同的是在协议层面我们定义了每个消息的唯一 id，因此可以更容易的复用连接。</p>
+<p>既然使用长连接，那么第一个问题是到底 client 和 server 之间需要多少根连接？ 实际上单连接和多连接在使用上没有区别，对于数据传输量较小的应用类型，单连接基本足够。 单连接和多连接最大的区别在于，每根连接都有自己私有的发送和接收缓冲区， 因此大数据量传输时分散在不同的连接缓冲区会得到更好的吞吐效率。 所以，如果你的数据传输量不足以让单连接的缓冲区一直处于饱和状态的话，那么使用多连接并不会产生任何明显的提升， 反而会增加连接管理的开销。</p>
+<p>连接是由 client 端发起建立并维持。 如果 client 和 server 之间是直连的，那么连接一般不会中断（当然物理链路故障除外）。 如果 client 和 server 连接经过一些负载中转设备，有可能连接一段时间不活跃时会被这些中间设备中断。 为了保持连接有必要定时为每个连接发送心跳数据以维持连接不中断。 心跳消息是 RPC 框架库使用的内部消息，在前文协议头结构中也有一个专门的心跳位， 就是用来标记心跳消息的，它对业务应用透明。</p>
+<h4 id="执行调用"><a href="#执行调用" class="headerlink" title="执行调用"></a>执行调用</h4><p>client stub 所做的事情仅仅是编码消息并传输给服务方，而真正调用过程发生在服务方。 server stub 从前文的结构拆解中我们细分了 RpcProcessor 和 RpcInvoker 两个组件， 一个负责控制调用过程，一个负责真正调用。 这里我们还是以 java 中实现这两个组件为例来分析下它们到底需要做什么？</p>
+<p>java 中实现代码的动态接口调用目前一般通过反射调用。 除了原生的 jdk 自带的反射，一些第三方库也提供了性能更优的反射调用， 因此 RpcInvoker 就是封装了反射调用的实现细节。</p>
+<p>调用过程的控制需要考虑哪些因素，RpcProcessor 需要提供什么样地调用控制服务呢？ 下面提出几点以启发思考：</p>
+<ul>
+<li>效率提升</li>
+</ul>
+<blockquote>
+<p>每个请求应该尽快被执行，因此我们不能每请求来再创建线程去执行，需要提供线程池服务.</p>
+</blockquote>
+<ul>
+<li>资源隔离</li>
+</ul>
+<blockquote>
+<p>当我们导出多个远程接口时，如何避免单一接口调用占据所有线程资源，而引发其他接口执行阻塞。</p>
+</blockquote>
+<ul>
+<li>超时控制</li>
+</ul>
+<blockquote>
+<p>当某个接口执行缓慢，而 client 端已经超时放弃等待后，server 端的线程继续执行此时显得毫无意义。</p>
+</blockquote>
+<h3 id="RPC-异常处理"><a href="#RPC-异常处理" class="headerlink" title="RPC 异常处理"></a>RPC 异常处理</h3><p>无论 RPC 怎样努力把远程调用伪装的像本地调用，但它们依然有很大的不同点，而且有一些异常情况是在本地调用时绝对不会碰到的。 在说异常处理之前，我们先比较下本地调用和 RPC 调用的一些差异：</p>
+<ul>
+<li>本地调用一定会执行，而远程调用则不一定，调用消息可能因为网络原因并未发送到服务方。</li>
+<li>本地调用只会抛出接口声明的异常，而远程调用还会跑出 RPC 框架运行时的其他异常。</li>
+<li>本地调用和远程调用的性能可能差距很大，这取决于 RPC 固有消耗所占的比重。</li>
+</ul>
+<p>正是这些区别决定了使用 RPC 时需要更多考量。 当调用远程接口抛出异常时，异常可能是一个业务异常， 也可能是 RPC 框架抛出的运行时异常（如：网络中断等）。 业务异常表明服务方已经执行了调用，可能因为某些原因导致未能正常执行， 而 RPC 运行时异常则有可能服务方根本没有执行，对调用方而言的异常处理策略自然需要区分。</p>
+<p>由于 RPC 固有的消耗相对本地调用高出几个数量级，本地调用的固有消耗是纳秒级，而 RPC 的固有消耗是在毫秒级。 那么对于过于轻量的计算任务就并不合适导出远程接口由独立的进程提供服务， 只有花在计算任务上时间远远高于 RPC 的固有消耗才值得导出为远程接口提供服务。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>至此我们提出了一个 RPC 实现的概念框架，并详细分析了需要考虑的一些实现细节。 无论 RPC 的概念是如何优雅，但是“草丛中依然有几条蛇隐藏着”，只有深刻理解了 RPC 的本质，才能更好地应用。</p>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+	<div>
+	  
+		
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------
+</div>
+
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/进程间通信/2015/08/27/进程间通信-2015-08-27-深入浅出RPC-浅出篇/" rel="next" title="深入浅出RPC——浅出篇(转载)">
+                <i class="fa fa-chevron-left"></i> 深入浅出RPC——浅出篇(转载)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/Python学习/2015/09/09/Python学习-2015-09-09-python装饰器学习-转载/" rel="prev" title="python装饰器学习(转载)">
+                python装饰器学习(转载) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://47.93.54.27/res/img/avatar.png"
+               alt="daodaoliang" />
+          <p class="site-author-name" itemprop="name">daodaoliang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">130</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+	     <a title="收藏到书签，偶尔High一下^_^" rel="alternate" class="mw-harlem_shake_slow wobble shake" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+ 
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+ 
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()'><i class="fa fa-music"></i> High</a>
+
+
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/daodaoliang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://music.163.com/#/user/home?id=30650281" target="_blank" title="网易云音乐">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  网易云音乐
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://daodaoliang.com" title="刀刀亮的博客" target="_blank">刀刀亮的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC-功能目标"><span class="nav-number">1.</span> <span class="nav-text">RPC 功能目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC调用分类"><span class="nav-number">2.</span> <span class="nav-text">RPC调用分类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC结构拆解"><span class="nav-number">3.</span> <span class="nav-text">RPC结构拆解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC组件职责"><span class="nav-number">4.</span> <span class="nav-text">RPC组件职责</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RPC实现分析"><span class="nav-number">5.</span> <span class="nav-text">RPC实现分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#导出远程接口"><span class="nav-number">5.1.</span> <span class="nav-text">导出远程接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#导入远程接口与客户端代理"><span class="nav-number">5.2.</span> <span class="nav-text">导入远程接口与客户端代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协议编解码"><span class="nav-number">5.3.</span> <span class="nav-text">协议编解码</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#调用编码"><span class="nav-number">5.3.1.</span> <span class="nav-text">调用编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#返回编码"><span class="nav-number">5.3.2.</span> <span class="nav-text">返回编码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#传输服务"><span class="nav-number">5.3.3.</span> <span class="nav-text">传输服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#执行调用"><span class="nav-number">5.3.4.</span> <span class="nav-text">执行调用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RPC-异常处理"><span class="nav-number">5.4.</span> <span class="nav-text">RPC 异常处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.5.</span> <span class="nav-text">总结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">daodaoliang</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "997752e1c04e423cb7427a28b0d9a10a",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === '') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

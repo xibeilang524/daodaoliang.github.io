@@ -1,0 +1,1842 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="刀刀亮, 极客, daodaoliang" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="刀刀亮的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="主要的包管理家族    包管理系统 发行版(部分列表)     Debian Style(.deb) Debian, Ubuntu, Xandros, Linspire   Red Hat Style(.rpm) Fedora,CentOS,Red Hat Enterprise Linux, OpenSUSE, Mandriva, PCLinuxOS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux下包管理说明">
+<meta property="og:url" content="http://daodaoliang.com/linux学习/2016/01/12/linux学习-2016-01-12-linux平台下的包管理说明/index.html">
+<meta property="og:site_name" content="刀刀亮的博客">
+<meta property="og:description" content="主要的包管理家族    包管理系统 发行版(部分列表)     Debian Style(.deb) Debian, Ubuntu, Xandros, Linspire   Red Hat Style(.rpm) Fedora,CentOS,Red Hat Enterprise Linux, OpenSUSE, Mandriva, PCLinuxOS">
+<meta property="og:updated_time" content="2017-05-03T16:07:44.965Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="linux下包管理说明">
+<meta name="twitter:description" content="主要的包管理家族    包管理系统 发行版(部分列表)     Debian Style(.deb) Debian, Ubuntu, Xandros, Linspire   Red Hat Style(.rpm) Fedora,CentOS,Red Hat Enterprise Linux, OpenSUSE, Mandriva, PCLinuxOS">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://daodaoliang.com/linux学习/2016/01/12/linux学习-2016-01-12-linux平台下的包管理说明/"/>
+
+
+
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+
+  <title>linux下包管理说明 | 刀刀亮的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">刀刀亮的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">一切源于内心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-telegram"></i> <br />
+            
+            生活
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2016/01/12/linux学习-2016-01-12-linux平台下的包管理说明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                linux下包管理说明
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-12T00:00:00+08:00">
+                2016-01-12
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
+                2017-05-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux学习/" itemprop="url" rel="index">
+                    <span itemprop="name">linux学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/linux学习/2016/01/12/linux学习-2016-01-12-linux平台下的包管理说明/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  2,183
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  9
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <hr>
+<p><strong>主要的包管理家族</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">包管理系统</th>
+<th style="text-align:center">发行版(部分列表)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Debian Style(.deb)</td>
+<td style="text-align:center">Debian, Ubuntu, Xandros, Linspire</td>
+</tr>
+<tr>
+<td style="text-align:center">Red Hat Style(.rpm)</td>
+<td style="text-align:center">Fedora,CentOS,Red Hat Enterprise Linux, OpenSUSE, Mandriva, PCLinuxOS</td>
+</tr>
+</tbody>
+</table>
+<a id="more"></a>
+<h2 id="1-背景知识科普"><a href="#1-背景知识科普" class="headerlink" title="1.背景知识科普"></a>1.背景知识科普</h2><h3 id="1-1-linux-中软件安装方式"><a href="#1-1-linux-中软件安装方式" class="headerlink" title="1.1 linux 中软件安装方式"></a>1.1 linux 中软件安装方式</h3><p>要么直接进行源码安装，要么用包管理工具对发行包进行安装，但是他们的共同之处在于:</p>
+<ul>
+<li>都有配置文件,通过配置文件来改变程序的运行特征。</li>
+<li>都拥有二进制的程序主体。</li>
+<li>都自带库文件，供程序主体进行调用。</li>
+<li>都带有帮助文件，对程序的使用方法进行说明。</li>
+</ul>
+<h3 id="1-2-软件的安装路径"><a href="#1-2-软件的安装路径" class="headerlink" title="1.2 软件的安装路径"></a>1.2 软件的安装路径</h3><p>在自行下载源码进行编译安装时，是可以指定自定义的安装路径的，在使用包管理器时，都是按照自身预设的安装路径进行安装.</p>
+<ul>
+<li><strong>软件包的一般安装路径</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件路径</th>
+<th style="text-align:center">路径用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">/</td>
+<td style="text-align:center">系统根目录,在此安装的文件通常是OS在运行时需要调用到的程序</td>
+</tr>
+<tr>
+<td style="text-align:center">/usr</td>
+<td style="text-align:center">此目录一般情况下是提供基本服务的软件</td>
+</tr>
+<tr>
+<td style="text-align:center">/usr/local</td>
+<td style="text-align:center">此目录下一般情况是用户自行安装的第三方软件</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>系统相关的软件包的安装路径</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件路径</th>
+<th style="text-align:center">路径用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">/etc</td>
+<td style="text-align:center">配置文件路径</td>
+</tr>
+<tr>
+<td style="text-align:center">/bin 和 /sbin</td>
+<td style="text-align:center">二进制文件路径</td>
+</tr>
+<tr>
+<td style="text-align:center">/lib</td>
+<td style="text-align:center">库文件路径</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>系统提供服务相关的包安装路进</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件路径</th>
+<th style="text-align:center">路径用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">/etc</td>
+<td style="text-align:center">配置文件的路径</td>
+</tr>
+<tr>
+<td style="text-align:center">/usr/bin 和 /usr/sbin</td>
+<td style="text-align:center">二进制文件路径</td>
+</tr>
+<tr>
+<td style="text-align:center">/usr/lib</td>
+<td style="text-align:center">库文件路径</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>第三方软件包的安装路径</strong></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">文件路径</th>
+<th style="text-align:center">路径用途说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">/usr/local/etc</td>
+<td style="text-align:center">配置文件路径</td>
+</tr>
+<tr>
+<td style="text-align:center">/usr/local/bin 和 /usr/local/sbin</td>
+<td style="text-align:center">二进制文件路径</td>
+</tr>
+<tr>
+<td style="text-align:center">/usr/local/lib</td>
+<td style="text-align:center">库文件路径</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><strong>特别说明:</strong></li>
+</ul>
+<p>说明文件都要存放在 <code>/usr/share/man</code> 和 <code>/usr/local/share/man</code></p>
+<h3 id="1-2-软件包的命名说明"><a href="#1-2-软件包的命名说明" class="headerlink" title="1.2 软件包的命名说明"></a>1.2 软件包的命名说明</h3><p>一般的软件包的组成形如(拿rpm包说明)</p>
+<blockquote>
+<p>name-version-release.arch.rpm</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># name: 表示包的名称，包括主包名和分包名</span></div><div class="line"><span class="comment"># version: 表示包的版本信息</span></div><div class="line"><span class="comment"># release: 用于标识包本身的发行号，可以同时包含适用的操作系统</span></div><div class="line"><span class="comment"># arch: 表示机器平台，noarch表示此包能安装到所有平台上面</span></div><div class="line"><span class="comment">#</span></div></pre></td></tr></table></figure>
+<p><strong>例如:</strong></p>
+<p>gd-devel-2.0.35-11.el6.x86_64.rpm</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># gd: 包的主名字</span></div><div class="line"><span class="comment"># devel: 包的分包名字</span></div><div class="line"><span class="comment"># 2.0.35: 表示版本信息，2为主板本号，0表示次版本信息，35为源码包的发行号，也叫做修订号，</span></div><div class="line"><span class="comment"># 11.el6: 11 是rpm的发行号，el6表示REHL6</span></div><div class="line"><span class="comment"># x86_64: 表示适合的平台</span></div></pre></td></tr></table></figure>
+<h2 id="2-主流发行版的软件包管理速查表"><a href="#2-主流发行版的软件包管理速查表" class="headerlink" title="2. 主流发行版的软件包管理速查表"></a>2. 主流发行版的软件包管理速查表</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">任务名称</th>
+<th style="text-align:center">Debian和Ubuntu等(apt系列)</th>
+<th style="text-align:center">openSUSE(zypp)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">安装包</td>
+<td style="text-align:center"><code>apt-get install &lt;pkg&gt;</code></td>
+<td style="text-align:center"><code>zypper install &lt;pkg&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:center">卸载包</td>
+<td style="text-align:center"><code>apt-get remove &lt;pkg&gt;</code></td>
+<td style="text-align:center"><code>zypper remove &lt;pkg&gt;</code></td>
+<td><code>yum erase &lt;pkg&gt;</code></td>
+<td><code>pacman -R &lt;pkg&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:center">更新包列表</td>
+<td style="text-align:center"><code>apt-get update</code></td>
+<td style="text-align:center"><code>zypper refresh</code></td>
+</tr>
+<tr>
+<td style="text-align:center">更新系统所有包</td>
+<td style="text-align:center"><code>apt-get upgrade</code></td>
+<td style="text-align:center"><code>zypper update</code></td>
+</tr>
+<tr>
+<td style="text-align:center">更新指定安装包</td>
+<td style="text-align:center"><code>dkpg -i &lt;pkg&gt;</code></td>
+<td style="text-align:center"><code>rpm -Uvh &lt;pkg&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:center">列出源</td>
+<td style="text-align:center"><code>cat /etc/apt/sources.list</code></td>
+<td style="text-align:center"><code>zypper repos</code></td>
+</tr>
+<tr>
+<td style="text-align:center">添加源</td>
+<td style="text-align:center"><code>vim /etc/apt/sources.list</code></td>
+<td style="text-align:center"><code>zypper addrepo &lt;path&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:center">移除源</td>
+<td style="text-align:center"><code>vim /etc/apt/sources.list</code></td>
+<td style="text-align:center"><code>zypper removerepo &lt;name&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:center">搜索包</td>
+<td style="text-align:center"><code>apt-cache search &lt;pkg&gt;</code></td>
+<td style="text-align:center"><code>zypper search &lt;pkg&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:center">列出已安装的包</td>
+<td style="text-align:center"><code>dpkg -l</code></td>
+<td style="text-align:center"><code>rpm -qa</code></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">任务名称</th>
+<th style="text-align:center">Fedora,CentOS(yum)</th>
+<th style="text-align:center">Arch(pacman)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">安装包</td>
+<td style="text-align:center"><code>yum install &lt;pkg&gt;</code></td>
+<td style="text-align:center"><code>pacman -S &lt;pkg&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:center">卸载包</td>
+<td style="text-align:center"><code>yum erase &lt;pkg&gt;</code></td>
+<td style="text-align:center"><code>pacman -R &lt;pkg&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:center">更新包列表</td>
+<td style="text-align:center"><code>yum check-update</code></td>
+<td style="text-align:center"><code>pacman -Sy</code></td>
+</tr>
+<tr>
+<td style="text-align:center">更新系统所有包</td>
+<td style="text-align:center"><code>yum update</code></td>
+<td style="text-align:center"><code>pacman -Su</code></td>
+</tr>
+<tr>
+<td style="text-align:center">更新系统指定包</td>
+<td style="text-align:center"><code>rpm -Uvh &lt;pkg&gt;</code>或者<code>yum update &lt;pkg&gt;</code></td>
+<td style="text-align:center"><code>rpm -Uvh &lt;pkg&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:center">列出源</td>
+<td style="text-align:center"><code>yum repolist</code></td>
+<td style="text-align:center"><code>cat /etc/pacman.conf</code></td>
+</tr>
+<tr>
+<td style="text-align:center">添加源</td>
+<td style="text-align:center"><code>add &lt;repo&gt; to /etc/yum.repos.d/</code></td>
+<td style="text-align:center"><code>vim /etc/pacman.conf</code></td>
+</tr>
+<tr>
+<td style="text-align:center">移除源</td>
+<td style="text-align:center"><code>remove &lt;repo&gt; from /etc/yum.repos.d</code></td>
+<td style="text-align:center"><code>vim /etc/pacman.conf</code></td>
+</tr>
+<tr>
+<td style="text-align:center">搜索包</td>
+<td style="text-align:center"><code>yum search &lt;pkg&gt;</code></td>
+<td style="text-align:center"><code>pacman -Qs &lt;pkg&gt;</code></td>
+</tr>
+<tr>
+<td style="text-align:center">列出已安装的包</td>
+<td style="text-align:center"><code>rmp -qs</code></td>
+<td style="text-align:center"><code>pacman -Qii</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="3-RPM-包的基本操作"><a href="#3-RPM-包的基本操作" class="headerlink" title="3. RPM 包的基本操作"></a>3. RPM 包的基本操作</h2><h3 id="3-1-RPM-命令常用参数"><a href="#3-1-RPM-命令常用参数" class="headerlink" title="3.1 RPM 命令常用参数"></a>3.1 RPM 命令常用参数</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">RPM 常规使用方式 rpm -? package.rpm ,其中 -? 为操作参数(更多信息，请查阅帮助 <span class="variable">$man</span> rpm)</div><div class="line"></div><div class="line">-q 在系统中查询软件或查询指定rpm包的内容信息</div><div class="line">-i 在系统中安装软件</div><div class="line">-U 在系统中升级软件</div><div class="line"><span class="_">-e</span> 在系统卸载软件</div><div class="line">-h 用<span class="comment">#(hash)符显示rpm安装过程</span></div><div class="line">-v 详述安装过程</div><div class="line">-p 表明对rpm包进行查询，通常和其他参数同时使用，如：</div><div class="line">	-qlp 查询某个rpm包中的所有文件列表</div><div class="line">	-qip 查询某个rpm包的内容信息</div></pre></td></tr></table></figure>
+<h3 id="3-2-RPM-命令参数使用方法"><a href="#3-2-RPM-命令参数使用方法" class="headerlink" title="3.2 RPM 命令参数使用方法"></a>3.2 RPM 命令参数使用方法</h3><ul>
+<li><strong>安装RPM包</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -ivh package.rpm</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>升级RPM包</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -Uvh package.rpm</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>卸载RPM包</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -ev package</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>查询RPM包中包含的文件列表命令</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -qlp package</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>查询RPM包瀚内容信息命令</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -qip package</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>查询系统中所有已安装RPM包</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -qa</div></pre></td></tr></table></figure>
+<h2 id="4-DEB-包的基本操作"><a href="#4-DEB-包的基本操作" class="headerlink" title="4. DEB 包的基本操作"></a>4. DEB 包的基本操作</h2><h3 id="4-1-DPKG命令常用参数"><a href="#4-1-DPKG命令常用参数" class="headerlink" title="4.1 DPKG命令常用参数"></a>4.1 DPKG命令常用参数</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">DPKG 的常规使用方法为 dpkg -? package.deb, 其中-? 为安装参数(更多信息，请查阅帮助<span class="variable">$man</span> dpkg)</div><div class="line"></div><div class="line"><span class="_">-l</span> 在系统中查询软件内容信息</div><div class="line">--info 在系统中查询软件或查询指定rpm包的内容信息</div><div class="line">-i 在系统中安装/升级软件</div><div class="line">-r 在系统中卸载软件，不删除配置文件</div><div class="line">-P 在系统中卸载软件以及其配置文件</div></pre></td></tr></table></figure>
+<h3 id="4-2-DPKG命令参数使用方法"><a href="#4-2-DPKG命令参数使用方法" class="headerlink" title="4.2 DPKG命令参数使用方法"></a>4.2 DPKG命令参数使用方法</h3><ul>
+<li><strong>安装DEB包</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i package.deb</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>升级DEB包</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i package.deb(和安装命令一样)</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>卸载DEB包</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -r package.deb <span class="comment"># 不卸载配置文件</span></div><div class="line">或者</div><div class="line">sudo dpkg -P package.deb <span class="comment"># 卸载配置文件</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>查询DEB包中包含的文件列表命令</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg-deb -c package.deb</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>查询DEB包中包含的内容信息命令</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg --info package.deb</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>查询系统中所有已安装DEB包</strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dpkg <span class="_">-l</span> package</div></pre></td></tr></table></figure>
+<h2 id="5-FAQ"><a href="#5-FAQ" class="headerlink" title="5. FAQ"></a>5. FAQ</h2><h3 id="5-1-可以手动强制不进行-RPM-DEB-的依赖性关系检查吗？"><a href="#5-1-可以手动强制不进行-RPM-DEB-的依赖性关系检查吗？" class="headerlink" title="5.1 可以手动强制不进行 RPM/DEB 的依赖性关系检查吗？"></a>5.1 可以手动强制不进行 RPM/DEB 的依赖性关系检查吗？</h3><ul>
+<li><strong>RPM</strong></li>
+</ul>
+<p>可以。使用 –nodeps 辅助参数，则安装过程将不理会依赖性关系限制，强制安装目标包，如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># rpm -i --nodeps package_a.rpm</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>DEB</strong></li>
+</ul>
+<p>可以。使用— force-depends 辅助参数，如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo dpkg -i --force-depends package_a.deb</div></pre></td></tr></table></figure>
+<h3 id="5-2-RPM-中的-–force-是干什么用的？"><a href="#5-2-RPM-中的-–force-是干什么用的？" class="headerlink" title="5.2 RPM 中的 –force 是干什么用的？"></a>5.2 RPM 中的 –force 是干什么用的？</h3><p>RPM 中的默认安装规则是不允许同一个包多次安装，也不允许降级安装。使用–force辅助参数不考虑以上因素，强制安装RPM包。但是，–force无法强制安装一个不满足系统依赖性关系的包（此时需要用到–nodeps参数）。使用方式如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -i --force package_a.rpm</div></pre></td></tr></table></figure>
+<h3 id="5-3-RPM-DPKG-支持远程安装吗？"><a href="#5-3-RPM-DPKG-支持远程安装吗？" class="headerlink" title="5.3 RPM/DPKG 支持远程安装吗？"></a>5.3 RPM/DPKG 支持远程安装吗？</h3><ul>
+<li><strong>RPM</strong></li>
+</ul>
+<p>是。 RPM 支持 HTTP 和 FTP 协议，如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -Uvh ftp://user:pass@ftpserver/package.rpm</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>DPKG</strong></li>
+</ul>
+<p>最新的基于 DEB 包的系统中，远程安装通常被更先进的 APT 代替。</p>
+<h3 id="5-4-可以从-RPM-DPKG-中抽取个别文件吗？"><a href="#5-4-可以从-RPM-DPKG-中抽取个别文件吗？" class="headerlink" title="5.4 可以从 RPM/DPKG 中抽取个别文件吗？"></a>5.4 可以从 RPM/DPKG 中抽取个别文件吗？</h3><ul>
+<li><strong>RPM</strong></li>
+</ul>
+<p>是。可以使用 rpm2cpio 工具来提取文件：<a href="http://www.rpm.org/max-rpm/s1-rpm-miscellania-rpm2cpio.html" target="_blank" rel="external">http://www.rpm.org/max-rpm/s1-rpm-miscellania-rpm2cpio.html</a></p>
+<ul>
+<li><strong>DPKG</strong></li>
+</ul>
+<p>是。可以使用 dpkg-deb 工具来提取文件：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dpkg-deb --extract ibm_lotus_notes-8.5.i586.deb <span class="variable">$dir</span>( 目标目录 )</div></pre></td></tr></table></figure>
+<h3 id="5-5-RPM-DPKG-提供包安装成功的验证机制吗？"><a href="#5-5-RPM-DPKG-提供包安装成功的验证机制吗？" class="headerlink" title="5.5 RPM/DPKG 提供包安装成功的验证机制吗？"></a>5.5 RPM/DPKG 提供包安装成功的验证机制吗？</h3><ul>
+<li><strong>RPM</strong></li>
+</ul>
+<p>是。可以使用 -V 参数进行验证。</p>
+<ul>
+<li><strong>DPKG</strong></li>
+</ul>
+<p>Debian 系统通常使用 debsums 工具参数进行验证。</p>
+<h3 id="5-6-RPM-DPKG-提供包安全签名吗？"><a href="#5-6-RPM-DPKG-提供包安全签名吗？" class="headerlink" title="5.6 RPM/DPKG 提供包安全签名吗？"></a>5.6 RPM/DPKG 提供包安全签名吗？</h3><ul>
+<li><strong>RPM</strong></li>
+</ul>
+<p>是。可以使用 –import 导入与软件同时发布的 GPG KEY, 接着使用 -K 命令来验证包的安全性，如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm --import pub_ibm_lotus_notes.gpg <span class="comment"># rpm -K ibm_lotus_notes-8.5.i586.rpm 返回信息 : ibm_lotus_notes-8.5.i586.rpm: (sha1) dsa sha1 md5 gpg OK</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong>DPKG</strong></li>
+</ul>
+<p>DPKG 不提供原生的 Key 验证机制。可以使用 debsigs 和 debsigs-verify，详情请见：<a href="http://man.ddvip.com/os/debiansecuring-howto/ch7.zh-cn.html" target="_blank" rel="external">http://man.ddvip.com/os/debiansecuring-howto/ch7.zh-cn.html</a></p>
+<h3 id="5-7-如果-RPM-的底层数据库损坏，RPM-还能使用吗？"><a href="#5-7-如果-RPM-的底层数据库损坏，RPM-还能使用吗？" class="headerlink" title="5.7  如果 RPM 的底层数据库损坏，RPM 还能使用吗？"></a>5.7  如果 RPM 的底层数据库损坏，RPM 还能使用吗？</h3><ul>
+<li><strong>RPM</strong></li>
+</ul>
+<p>如果底层数据库损坏，RPM 将无法正常使用。此时最常用的解决方法是重构数据库：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rm <span class="_">-f</span> /var/lib/rpm/__* ; rpm -vv --rebuilddb</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>DPKG</strong></li>
+</ul>
+<p>DPKG 本身不提供底层数据库恢复机制。它的数据库以文件形式保存在 /var/lib/dpkg 目录中。及时地备份这个目录是最好的预防数据库损坏措施。</p>
+<h3 id="5-8-可以查询系统中已经安装的某个文件属于哪个-RPM-包吗？"><a href="#5-8-可以查询系统中已经安装的某个文件属于哪个-RPM-包吗？" class="headerlink" title="5.8  可以查询系统中已经安装的某个文件属于哪个 RPM 包吗？"></a>5.8  可以查询系统中已经安装的某个文件属于哪个 RPM 包吗？</h3><ul>
+<li><strong>RPM</strong></li>
+</ul>
+<p>可以。使用 -qf 参数 , 如在安装了 Notes8.5 的系统中：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -qf /opt/ibm/lotus/notes/notes 返回信息 : Ibm_lotus_notes-8.5-20081211.1920</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>DPKG</strong></li>
+</ul>
+<p>可以。使用— search 参数 , 如在安装了 Notes8.5 的系统中：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dpkg --search /opt/ibm/lotus/notes/notes 返回信息 : ibm-lotus-notes: /opt/ibm/lotus/notes/notes</div></pre></td></tr></table></figure>
+<h3 id="5-9-可以查询-RPM-包的安装时间吗？"><a href="#5-9-可以查询-RPM-包的安装时间吗？" class="headerlink" title="5.9 可以查询 RPM 包的安装时间吗？"></a>5.9 可以查询 RPM 包的安装时间吗？</h3><ul>
+<li><strong>RPM</strong></li>
+</ul>
+<p>可以。可使用 –last 查询。如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -qa --last 返回信息 : 系统中所有软件的安装时间。</div></pre></td></tr></table></figure>
+<ul>
+<li><strong>DPKG</strong></li>
+</ul>
+<p>DPKG 不提供直接的查询参数，但是可以用过查询 dpkg 的日志文件实现这个功能。如：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat /var/<span class="built_in">log</span>/dpkg.log | grep <span class="string">"\ install\ "</span></div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+	<div>
+	  
+		
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------
+</div>
+
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/环境搭建/2016/01/06/环境搭建-2016-01-06-CentOS6-5配置防火墙/" rel="next" title="CentOS6.5配置防火墙">
+                <i class="fa fa-chevron-left"></i> CentOS6.5配置防火墙
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/数据库学习/2016/01/14/数据库学习-mysql专题-2016-01-14-mysql全文搜索简介/" rel="prev" title="mysql全文索引简介">
+                mysql全文索引简介 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://47.93.54.27/res/img/avatar.png"
+               alt="daodaoliang" />
+          <p class="site-author-name" itemprop="name">daodaoliang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">130</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+	     <a title="收藏到书签，偶尔High一下^_^" rel="alternate" class="mw-harlem_shake_slow wobble shake" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+ 
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+ 
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()'><i class="fa fa-music"></i> High</a>
+
+
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/daodaoliang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://music.163.com/#/user/home?id=30650281" target="_blank" title="网易云音乐">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  网易云音乐
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://daodaoliang.com" title="刀刀亮的博客" target="_blank">刀刀亮的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-背景知识科普"><span class="nav-number">1.</span> <span class="nav-text">1.背景知识科普</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-linux-中软件安装方式"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 linux 中软件安装方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-软件的安装路径"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 软件的安装路径</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-软件包的命名说明"><span class="nav-number">1.3.</span> <span class="nav-text">1.2 软件包的命名说明</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-主流发行版的软件包管理速查表"><span class="nav-number">2.</span> <span class="nav-text">2. 主流发行版的软件包管理速查表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-RPM-包的基本操作"><span class="nav-number">3.</span> <span class="nav-text">3. RPM 包的基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-RPM-命令常用参数"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 RPM 命令常用参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-RPM-命令参数使用方法"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 RPM 命令参数使用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-DEB-包的基本操作"><span class="nav-number">4.</span> <span class="nav-text">4. DEB 包的基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-DPKG命令常用参数"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 DPKG命令常用参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-DPKG命令参数使用方法"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 DPKG命令参数使用方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-FAQ"><span class="nav-number">5.</span> <span class="nav-text">5. FAQ</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-可以手动强制不进行-RPM-DEB-的依赖性关系检查吗？"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 可以手动强制不进行 RPM/DEB 的依赖性关系检查吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-RPM-中的-–force-是干什么用的？"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 RPM 中的 –force 是干什么用的？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-RPM-DPKG-支持远程安装吗？"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 RPM/DPKG 支持远程安装吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-可以从-RPM-DPKG-中抽取个别文件吗？"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 可以从 RPM/DPKG 中抽取个别文件吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-RPM-DPKG-提供包安装成功的验证机制吗？"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 RPM/DPKG 提供包安装成功的验证机制吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-6-RPM-DPKG-提供包安全签名吗？"><span class="nav-number">5.6.</span> <span class="nav-text">5.6 RPM/DPKG 提供包安全签名吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-7-如果-RPM-的底层数据库损坏，RPM-还能使用吗？"><span class="nav-number">5.7.</span> <span class="nav-text">5.7  如果 RPM 的底层数据库损坏，RPM 还能使用吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-8-可以查询系统中已经安装的某个文件属于哪个-RPM-包吗？"><span class="nav-number">5.8.</span> <span class="nav-text">5.8  可以查询系统中已经安装的某个文件属于哪个 RPM 包吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-9-可以查询-RPM-包的安装时间吗？"><span class="nav-number">5.9.</span> <span class="nav-text">5.9 可以查询 RPM 包的安装时间吗？</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">daodaoliang</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "997752e1c04e423cb7427a28b0d9a10a",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === '') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>

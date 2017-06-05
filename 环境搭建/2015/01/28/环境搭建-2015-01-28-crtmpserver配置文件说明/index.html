@@ -1,0 +1,1747 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+      
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="刀刀亮, 极客, daodaoliang" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="刀刀亮的博客" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="配置文件说明配置文件实际上是一个Lua脚本，它包含至少一个configuration的对象，从而为程序提供灵活的扩展和定制功能。除了configuration对象外，还可以有函数，Lua库等。 主结构12345678910111213configuration=&amp;#123;  daemon=false,  pathSeparator=&quot;/&quot;,  logAppenders=  &amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="crtmpserver配置文件说明">
+<meta property="og:url" content="http://daodaoliang.com/环境搭建/2015/01/28/环境搭建-2015-01-28-crtmpserver配置文件说明/index.html">
+<meta property="og:site_name" content="刀刀亮的博客">
+<meta property="og:description" content="配置文件说明配置文件实际上是一个Lua脚本，它包含至少一个configuration的对象，从而为程序提供灵活的扩展和定制功能。除了configuration对象外，还可以有函数，Lua库等。 主结构12345678910111213configuration=&amp;#123;  daemon=false,  pathSeparator=&quot;/&quot;,  logAppenders=  &amp;#123;">
+<meta property="og:updated_time" content="2017-05-03T16:07:44.961Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="crtmpserver配置文件说明">
+<meta name="twitter:description" content="配置文件说明配置文件实际上是一个Lua脚本，它包含至少一个configuration的对象，从而为程序提供灵活的扩展和定制功能。除了configuration对象外，还可以有函数，Lua库等。 主结构12345678910111213configuration=&amp;#123;  daemon=false,  pathSeparator=&quot;/&quot;,  logAppenders=  &amp;#123;">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always","offset":12,"offset_float":0,"b2t":true,"scrollpercent":true},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: "",
+      labels: ""
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://daodaoliang.com/环境搭建/2015/01/28/环境搭建-2015-01-28-crtmpserver配置文件说明/"/>
+
+
+
+
+<script src="//cdn.bootcss.com/pace/1.0.2/pace.min.js"></script>
+<link href="//cdn.bootcss.com/pace/1.0.2/themes/pink/pace-theme-flash.css" rel="stylesheet">
+
+
+  <title>crtmpserver配置文件说明 | 刀刀亮的博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">刀刀亮的博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">一切源于内心</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-life">
+          <a href="/life" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-telegram"></i> <br />
+            
+            生活
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/环境搭建/2015/01/28/环境搭建-2015-01-28-crtmpserver配置文件说明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                crtmpserver配置文件说明
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-28T00:00:00+08:00">
+                2015-01-28
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
+                2017-05-04
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/环境搭建/" itemprop="url" rel="index">
+                    <span itemprop="name">环境搭建</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a class="cloud-tie-join-count" href="/环境搭建/2015/01/28/环境搭建-2015-01-28-crtmpserver配置文件说明/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count join-count" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="page-pv"><i class="fa fa-file-o">本文总阅读量</i>
+            <span class="busuanzi-value" id="busuanzi_value_page_pv" ></span>次
+            </span>
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,525
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <a id="more"></a>
+<h2 id="配置文件说明"><a href="#配置文件说明" class="headerlink" title="配置文件说明"></a><strong><em>配置文件说明</em></strong></h2><p>配置文件实际上是一个Lua脚本，它包含至少一个configuration的对象，从而为程序提供灵活的扩展和定制功能。除了configuration对象外，还可以有函数，Lua库等。</p>
+<h3 id="主结构"><a href="#主结构" class="headerlink" title="主结构"></a><strong><em>主结构</em></strong></h3><figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">configuration=</div><div class="line">&#123;</div><div class="line">  daemon=<span class="literal">false</span>,</div><div class="line">  pathSeparator=<span class="string">"/"</span>,</div><div class="line">  logAppenders=</div><div class="line">  &#123;</div><div class="line">    <span class="comment">-- content removed for clarity</span></div><div class="line">  &#125;,</div><div class="line">  applications=</div><div class="line">  &#123;</div><div class="line">    <span class="comment">-- content removed for clarity</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">key</th>
+<th style="text-align:center">type</th>
+<th style="text-align:center">mandatory</th>
+<th style="text-align:center">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">daemon</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">true  表示 服务以后台方式启动;false 表示 服务以控制台模式启动(以用于开发);</td>
+</tr>
+<tr>
+<td style="text-align:center">pathSeparator</td>
+<td style="text-align:center">string(1)</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">用来分隔路径; 例如，在UNIX-like是 /, Windows是\;</td>
+</tr>
+<tr>
+<td style="text-align:center">logAppenders</td>
+<td style="text-align:center">object</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">配置日志追加的容器</td>
+</tr>
+<tr>
+<td style="text-align:center">applications</td>
+<td style="text-align:center">object</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">配置加载各种应用的容器</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>服务启动时，将按顺序执行下列操作:</em></strong></p>
+<ul>
+<li>配置文件加载后，首先做的就是对配置文件进行校验，如果配置文件有错误，将会有错误提示并停止启动，可进行修改后再启动;</li>
+<li>读取 daemon 值，判断服务是以后台方式启动还是以控制台方式启动;</li>
+<li>读取日志追加器，用来配置日志记录并启动到运行状态，依据日志追加器，可以看到更多的日志信息;</li>
+<li>最后的应用加载，只到这一步完成后，服务和应用才在线，并准备就绪;</li>
+</ul>
+<h3 id="日志追加器"><a href="#日志追加器" class="headerlink" title="日志追加器"></a><strong><em>日志追加器</em></strong></h3><p>这部分包含了一个日志追加器的列表。整个日志追加器的添加是在加载时配置，依据日志级别，追加器可以选择是否有日志消息输出到指定目的处；</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">logAppenders=</div><div class="line">&#123;</div><div class="line">  &#123;</div><div class="line">    name=<span class="string">"console appender"</span>,</div><div class="line">    <span class="built_in">type</span>=<span class="string">"coloredConsole"</span>,</div><div class="line">    level=<span class="number">6</span></div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    name=<span class="string">"file appender"</span>,</div><div class="line">    <span class="built_in">type</span>=<span class="string">"file"</span>,</div><div class="line">    level=<span class="number">6</span>,</div><div class="line">    fileName=<span class="string">"/tmp/crtmpserver.log"</span></div><div class="line">  &#125;</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p><strong><em>logAppenders structure</em></strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">key</th>
+<th style="text-align:center">type</th>
+<th style="text-align:center">mandatory</th>
+<th style="text-align:center">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">追加器的名字.</td>
+</tr>
+<tr>
+<td style="text-align:center">type</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">追加器的类型可以是控制台，带颜色控制台或文件;控制台和带颜色控制台都会将日志消息输出到控制台，不同之处在于带颜色控制台会依据日志级别进行颜色标记；文件类型则会将所有消息输出到指定的文件；</td>
+</tr>
+<tr>
+<td style="text-align:center">level</td>
+<td style="text-align:center">number</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">日志的级别可见下表中的级别定义；\n只有小于或等于这个级别的日志消息会被记录，高于这个级别则都被丢弃；例如:级别为0时，只记录 FATAL 消息；级别为3时，只记录 FATAL, ERROR, WARNING, INFO 消息；</td>
+</tr>
+<tr>
+<td style="text-align:center">fileName</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">如果追加器类型为文件，则在此处指定日志文件和路径</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>Log levels</em></strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0</td>
+<td style="text-align:center">FATAL</td>
+</tr>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">ERROR</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">WARNING</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">INFO</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">DEBUG</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">FINE</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">FINEST</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>PS</em></strong>: 当使用后台模式时，所有的控制台追加消息将会被忽略。</p>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a><strong><em>应用</em></strong></h3><p>这部分用来配置各种应用，并设置这些应用的属性；每个应用的属性都对应了这个应用的指定功能；</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">applications=</div><div class="line">&#123;</div><div class="line">  rootDirectory=<span class="string">"applications"</span>,</div><div class="line">  &#123;</div><div class="line">    <span class="comment">-- settings for application 1</span></div><div class="line">    <span class="comment">-- content removed for clarity</span></div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    <span class="comment">-- settings for application 2</span></div><div class="line">    <span class="comment">-- content removed for clarity</span></div><div class="line">  &#125;,</div><div class="line">  &#123;</div><div class="line">    <span class="comment">-- settings for application 3</span></div><div class="line">    <span class="comment">-- content removed for clarity</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong><em>applications structure</em></strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">key</th>
+<th style="text-align:center">type</th>
+<th style="text-align:center">mandatory</th>
+<th style="text-align:center">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">rootDirectory</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">true</td>
+<td style="text-align:center">这个目录包含了应用的子目录；如果路径以 / 或 \ 开始， 则视其为绝对路径，否则视为启动服务时所在的相对路径；</td>
+</tr>
+</tbody>
+</table>
+<p>rootDirectory 之后，是应用的集合；每个应用都定义了一个有特定属性的对象；细节如下所示；</p>
+<p><strong><em>应用定义</em></strong></p>
+<p>这些目录用来定义应用.自从790版本后，添加了一新的功能：mediaStorage; 这个功能能使应用可以有多个mediaFolder，并且可以将.seek/.meta文件和媒体文件分开存储在不同的文件夹中；</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  name=<span class="string">"flvplayback"</span>,</div><div class="line">  protocol=<span class="string">"dynamiclinklibrary"</span>,</div><div class="line">  description=<span class="string">"FLV Playback Sample"</span>,</div><div class="line">  default=<span class="literal">false</span>,</div><div class="line">  validateHandshake=<span class="literal">true</span>,</div><div class="line">  enableCheckBandwidth=<span class="literal">true</span>,</div><div class="line">  <span class="comment">-- this settings are now part of mediaStorage setting</span></div><div class="line">  <span class="comment">-- keyframeSeek=true,</span></div><div class="line">  <span class="comment">-- seekGranularity=1.5,</span></div><div class="line">  <span class="comment">-- clientSideBuffer=12,</span></div><div class="line">  <span class="comment">-- generateMetaFiles=true,</span></div><div class="line">  <span class="comment">-- renameBadFiles=true,</span></div><div class="line">  aliases=</div><div class="line">  &#123;</div><div class="line">    <span class="string">"simpleLive"</span>,</div><div class="line">    <span class="string">"vod"</span>,</div><div class="line">    <span class="string">"live"</span>,</div><div class="line">    <span class="string">"WeeklyQuest"</span>,</div><div class="line">    <span class="string">"SOSample"</span>,</div><div class="line">    <span class="string">"oflaDemo"</span>,</div><div class="line">    <span class="string">"chat"</span>,</div><div class="line">  &#125;,</div><div class="line">  acceptors = </div><div class="line">  &#123;</div><div class="line">    &#123;</div><div class="line">      <span class="comment">-- acceptor 1</span></div><div class="line">      <span class="comment">-- content removed for clarity</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="comment">-- acceptor 2</span></div><div class="line">      <span class="comment">-- content removed for clarity</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="comment">-- acceptor n</span></div><div class="line">      <span class="comment">-- content removed for clarity</span></div><div class="line">    &#125;,</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">-- new feature mediaStorage</span></div><div class="line">  mediaStorage = &#123;</div><div class="line">     namedStorage1=&#123;</div><div class="line">      description=<span class="string">"Main storage"</span>,</div><div class="line">      mediaFolder=<span class="string">"/usr/main_storage/media"</span>, <span class="comment">-- only this parameter IS MANDATORY</span></div><div class="line">      metaFolder=<span class="string">"/usr/main_storage/metadata"</span>, <span class="comment">-- if you have static large file to stream it is good to know that for a file around 500MB </span></div><div class="line">                                               <span class="comment">-- it's .seek file has around 16MB; so it would be preffer to designate metafolder into a system</span></div><div class="line">                                               <span class="comment">-- partition which has enough space... for no surprises... :)</span></div><div class="line">      statsFolder=<span class="string">"/usr/main_storage/statsFolder"</span>,</div><div class="line">      enableStats=<span class="literal">true</span>,</div><div class="line">      clientSideBuffer=<span class="number">16</span>,</div><div class="line">      keyframeSeek=<span class="literal">false</span>, <span class="comment">-- should crtmpdserver DO SEEK ONLY IN key-frame (true/false)? </span></div><div class="line">                          <span class="comment">-- very useful to know in situations like play/pause/resume (meaning pause/seek/play)</span></div><div class="line">      seekGranularity=<span class="number">1</span>,</div><div class="line">      generateMetaFiles=<span class="literal">false</span>,</div><div class="line">      renameBadFiles=<span class="literal">false</span>,</div><div class="line">    &#125;,</div><div class="line">    <span class="comment">--[[&#123;</span></div><div class="line">      -- here is another example of storage; it does not start with name=&#123;...&#125;</div><div class="line">       description="Second storage of same application",</div><div class="line">       mediaFolder="/usr/second_storage/media/flv",</div><div class="line">       metaFolder="/usr/second_storage/metadata",</div><div class="line">       statsFolder="/usr/second_storage/statsFolder",</div><div class="line">    &#125;,]]<span class="comment">--</span></div><div class="line">  &#125;, </div><div class="line">  externalStreams = </div><div class="line">  &#123;</div><div class="line">    &#123;</div><div class="line">      <span class="comment">-- stream 1</span></div><div class="line">      <span class="comment">-- content removed for clarity</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="comment">-- stream 2</span></div><div class="line">      <span class="comment">-- content removed for clarity</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">      <span class="comment">-- stream n</span></div><div class="line">      <span class="comment">-- content removed for clarity</span></div><div class="line">    &#125;,</div><div class="line">  &#125;,</div><div class="line">  authentication=</div><div class="line">  &#123;</div><div class="line">    <span class="comment">-- content removed for clarity</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><strong><em>application structure</em></strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">key</th>
+<th style="text-align:center">type</th>
+<th style="text-align:center">mandatory</th>
+<th style="text-align:center">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">name</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">应用的名称</td>
+</tr>
+<tr>
+<td style="text-align:center">protocol</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">应用的类型值为 dynamiclinklibrary 意即 应用是一个共享库</td>
+</tr>
+<tr>
+<td style="text-align:center">description</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">应用的描述信息</td>
+</tr>
+<tr>
+<td style="text-align:center">default</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">这个标志指定了默认应用；默认应用负责分析连接请求并将连接分配到正确的应用</td>
+</tr>
+<tr>
+<td style="text-align:center">validateHandshake</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">通知服务器在进行下一步前要对客户端的握手进行验证；这是一个可选项，其默认值为真。如果这个值为真 且 握手失败，服务器就放弃这个连接;如果这个值为假，则不会进行强制的握手验证，所有的连接都会被接受；</td>
+</tr>
+<tr>
+<td style="text-align:center">keyframeSeek</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">这个属性指定了流生成器只在关键帧搜索，如果是直播流，则忽略这个值</td>
+</tr>
+<tr>
+<td style="text-align:center">seekGranularity</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">搜索的精细度，以秒为单位, 值域定义在 0.1 ~ 600; 例如：如果粒度定义为10秒，并期望定位到 t= 2:34; 则实际上是会定位到 t= 2:30. 60秒被认定为完整的电影长度，1秒为电影片断；</td>
+</tr>
+<tr>
+<td style="text-align:center">clientSideBuffer</td>
+<td style="text-align:center">double</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">每个连接在客户端的缓冲秒数，值定义在5 ~ 30 秒；</td>
+</tr>
+<tr>
+<td style="text-align:center">generateMetaFiles</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">在应用启动前生成 seek/meta文件</td>
+</tr>
+<tr>
+<td style="text-align:center">renameBadFiles</td>
+<td style="text-align:center">boolean</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">如果这上值为真且媒体文件是不能被解析的，则媒体文件被重命名为 *.bad，否则这样的文件将不做处理</td>
+</tr>
+<tr>
+<td style="text-align:center">aliases</td>
+<td style="text-align:center">object</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">应用的别名</td>
+</tr>
+<tr>
+<td style="text-align:center">acceptors</td>
+<td style="text-align:center">object</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">接受器保持这个服务并让服务器托管；应用可以有它自己的接受器，但这个是可选的；</td>
+</tr>
+<tr>
+<td style="text-align:center">externalStreams</td>
+<td style="text-align:center">object</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">authentication</td>
+<td style="text-align:center">object</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">mediaFolder</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">当定义了 mediaStorage时，这个域用来指定媒体文件的物理位置；</td>
+</tr>
+<tr>
+<td style="text-align:center">metaFolder</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">指定用来存放 .seek/.meta文件的位置；</td>
+</tr>
+<tr>
+<td style="text-align:center">statsFolder</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">no</td>
+<td style="text-align:center">服状态文件的位置</td>
+</tr>
+</tbody>
+</table>
+<p><strong><em>acceptor structure</em></strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">key</th>
+<th style="text-align:center">type</th>
+<th style="text-align:center">mandatory</th>
+<th style="text-align:center">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ip</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">服务所在的IP, 0.0.0.0表示所有接口和所有IP;</td>
+</tr>
+<tr>
+<td style="text-align:center">port</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">服务监听的端口号</td>
+</tr>
+<tr>
+<td style="text-align:center">protocol</td>
+<td style="text-align:center">string</td>
+<td style="text-align:center">yes</td>
+<td style="text-align:center">对应 ip:port的服务的协议</td>
+</tr>
+</tbody>
+</table>
+
+      
+    </div>
+
+	<div>
+      
+        
+      
+	</div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+	<div>
+	  
+		
+<div style="text-align:center;color: #ccc;font-size:14px;">
+------ 本文结束 ------
+</div>
+
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/Python学习/2015/01/28/Python学习-2015-01-30-python-CRC32/" rel="next" title="python CRC32">
+                <i class="fa fa-chevron-left"></i> python CRC32
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/linux学习/2015/01/28/linux学习-2015-01-28-shell输出重定向详解/" rel="prev" title="2>&1详解">
+                2>&1详解 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "1",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "16"
+      },
+      "slide": {
+        "bdImg": "5",
+        "bdPos": "left",
+        "bdTop": "100"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://47.93.54.27/res/img/avatar.png"
+               alt="daodaoliang" />
+          <p class="site-author-name" itemprop="name">daodaoliang</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">130</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+	     <a title="收藏到书签，偶尔High一下^_^" rel="alternate" class="mw-harlem_shake_slow wobble shake" href='javascript:(function() {
+    function c() {
+        var e = document.createElement("link");
+        e.setAttribute("type", "text/css");
+        e.setAttribute("rel", "stylesheet");
+        e.setAttribute("href", f);
+        e.setAttribute("class", l);
+        document.body.appendChild(e)
+    }
+ 
+    function h() {
+        var e = document.getElementsByClassName(l);
+        for (var t = 0; t < e.length; t++) {
+            document.body.removeChild(e[t])
+        }
+    }
+ 
+    function p() {
+        var e = document.createElement("div");
+        e.setAttribute("class", a);
+        document.body.appendChild(e);
+        setTimeout(function() {
+            document.body.removeChild(e)
+        }, 100)
+    }
+ 
+    function d(e) {
+        return {
+            height : e.offsetHeight,
+            width : e.offsetWidth
+        }
+    }
+ 
+    function v(i) {
+        var s = d(i);
+        return s.height > e && s.height < n && s.width > t && s.width < r
+    }
+ 
+    function m(e) {
+        var t = e;
+        var n = 0;
+        while (!!t) {
+            n += t.offsetTop;
+            t = t.offsetParent
+        }
+        return n
+    }
+ 
+    function g() {
+        var e = document.documentElement;
+        if (!!window.innerWidth) {
+            return window.innerHeight
+        } else if (e && !isNaN(e.clientHeight)) {
+            return e.clientHeight
+        }
+        return 0
+    }
+ 
+    function y() {
+        if (window.pageYOffset) {
+            return window.pageYOffset
+        }
+        return Math.max(document.documentElement.scrollTop, document.body.scrollTop)
+    }
+ 
+    function E(e) {
+        var t = m(e);
+        return t >= w && t <= b + w
+    }
+ 
+    function S() {
+        var e = document.createElement("audio");
+        e.setAttribute("class", l);
+        e.src = i;
+        e.loop = false;
+        e.addEventListener("canplay", function() {
+            setTimeout(function() {
+                x(k)
+            }, 500);
+            setTimeout(function() {
+                N();
+                p();
+                for (var e = 0; e < O.length; e++) {
+                    T(O[e])
+                }
+            }, 15500)
+        }, true);
+        e.addEventListener("ended", function() {
+            N();
+            h()
+        }, true);
+        e.innerHTML = " <p>If you are reading this, it is because your browser does not support the audio element. We recommend that you get a new browser.</p> <p>";
+        document.body.appendChild(e);
+        e.play()
+    }
+ 
+    function x(e) {
+        e.className += " " + s + " " + o
+    }
+ 
+    function T(e) {
+        e.className += " " + s + " " + u[Math.floor(Math.random() * u.length)]
+    }
+ 
+    function N() {
+        var e = document.getElementsByClassName(s);
+        var t = new RegExp("\\b" + s + "\\b");
+        for (var n = 0; n < e.length; ) {
+            e[n].className = e[n].className.replace(t, "")
+        }
+    }
+ 
+    var e = 30;
+    var t = 30;
+    var n = 350;
+    var r = 350;
+    var i = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake.mp3";
+    var s = "mw-harlem_shake_me";
+    var o = "im_first";
+    var u = ["im_drunk", "im_baked", "im_trippin", "im_blown"];
+    var a = "mw-strobe_light";
+    var f = "//s3.amazonaws.com/moovweb-marketing/playground/harlem-shake-style.css";
+    var l = "mw_added_css";
+    var b = g();
+    var w = y();
+    var C = document.getElementsByTagName("*");
+    var k = null;
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            if (E(A)) {
+                k = A;
+                break
+            }
+        }
+    }
+    if (A === null) {
+        console.warn("Could not find a node of the right size. Please try a different page.");
+        return
+    }
+    c();
+    S();
+    var O = [];
+    for (var L = 0; L < C.length; L++) {
+        var A = C[L];
+        if (v(A)) {
+            O.push(A)
+        }
+    }
+})()'><i class="fa fa-music"></i> High</a>
+
+
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/daodaoliang" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://music.163.com/#/user/home?id=30650281" target="_blank" title="网易云音乐">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  网易云音乐
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-block">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://daodaoliang.com" title="刀刀亮的博客" target="_blank">刀刀亮的博客</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#配置文件说明"><span class="nav-number">1.</span> <span class="nav-text">配置文件说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#主结构"><span class="nav-number">1.1.</span> <span class="nav-text">主结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#日志追加器"><span class="nav-number">1.2.</span> <span class="nav-text">日志追加器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应用"><span class="nav-number">1.3.</span> <span class="nav-text">应用</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2012 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">daodaoliang</span>
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user">本站访客数</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye">本站总访问量</i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+    
+    <script>
+      var cloudTieConfig = {
+        url: document.location.href, 
+        sourceId: "",
+        productKey: "997752e1c04e423cb7427a28b0d9a10a",
+        target: "cloud-tie-wrapper"
+      };
+    </script>
+    <script src="https://img1.ws.126.net/f2e/tie/yun/sdk/loader.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === '') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
