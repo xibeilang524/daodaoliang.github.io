@@ -60,34 +60,83 @@
   </entry>
   
   <entry>
-    <title>CentOS6升级GCC版本</title>
-    <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2017/04/20/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2017-04-20-CentOS6%E5%8D%87%E7%BA%A7GCC%E7%89%88%E6%9C%AC/"/>
-    <id>http://daodaoliang.com/环境搭建/2017/04/20/环境搭建-2017-04-20-CentOS6升级GCC版本/</id>
-    <published>2017-04-19T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.961Z</updated>
+    <title>CentOS下搭建IPv6环境</title>
+    <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2017/06/22/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2017-06-22-CentOS%E4%B8%8B%E6%90%AD%E5%BB%BAipv6%E7%8E%AF%E5%A2%83/"/>
+    <id>http://daodaoliang.com/环境搭建/2017/06/22/环境搭建-2017-06-22-CentOS下搭建ipv6环境/</id>
+    <published>2017-06-21T16:00:00.000Z</published>
+    <updated>2017-06-22T01:57:12.744Z</updated>
     
-    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">作者 : daodaoliang@yeah.net</div><div class="line">日期 : 2017-04-20</div><div class="line">版本 : 0.0.1</div></pre></td></tr></table></figure>
+    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">作者 : daodaoliang@yeah.net</div><div class="line">日期 : 2017-06-22</div><div class="line">版本 : 0.0.1</div></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>[TOC]</p>
-<h3 id="1-背景简述"><a href="#1-背景简述" class="headerlink" title="1. 背景简述"></a>1. 背景简述</h3><p><code>CentOS 6</code>系列的服务器,默认的gcc编译器都是 <code>4.4.7</code> 版本,有事后为了开发或者编译其他开源软件，则需要对gcc编译器进行升级;</p>
-<h3 id="2-安装GCC前准备"><a href="#2-安装GCC前准备" class="headerlink" title="2. 安装GCC前准备"></a>2. 安装<code>GCC</code>前准备</h3><h4 id="2-1-下载指定版本"><a href="#2-1-下载指定版本" class="headerlink" title="2.1 下载指定版本"></a>2.1 下载指定版本</h4><p>首先在官网上面下载你需要的<code>GCC</code>版本,<a href="http://ftp.gnu.org/gnu/gcc" target="_blank" rel="external">官网在这里</a>,笔者选择的是<code>GCC 4.8.4</code>版本;</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src</div><div class="line">   wget http://ftp.gnu.org/gnu/gcc/gcc-4.8.4/gcc-4.8.4.tar.gz</div></pre></td></tr></table></figure>
-<h4 id="2-2-解压并进行准备工作"><a href="#2-2-解压并进行准备工作" class="headerlink" title="2.2 解压并进行准备工作"></a>2.2 解压并进行准备工作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar zxvf gcc-4.8.4.tar.gz</div></pre></td></tr></table></figure>
-<h4 id="2-3-下载供编译需求的依赖项"><a href="#2-3-下载供编译需求的依赖项" class="headerlink" title="2.3 下载供编译需求的依赖项"></a>2.3 下载供编译需求的依赖项</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/src/gcc-4.8.4/contrib/download_prerequisites</div></pre></td></tr></table></figure>
-<h3 id="3-开始安装"><a href="#3-开始安装" class="headerlink" title="3. 开始安装"></a>3. 开始安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src/gcc-4.8.4</div><div class="line">   mkdir gcc-build</div><div class="line">   cd gcc-build</div><div class="line">   ../configure -enable-checking=release -enable-languages=c,c++ -disable-multilib</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make -j4</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo make install</div></pre></td></tr></table></figure>
-<h3 id="4-配置环境"><a href="#4-配置环境" class="headerlink" title="4. 配置环境"></a>4. 配置环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp /usr/local/lib64/libstdc++* /usr/lib64/</div><div class="line">   ln -s /usr/lib64/libstdc++.so /usr/lib64/libstdc++.so.6.0.19</div></pre></td></tr></table></figure>
+<h3 id="1-背景简介"><a href="#1-背景简介" class="headerlink" title="1. 背景简介"></a>1. 背景简介</h3><ol>
+<li>阿里云的<code>centos</code>默认是没有开启<code>IPv6</code>的，可以通过 <code>lsmod | grep ipv6</code> 或者 <code>ifconfig -a | grep inet6</code> 进行对应的查看;</li>
+<li>由于某些应用在上线某个平台时需要进行Ipv6的适配;</li>
+<li><code>Ipv6</code> 确实在某些场景下时必须的;</li>
+</ol>
+<p>基于以上种种原因，因此才有此文章，此文章所有的部分内容为查阅的其他工程师的探究结果。</p>
+<h3 id="2-开启系统的Ipv6"><a href="#2-开启系统的Ipv6" class="headerlink" title="2. 开启系统的Ipv6"></a>2. 开启系统的<code>Ipv6</code></h3><h4 id="2-1-检查系统是否已经开启Ipv6"><a href="#2-1-检查系统是否已经开启Ipv6" class="headerlink" title="2.1 检查系统是否已经开启Ipv6"></a>2.1 检查系统是否已经开启<code>Ipv6</code></h4><p>在终端执行进行查看</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ifconfig -a | inet6</div></pre></td></tr></table></figure>
+<h4 id="2-2-配置开启Ipv6"><a href="#2-2-配置开启Ipv6" class="headerlink" title="2.2 配置开启Ipv6"></a>2.2 配置开启<code>Ipv6</code></h4><ul>
+<li>修改<code>/etc/sysctl.conf</code>, 存在则修改，不存在则增加如下内容:</li>
+</ul>
+<p><img src="/res/img/blog/环境搭建/ipv6.png" alt="img"></p>
+<ul>
+<li>修改 <code>/etc/modprobe.d/disable_ipv6.conf</code>, 存在则修改，不存在则增加如下内容：</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">修改前</div><div class="line">alias net-pf-10 off</div><div class="line">alias ipv6 off</div><div class="line">options ipv6 disable=1</div><div class="line"></div><div class="line">修改后</div><div class="line">alias net-pf-10 off</div><div class="line">#alias ipv6 off</div><div class="line">options ipv6 disable=0</div></pre></td></tr></table></figure>
+<ul>
+<li>修改<code>/etc/sysconfig/network</code>, 存在则修改，不存在则增加如下内容:</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">修改前</div><div class="line">NETWORKING=yes</div><div class="line">HOSTNAME=coolnull</div><div class="line">NETWORKING_IPV6=no</div><div class="line">PEERNTP=no</div><div class="line">GATEWAY=*.*.*.*</div><div class="line"></div><div class="line">修改后</div><div class="line">NETWORKING=yes</div><div class="line">HOSTNAME=coolnull</div><div class="line">NETWORKING_IPV6=yes</div><div class="line">PEERNTP=no</div><div class="line">GATEWAY=*.*.*.*</div></pre></td></tr></table></figure>
+<ul>
+<li>至此ipv6的服务器端支持已经完成，重启服务器测试是否支持ipv6</li>
+</ul>
+<h3 id="3-注册免费的Ipv6隧道"><a href="#3-注册免费的Ipv6隧道" class="headerlink" title="3. 注册免费的Ipv6隧道"></a>3. 注册免费的<code>Ipv6</code>隧道</h3><h4 id="3-1-注册账号"><a href="#3-1-注册账号" class="headerlink" title="3.1 注册账号"></a>3.1 注册账号</h4><p><a href="https://www.tunnelbroker.net/" target="_blank" rel="external">https://www.tunnelbroker.net/</a>,不再赘述，注意邮箱不要使用腾讯家的就好，不然收不到激活邮件;</p>
+<h4 id="3-2-创建通道"><a href="#3-2-创建通道" class="headerlink" title="3.2 创建通道"></a>3.2 创建通道</h4><ul>
+<li>填写云服务器ip以及选择默认的隧道节点，点击Create Tunnel创建。填写ip都，如果出现“IP is a potential tunnel endpoint.”则证明可以添加ipv6隧道，一般隧道节点系统已经默认分配，可以手动选择，大家可以在自己的云服务器上分别ping一下这些ip，选时延低的。</li>
+</ul>
+<p><img src="/res/img/blog/环境搭建/ipv61.jpg" alt="ipv61"></p>
+<ul>
+<li>到下一页面切换到Example configurations选项卡，如果你的VPS是centOS/Debian这些常见Linux的话，下拉菜单选择Linux-route2，出现了设置的命令，复制到自己的云服务器上运行。</li>
+</ul>
+<p><img src="/res/img/blog/环境搭建/ipv62.jpg" alt="ipv62"></p>
+<ul>
+<li>如果执行失败请用下面的命令执行,替换掉里面对应的IP信息</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># modprobe ipv6</div><div class="line"># ip tunnel add he-ipv6 mode sit remote &lt;Server IPv4 Address&gt; local &lt;Client IPv4 Address&gt; ttl 255</div><div class="line"># ip link set he-ipv6 up</div><div class="line"># ip addr add &lt;Server IPv6 Address&gt; dev he-ipv6</div><div class="line"># ip -6 route add ::/0 dev he-ipv6</div><div class="line"># ip -f inet6 addr</div></pre></td></tr></table></figure>
+<h4 id="3-3-测试Ipv6"><a href="#3-3-测试Ipv6" class="headerlink" title="3.3 测试Ipv6"></a>3.3 测试<code>Ipv6</code></h4><ul>
+<li>终端执行如下指令查看对应结果</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ifconfig he-ipv6</div></pre></td></tr></table></figure>
+<ul>
+<li><code>ping6 google</code>的<code>ipv6</code>的<code>DNS</code>服务器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ping6 -c 5 2001:4860:4860::8888</div></pre></td></tr></table></figure>
+<p><strong><em>小技巧:</em></strong></p>
+<ul>
+<li>增加<code>Google</code>的<code>Ipv6</code>的<code>DNS</code>服务器</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"># vim /eyc/resolv.conf</div><div class="line">nameserver 2001:4860:4860::8888</div><div class="line">nameserver 2001:4860:4860::8844</div></pre></td></tr></table></figure>
+<p>接下来就能直接 <code>ping6</code> 支持ipv6的地址了;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ping6 ipv6.google.com</div></pre></td></tr></table></figure>
+<h3 id="4-配置阿里云域名"><a href="#4-配置阿里云域名" class="headerlink" title="4. 配置阿里云域名"></a>4. 配置阿里云域名</h3><p>在增加<code>A</code>记录的同时，增加<code>AAAA</code>记录即可，<code>AAAA</code>记录里面的值为<code>server</code>里面的值 注意不要带后面<code>/64</code></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;作者 : daodaoliang@yeah.net&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;日期 : 2017-04-20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;版本 : 0.0.1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;作者 : daodaoliang@yeah.net&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;日期 : 2017-06-22&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;版本 : 0.0.1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
       <category term="环境搭建" scheme="http://daodaoliang.com/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     
+    
+      <category term="centos" scheme="http://daodaoliang.com/tags/centos/"/>
+    
+      <category term="ipv6" scheme="http://daodaoliang.com/tags/ipv6/"/>
+    
+      <category term="环境搭建" scheme="http://daodaoliang.com/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     
   </entry>
   
@@ -155,6 +204,38 @@
     <summary type="html">
     
       &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;作者 : daodaoliang@yeah.net&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;日期 : 2017-04-20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;版本 : 0.0.4&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+    
+    </summary>
+    
+      <category term="环境搭建" scheme="http://daodaoliang.com/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>CentOS6升级GCC版本</title>
+    <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2017/04/20/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2017-04-20-CentOS6%E5%8D%87%E7%BA%A7GCC%E7%89%88%E6%9C%AC/"/>
+    <id>http://daodaoliang.com/环境搭建/2017/04/20/环境搭建-2017-04-20-CentOS6升级GCC版本/</id>
+    <published>2017-04-19T16:00:00.000Z</published>
+    <updated>2017-05-03T16:07:44.961Z</updated>
+    
+    <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">作者 : daodaoliang@yeah.net</div><div class="line">日期 : 2017-04-20</div><div class="line">版本 : 0.0.1</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>[TOC]</p>
+<h3 id="1-背景简述"><a href="#1-背景简述" class="headerlink" title="1. 背景简述"></a>1. 背景简述</h3><p><code>CentOS 6</code>系列的服务器,默认的gcc编译器都是 <code>4.4.7</code> 版本,有事后为了开发或者编译其他开源软件，则需要对gcc编译器进行升级;</p>
+<h3 id="2-安装GCC前准备"><a href="#2-安装GCC前准备" class="headerlink" title="2. 安装GCC前准备"></a>2. 安装<code>GCC</code>前准备</h3><h4 id="2-1-下载指定版本"><a href="#2-1-下载指定版本" class="headerlink" title="2.1 下载指定版本"></a>2.1 下载指定版本</h4><p>首先在官网上面下载你需要的<code>GCC</code>版本,<a href="http://ftp.gnu.org/gnu/gcc" target="_blank" rel="external">官网在这里</a>,笔者选择的是<code>GCC 4.8.4</code>版本;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src</div><div class="line">   wget http://ftp.gnu.org/gnu/gcc/gcc-4.8.4/gcc-4.8.4.tar.gz</div></pre></td></tr></table></figure>
+<h4 id="2-2-解压并进行准备工作"><a href="#2-2-解压并进行准备工作" class="headerlink" title="2.2 解压并进行准备工作"></a>2.2 解压并进行准备工作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar zxvf gcc-4.8.4.tar.gz</div></pre></td></tr></table></figure>
+<h4 id="2-3-下载供编译需求的依赖项"><a href="#2-3-下载供编译需求的依赖项" class="headerlink" title="2.3 下载供编译需求的依赖项"></a>2.3 下载供编译需求的依赖项</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/src/gcc-4.8.4/contrib/download_prerequisites</div></pre></td></tr></table></figure>
+<h3 id="3-开始安装"><a href="#3-开始安装" class="headerlink" title="3. 开始安装"></a>3. 开始安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/src/gcc-4.8.4</div><div class="line">   mkdir gcc-build</div><div class="line">   cd gcc-build</div><div class="line">   ../configure -enable-checking=release -enable-languages=c,c++ -disable-multilib</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make -j4</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo make install</div></pre></td></tr></table></figure>
+<h3 id="4-配置环境"><a href="#4-配置环境" class="headerlink" title="4. 配置环境"></a>4. 配置环境</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cp /usr/local/lib64/libstdc++* /usr/lib64/</div><div class="line">   ln -s /usr/lib64/libstdc++.so /usr/lib64/libstdc++.so.6.0.19</div></pre></td></tr></table></figure>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;3&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;作者 : daodaoliang@yeah.net&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;日期 : 2017-04-20&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;版本 : 0.0.1&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
     
     </summary>
     
@@ -1022,68 +1103,6 @@
     </summary>
     
       <category term="环境搭建" scheme="http://daodaoliang.com/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>10个值得前端收藏的CSS3动效库</title>
-    <link href="http://daodaoliang.com/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/2016/09/18/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0-2016-09-28-10%E4%B8%AA%E5%80%BC%E5%BE%97%E5%89%8D%E7%AB%AF%E6%94%B6%E8%97%8F%E7%9A%84CSS3%E5%8A%A8%E6%95%88%E5%BA%93/"/>
-    <id>http://daodaoliang.com/前端学习/2016/09/18/前端学习-2016-09-28-10个值得前端收藏的CSS3动效库/</id>
-    <published>2016-09-17T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.961Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>原文: http://www.jianshu.com/p/31118d83cb5f#
-版本: V1.0.1.0
-日期: 2016年9月28日
-</code></pre><a id="more"></a>
-<p>现在的网站和App的设计中越来越重视用户体验，而优秀的动效则能使你的应用更具交互性，从而吸引更多用户的使用。如果你对CSS3中定义动效还不熟练，或希望采用更加简单直接的方式在你的应用中引入动效的话，你可以参考并使用下面的这10个优秀动效库（工具）。</p>
-<h2 id="1-Animate-css"><a href="#1-Animate-css" class="headerlink" title="1.Animate.css"></a>1.<a href="https://daneden.github.io/animate.css/" target="_blank" rel="external">Animate.css</a></h2><p>Animate.css是我比较喜欢的一个CSS3动效库，非常适合那些对CSS3动画效果不熟悉，但又希望给自己所做的网站或基于H5的APP引入动效的朋友。因为，你只需要给需要实现动效的元素添加上Animate.css中预定义的那些动效名称就可以了。比如常见的：bounce，flash，fadeIn，fadeOut等等，加起来有75种不同的动效，完全能够满足你的基本需要了。</p>
-<p><img src="/res/img/blog/前端学习/Animate.png" alt="Animate"></p>
-<p>当然对于这个库也有一些使用注意事项，比如你最好在给元素添加动效样式完成动效后，马上将这个动效样式去掉。另外，对于动效的时长，振动幅度等，你也需要做一些调整。因为，我感觉它默认设置中的动效过于快速和强烈了。Animate.css已经提供了详细的文档告诉你应该如何做这些调整。</p>
-<hr>
-
-
-<h2 id="2-Bounce-js"><a href="#2-Bounce-js" class="headerlink" title="2.Bounce.js"></a>2.<a href="http://bouncejs.com/" target="_blank" rel="external">Bounce.js</a></h2><p>Bounce.js是一个能够生成CSS3动效的小工具，它是用JavaScript编写的，提供了一个Web界面，你可以添加一个组件然后就可以选择包括Scale，Translate，Rotate，Skew这些动效类型，然后分别设置它们的参数，当达到你想要的效果后，你可以将这个动效以CSS的方式导出，这样你就可以将它应用到你的应用中了。</p>
-<p><img src="/res/img/blog/前端学习/Bounce.png" alt="Bounce"></p>
-<hr>
-
-<h2 id="3-CSS3-Animation"><a href="#3-CSS3-Animation" class="headerlink" title="3.CSS3 Animation"></a>3.<a href="http://css3gen.com/css3-animation/" target="_blank" rel="external">CSS3 Animation</a></h2><p>CSS3 Animation是一个非常简单易用的动效工具，你可以在它提供的简单图形界面里，通过拖拽一些进度条来控制你的动效，生成的CSS代码会自动显示在下面的一个文本框里，你可以拷贝粘贴到你的应用中直接使用。</p>
-<p><img src="/res/img/blog/前端学习/Animation.png" alt="Animation"></p>
-<hr>
-
-<h2 id="4-CSS-Animate"><a href="#4-CSS-Animate" class="headerlink" title="4.CSS Animate"></a>4.<a href="http://cssanimate.com/" target="_blank" rel="external">CSS Animate</a></h2><p>如果你觉得上面的工具还无法做出你想要的动效，那么可以看看CSS Animate这个工具。它能让你设置更多的动效参数，比如你可以同时设置动效起始和终止状态的坐标，大小，以及透明度，这样你就能够做出更加复杂的动效来。</p>
-<p><img src="/res/img/blog/前端学习/Animate1.png" alt="Animate1"></p>
-<hr>
-
-<h2 id="5-Magic-Animations"><a href="#5-Magic-Animations" class="headerlink" title="5.Magic Animations"></a>5.<a href="https://www.minimamente.com/example/magic_animations/" target="_blank" rel="external">Magic Animations</a></h2><p>Magic Animations与Animate.css十分类似，也是一个预定义了一系列动效的CSS库。但与Animate.css的最大区别可能是，它定义的那些动效更炫也更酷一些，如果你的网站也很新潮，那可以考虑使用这个CSS动效库。</p>
-<p><img src="/res/img/blog/前端学习/Magic.png" alt="Magic"></p>
-<hr>
-
-<h2 id="6-AniJS"><a href="#6-AniJS" class="headerlink" title="6.AniJS"></a>6.<a href="http://anijs.github.io/" target="_blank" rel="external">AniJS</a></h2><p>AniJS是一个通过JavaScript控制的动效库。它允许你通过它的链式语法来定义动效。比如下面这个例子：当用户点击时这个元素会沿Y轴翻转。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;div data-anijs=&quot;if: click, do: flipInY, to: .container-box&quot;&gt;&lt;/div&gt;</div></pre></td></tr></table></figure>
-<p><img src="/res/img/blog/前端学习/AniJS.png" alt="AniJS"></p>
-<h2 id="7-Single-Element-CSS-Spinners"><a href="#7-Single-Element-CSS-Spinners" class="headerlink" title="7.Single Element CSS Spinners"></a>7.<a href="http://projects.lukehaas.me/css-loaders/" target="_blank" rel="external">Single Element CSS Spinners</a></h2><p>我们经常会需要一些动效来表达系统处于加载或处理数据的过程中。Single Element CSS Spinners这个在GitHub上的项目，提供了一组非常漂亮的可用于加载的CSS3动效。</p>
-<p><img src="/res/img/blog/前端学习/Spinners.png" alt="Spinners"></p>
-<h2 id="8-Snabbt-js"><a href="#8-Snabbt-js" class="headerlink" title="8.Snabbt.js"></a>8.<a href="http://daniel-lundin.github.io/snabbt.js/" target="_blank" rel="external">Snabbt.js</a></h2><p>Sanbbt.js是我很喜欢的一个动效库，它非常小巧只有5K，所以可以被用在移动应用中。而且它也支持链式语法，你可以很方便地写出复杂的动效组合。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">snabbt(element, &#123;</div><div class="line">  position: [200, 0, 0],</div><div class="line">  easing: function(value) &#123;</div><div class="line">    return value + 0.3 * Math.sin(2*Math.PI * value);</div><div class="line">  &#125;</div><div class="line">&#125;).snabbt(&#123;</div><div class="line">  position: [0, 0, 0],</div><div class="line">  easing: &apos;easeOut&apos;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p><img src="/res/img/blog/前端学习/Snabbt.png" alt="Snabbt"></p>
-<h2 id="9-Odometer"><a href="#9-Odometer" class="headerlink" title="9.Odometer"></a>9.<a href="http://github.hubspot.com/odometer/docs/welcome/" target="_blank" rel="external">Odometer</a></h2><p>Odometer 是用来给数字作动效的，比如通过它你可以很好地呈现网站人数的增加，倒计时等与数字相关的动画效果。</p>
-<p><img src="/res/img/blog/前端学习/Odometer.png" alt="Odometer"></p>
-<h2 id="10-Hover-css"><a href="#10-Hover-css" class="headerlink" title="10.Hover.css"></a>10.<a href="http://ianlunn.github.io/Hover/" target="_blank" rel="external">Hover.css</a></h2><p>Hover.css提供了大量的Hover效果，包括2D变换，图标变换，背景变换等等。而且几乎可以应用于所有元素，包括链接，按钮，logo，SVG甚至图片等等。</p>
-<p><img src="/res/img/blog/前端学习/Hover.png" alt="Hover"></p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;pre&gt;&lt;code&gt;原文: http://www.jianshu.com/p/31118d83cb5f#
-版本: V1.0.1.0
-日期: 2016年9月28日
-&lt;/code&gt;&lt;/pre&gt;
-    
-    </summary>
-    
-      <category term="前端学习" scheme="http://daodaoliang.com/categories/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%B9%A0/"/>
     
     
   </entry>

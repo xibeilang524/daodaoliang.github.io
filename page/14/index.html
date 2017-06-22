@@ -354,7 +354,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/05/27/linux学习-2015-05-27-linux目录结构/">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/06/01/linux学习-2015-06-01-linux脚本文件格式错误/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="daodaoliang">
@@ -376,8 +376,8 @@
             
               
                 
-                <a class="post-title-link" href="/linux学习/2015/05/27/linux学习-2015-05-27-linux目录结构/" itemprop="url">
-                  linux目录结构
+                <a class="post-title-link" href="/linux学习/2015/06/01/linux学习-2015-06-01-linux脚本文件格式错误/" itemprop="url">
+                  linux脚本文件格式错误
                 </a>
               
             
@@ -393,8 +393,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-27T00:00:00+08:00">
-                2015-05-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-06-01T00:00:00+08:00">
+                2015-06-01
               </time>
             
 
@@ -459,7 +459,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  3,845
+                  78
                 </span>
               
 
@@ -475,7 +475,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  14
+                  1
                 </span>
               
             </div>
@@ -494,15 +494,23 @@
 
       
         
-          <hr>
-<p>在Linux文件系统中的每一个子目录都有特定的目的和用途。一般都是根据FHS标准定义一个正式的文件系统结构的，这个标准规定了哪些目录应该哪些作用</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/linux学习/2015/05/27/linux学习-2015-05-27-linux目录结构/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
+          
+            <hr>
+<ul>
+<li><strong><em>/bin/sh<code>^</code>M:bad interpreter: No such file or directory</em></strong></li>
+</ul>
+<blockquote>
+<ul>
+<li><p>这个错误发生在你在windows下编写文件上传到linux服务器去运行的时候。<br>错误原因：windows和linux的文件不一样。</p>
+</li>
+<li><p>解决办法:vi该文件 在命令模式下输入 :set ff=unix 回车</p>
+</li>
+<li><p>执行完成后输入:wq</p>
+</li>
+</ul>
+</blockquote>
+
+          
         
       
     </div>
@@ -746,7 +754,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/Python学习/2015/05/19/Python学习-2015-05-19-Wake-on-lan远程开机/">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/05/27/linux学习-2015-05-27-linux目录结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="daodaoliang">
@@ -768,8 +776,8 @@
             
               
                 
-                <a class="post-title-link" href="/Python学习/2015/05/19/Python学习-2015-05-19-Wake-on-lan远程开机/" itemprop="url">
-                  远程开机包封装
+                <a class="post-title-link" href="/linux学习/2015/05/27/linux学习-2015-05-27-linux目录结构/" itemprop="url">
+                  linux目录结构
                 </a>
               
             
@@ -785,8 +793,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-19T00:00:00+08:00">
-                2015-05-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-27T00:00:00+08:00">
+                2015-05-27
               </time>
             
 
@@ -820,8 +828,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python学习/" itemprop="url" rel="index">
-                    <span itemprop="name">Python学习</span>
+                  <a href="/categories/linux学习/" itemprop="url" rel="index">
+                    <span itemprop="name">linux学习</span>
                   </a>
                 </span>
 
@@ -851,7 +859,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  311
+                  3,845
                 </span>
               
 
@@ -867,7 +875,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  2
+                  14
                 </span>
               
             </div>
@@ -886,16 +894,11 @@
 
       
         
-          <ul>
-<li>使用方法<ul>
-<li>同一局域网内的机器，只需指定目标主机的MAC地址，就令远程主机开机。</li>
-<li>非同一局域网的情况下，除需指定目标主机的MAC地址，还需指定目标主机的地址。</li>
-</ul>
-</li>
-</ul>
+          <hr>
+<p>在Linux文件系统中的每一个子目录都有特定的目的和用途。一般都是根据FHS标准定义一个正式的文件系统结构的，这个标准规定了哪些目录应该哪些作用</p>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/Python学习/2015/05/19/Python学习-2015-05-19-Wake-on-lan远程开机/#more" rel="contents">
+            <a class="btn" href="/linux学习/2015/05/27/linux学习-2015-05-27-linux目录结构/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1147,7 +1150,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/数据库学习/2015/05/17/数据库学习-mysql专题-2015-04-15-linux下mysql忘记root密码处理方案/">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/Python学习/2015/05/19/Python学习-2015-05-19-Wake-on-lan远程开机/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="daodaoliang">
@@ -1169,8 +1172,8 @@
             
               
                 
-                <a class="post-title-link" href="/数据库学习/2015/05/17/数据库学习-mysql专题-2015-04-15-linux下mysql忘记root密码处理方案/" itemprop="url">
-                  linux下mysql忘记root密码的处理方案
+                <a class="post-title-link" href="/Python学习/2015/05/19/Python学习-2015-05-19-Wake-on-lan远程开机/" itemprop="url">
+                  远程开机包封装
                 </a>
               
             
@@ -1186,8 +1189,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-17T00:00:00+08:00">
-                2015-05-17
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-05-19T00:00:00+08:00">
+                2015-05-19
               </time>
             
 
@@ -1221,8 +1224,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库学习/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库学习</span>
+                  <a href="/categories/Python学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Python学习</span>
                   </a>
                 </span>
 
@@ -1252,7 +1255,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  206
+                  311
                 </span>
               
 
@@ -1268,7 +1271,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  1
+                  2
                 </span>
               
             </div>
@@ -1287,13 +1290,16 @@
 
       
         
-          <h4 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h4><ul>
-<li>首先确认mysql数据库处于安全状态，因为在找回密码的过程中，mysql处于没有密码保护的状态，任何人都可以连接数据库并且对数据库作出修改，建议断开对外端口，或者断开对外网线，最保险的办法就是断开对外网络同时登录服务器通过控制台操作</li>
-<li></li>
+          <ul>
+<li>使用方法<ul>
+<li>同一局域网内的机器，只需指定目标主机的MAC地址，就令远程主机开机。</li>
+<li>非同一局域网的情况下，除需指定目标主机的MAC地址，还需指定目标主机的地址。</li>
+</ul>
+</li>
 </ul>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/数据库学习/2015/05/17/数据库学习-mysql专题-2015-04-15-linux下mysql忘记root密码处理方案/#more" rel="contents">
+            <a class="btn" href="/Python学习/2015/05/19/Python学习-2015-05-19-Wake-on-lan远程开机/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1340,7 +1346,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/26/">26</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
+    <a class="extend prev" rel="prev" href="/page/13/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/13/">13</a><span class="page-number current">14</span><a class="page-number" href="/page/15/">15</a><span class="space">&hellip;</span><a class="page-number" href="/page/27/">27</a><a class="extend next" rel="next" href="/page/15/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1385,7 +1391,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">130</span>
+                <span class="site-state-item-count">131</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1407,7 +1413,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2141,6 +2147,28 @@
 
 
   
+  
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  
+
 
   
 
