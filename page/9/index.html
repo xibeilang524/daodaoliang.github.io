@@ -354,6 +354,214 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/环境搭建/2016/01/06/环境搭建-2016-01-06-CentOS6-5配置防火墙/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/环境搭建/2016/01/06/环境搭建-2016-01-06-CentOS6-5配置防火墙/" itemprop="url">
+                  CentOS6.5配置防火墙
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-06T00:00:00+08:00">
+                2016-01-06
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/环境搭建/" itemprop="url" rel="index">
+                    <span itemprop="name">环境搭建</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  304
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<p><img src="/res/img/blog/环境搭建/iptables.jpg" alt="iptables图解"></p>
+<h3 id="检查iptables状态"><a href="#检查iptables状态" class="headerlink" title="检查iptables状态"></a>检查iptables状态</h3><p><strong>检查服务状态:</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ service iptables status</div><div class="line">iptables: Firewall is not running.</div></pre></td></tr></table></figure>
+<p>上面的状态说明iptables服务是没有被安装的,进行iptables的安装:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ yum install -y iptables</div></pre></td></tr></table></figure>
+<p><strong>启动iptables:</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">service iptables start</div></pre></td></tr></table></figure>
+<p><strong>查看当前iptables的配置:</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ iptables -L -n</div></pre></td></tr></table></figure>
+<h3 id="清除默认的防火墙规则"><a href="#清除默认的防火墙规则" class="headerlink" title="清除默认的防火墙规则"></a>清除默认的防火墙规则</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 允许所有请求</span></div><div class="line">iptables -P INPUT ACCEPT</div><div class="line"></div><div class="line"><span class="comment"># 清空默认所有规则</span></div><div class="line">iptables -F</div><div class="line"></div><div class="line"><span class="comment"># 清空自定义的所有规则</span></div><div class="line">iptables -X</div><div class="line"></div><div class="line"><span class="comment"># 计数器置零</span></div><div class="line">iptables -Z</div></pre></td></tr></table></figure>
+<h3 id="配置规则"><a href="#配置规则" class="headerlink" title="配置规则"></a>配置规则</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 允许本地的数据包发送</span></div><div class="line">iptables -A INPUT -i lo -j ACCEPT</div><div class="line"></div><div class="line"><span class="comment"># SSH 端口22</span></div><div class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</div><div class="line"></div><div class="line"><span class="comment"># FTP 端口21</span></div><div class="line">iptables -A INPUT -p tcp --dport 21 -j ACCEPT</div><div class="line"></div><div class="line"><span class="comment"># WEB 端口80</span></div><div class="line">iptables -A INPUT -p tcp --dport 80 -j ACCEPT</div><div class="line"></div><div class="line"><span class="comment"># 自定义的端口 XXXX </span></div><div class="line">iptables -A INPUT -p tcp --dport xxxx -j ACCEPT</div><div class="line"></div><div class="line"><span class="comment"># 允许 ping</span></div><div class="line">iptables -A INPUT -p icmp -m icmp --icmp-type 8 -j ACCEPT</div><div class="line"> </div><div class="line"><span class="comment"># 允许对外请求的返回包</span></div><div class="line">iptables -A INPUT -m state --state ESTABLISHED -j ACCEPT</div><div class="line"></div><div class="line"><span class="comment"># 添加指定IP的所有tcp请求</span></div><div class="line">iptables -A INPUT -p tcp <span class="_">-s</span> 112.114.123.12 -j ACCEPT</div><div class="line"> </div><div class="line"><span class="comment">#过滤所有非以上规则的请求</span></div><div class="line">iptables -P INPUT DROP</div></pre></td></tr></table></figure>
+<h3 id="保存规则"><a href="#保存规则" class="headerlink" title="保存规则"></a>保存规则</h3><p><strong>查看配置是否正确</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">iptables -L -n</div></pre></td></tr></table></figure>
+<p><strong>另开一个ssh链接，确保可以登录</strong></p>
+<p><strong>保存</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ service iptables save</div></pre></td></tr></table></figure>
+<p><strong>添加自启动</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ chkconfig iptables on</div></pre></td></tr></table></figure>
+          
+        
+      
+    </div>
+
+	<div>
+      
+	</div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+	<div>
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/12/29/linux学习-2015-12-29-netcat命令无效参数e的解决方案/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -409,8 +617,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -606,8 +814,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -802,8 +1010,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -997,8 +1205,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -1086,201 +1294,6 @@
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/项目工程管理/2015/11/05/项目工程管理-2015-11-05-gitflow分支管理模型/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-	<div>
-      
-	</div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-	<div>
-	  
-	</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/开源框架学习/2015/11/04/开源框架学习-2015-11-04-以正确的方式开源Python项目/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="daodaoliang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刀刀亮的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/开源框架学习/2015/11/04/开源框架学习-2015-11-04-以正确的方式开源Python项目/" itemprop="url">
-                  以正确的方式开源 Python 项目(转载)
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-11-04T00:00:00+08:00">
-                2015-11-04
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/开源框架学习/" itemprop="url" rel="index">
-                    <span itemprop="name">开源框架学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  9,240
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  35
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p><strong>重要的事情要加黑:</strong> <a href="http://www.oschina.net/translate/open-sourcing-a-python-project-the-right-way?print" target="_blank" rel="external">原文地址</a></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/开源框架学习/2015/11/04/开源框架学习-2015-11-04-以正确的方式开源Python项目/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -2128,28 +2141,6 @@
 
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
 
   
 

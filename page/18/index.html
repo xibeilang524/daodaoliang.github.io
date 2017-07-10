@@ -354,6 +354,392 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/02/05/linux学习-2015-02-05-安装脚本编写/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/linux学习/2015/02/05/linux学习-2015-02-05-安装脚本编写/" itemprop="url">
+                  linux安装脚本
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-05T00:00:00+08:00">
+                2015-02-05
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux学习/" itemprop="url" rel="index">
+                    <span itemprop="name">linux学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  524
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<hr>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment"># user can config the following configs, then package.</span></div><div class="line">INSTALL=/usr/<span class="built_in">local</span>/cusflo-server</div><div class="line"><span class="function"><span class="title">ok_msg</span></span>() &#123;</div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"<span class="variable">$&#123;1&#125;</span><span class="variable">$&#123;POS&#125;</span><span class="variable">$&#123;BLACK&#125;</span>[<span class="variable">$&#123;GREEN&#125;</span>  OK  <span class="variable">$&#123;BLACK&#125;</span>]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">failed_msg</span></span>() &#123;</div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"<span class="variable">$&#123;1&#125;</span><span class="variable">$&#123;POS&#125;</span><span class="variable">$&#123;BLACK&#125;</span>[<span class="variable">$&#123;RED&#125;</span>FAILED<span class="variable">$&#123;BLACK&#125;</span>]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># discover the current work dir, the log and access.</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"argv[0]=<span class="variable">$0</span>"</span></div><div class="line"><span class="keyword">if</span> [[ ! <span class="_">-f</span> <span class="variable">$0</span> ]]; <span class="keyword">then</span> </div><div class="line">    <span class="built_in">echo</span> <span class="string">"directly execute the scripts on shell."</span>;</div><div class="line">    work_dir=`<span class="built_in">pwd</span>`</div><div class="line"><span class="keyword">else</span> </div><div class="line">    <span class="built_in">echo</span> <span class="string">"execute scripts in file: <span class="variable">$0</span>"</span>;</div><div class="line">    work_dir=`dirname <span class="variable">$0</span>`; work_dir=`(<span class="built_in">cd</span> <span class="variable">$&#123;work_dir&#125;</span> &amp;&amp; <span class="built_in">pwd</span>)`</div><div class="line"><span class="keyword">fi</span></div><div class="line">product_dir=<span class="variable">$work_dir</span></div><div class="line"></div><div class="line"><span class="comment"># user must stop service first.</span></div><div class="line">ok_msg <span class="string">"check previous install"</span></div><div class="line"><span class="keyword">if</span> [[ <span class="_">-f</span> /etc/init.d/cusflo-server-moon ]]; <span class="keyword">then</span></div><div class="line">    /etc/init.d/cusflo-server-moon status &gt;/dev/null 2&gt;&amp;1</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> </div><div class="line">        failed_msg <span class="string">"you must stop the service first: sudo /etc/init.d/cusflo-server-moon stop"</span>; </div><div class="line">        <span class="built_in">exit</span> 1; </div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line">ok_msg <span class="string">"previous install checked"</span></div><div class="line"></div><div class="line"><span class="comment"># backup old srs</span></div><div class="line">ok_msg <span class="string">"backup old cusflo-server-moon"</span></div><div class="line">install_root=<span class="variable">$INSTALL</span></div><div class="line">install_bin=<span class="variable">$install_root</span>/</div><div class="line"><span class="keyword">if</span> [[ <span class="_">-d</span> <span class="variable">$install_root</span> ]]; <span class="keyword">then</span></div><div class="line">    backup_dir=<span class="variable">$&#123;install_root&#125;</span>.`date <span class="string">"+%Y-%m-%d_%H-%M-%S"</span>`</div><div class="line">    ok_msg <span class="string">"backup installed dir"</span></div><div class="line">    ok_msg <span class="string">"    to=<span class="variable">$backup_dir</span>"</span></div><div class="line">    mv <span class="variable">$install_root</span> <span class="variable">$backup_dir</span> 2&gt;&amp;1</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"backup installed dir failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">    ok_msg <span class="string">"backup installed dir success"</span></div><div class="line"><span class="keyword">fi</span></div><div class="line">ok_msg <span class="string">"old srs backuped"</span></div><div class="line"></div><div class="line"><span class="comment"># copy core files</span></div><div class="line">ok_msg <span class="string">"copy core components"</span></div><div class="line">(</div><div class="line">    mkdir -p <span class="variable">$install_root</span></div><div class="line">    cp -r <span class="variable">$work_dir</span>/conf <span class="variable">$install_root</span> &amp;&amp;</div><div class="line">    cp -r <span class="variable">$work_dir</span>/dog <span class="variable">$install_root</span> &amp;&amp;</div><div class="line">    cp -r <span class="variable">$work_dir</span>/<span class="built_in">log</span> <span class="variable">$install_root</span> &amp;&amp;</div><div class="line">    cp -r <span class="variable">$work_dir</span>/moon <span class="variable">$install_root</span> &amp;&amp;</div><div class="line">    cp -r <span class="variable">$work_dir</span>/scripts <span class="variable">$install_root</span></div><div class="line">) 2&gt;&amp;1</div><div class="line">ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"copy core components failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">ok_msg <span class="string">"copy core components success"</span></div><div class="line"></div><div class="line"><span class="comment"># install init.d scripts</span></div><div class="line">ok_msg <span class="string">"install init.d scripts"</span></div><div class="line">(</div><div class="line">    rm -rf /etc/init.d/cusflo-server-moon &amp;&amp;</div><div class="line">    ln -sf <span class="variable">$install_root</span>/scripts/cusflo-server-moon /etc/init.d/cusflo-server-moon</div><div class="line">) 2&gt;&amp;1</div><div class="line">ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"install init.d scripts failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">ok_msg <span class="string">"install init.d scripts success"</span></div><div class="line"></div><div class="line"><span class="comment"># install system service</span></div><div class="line">lsb_release --id|grep <span class="string">"CentOS"</span> &gt;/dev/null 2&gt;&amp;1; os_id_centos=$?</div><div class="line">lsb_release --id|grep <span class="string">"Ubuntu"</span> &gt;/dev/null 2&gt;&amp;1; os_id_ubuntu=$?</div><div class="line">lsb_release --id|grep <span class="string">"Debian"</span> &gt;/dev/null 2&gt;&amp;1; os_id_debian=$?</div><div class="line">lsb_release --id|grep <span class="string">"Raspbian"</span> &gt;/dev/null 2&gt;&amp;1; os_id_rasabian=$?</div><div class="line"><span class="keyword">if</span> [[ 0 <span class="_">-eq</span> <span class="variable">$os_id_centos</span> ]]; <span class="keyword">then</span></div><div class="line">    ok_msg <span class="string">"install system service for CentOS"</span></div><div class="line">    /sbin/chkconfig --add cusflo-server-moon &amp;&amp; /sbin/chkconfig cusflo-server-moon on</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"install system service failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">    ok_msg <span class="string">"install system service success"</span></div><div class="line"><span class="keyword">elif</span> [[ 0 <span class="_">-eq</span> <span class="variable">$os_id_ubuntu</span> ]]; <span class="keyword">then</span></div><div class="line">    ok_msg <span class="string">"install system service for Ubuntu"</span></div><div class="line">    update-rc.d cusflo-server-moon defaults</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"install system service failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">    ok_msg <span class="string">"install system service success"</span></div><div class="line"><span class="keyword">elif</span> [[ 0 <span class="_">-eq</span> <span class="variable">$os_id_debian</span> ]]; <span class="keyword">then</span></div><div class="line">    ok_msg <span class="string">"install system service for Debian"</span></div><div class="line">    update-rc.d cusflo-server-moon defaults</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"install system service failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">    ok_msg <span class="string">"install system service success"</span></div><div class="line"><span class="keyword">elif</span> [[ 0 <span class="_">-eq</span> <span class="variable">$os_id_rasabian</span> ]]; <span class="keyword">then</span></div><div class="line">    ok_msg <span class="string">"install system service for RaspberryPi"</span></div><div class="line">    update-rc.d cusflo-server-moon defaults</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"install system service failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">    ok_msg <span class="string">"install system service success"</span></div><div class="line"><span class="keyword">else</span></div><div class="line">    warn_msg <span class="string">"ignore and donot install system service for `lsb_release --id|awk '&#123;print <span class="variable">$3</span>&#125;'`."</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">""</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"install success, you can:"</span></div><div class="line"><span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"<span class="variable">$&#123;GREEN&#125;</span>      sudo ./moon/scripts/cusflo-server-moon start<span class="variable">$&#123;BLACK&#125;</span>"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"cusflo-server-moon root is <span class="variable">$&#123;INSTALL&#125;</span>"</span></div><div class="line"></div><div class="line"><span class="built_in">exit</span> 0</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+	<div>
+      
+	</div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+	<div>
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/02/04/linux学习-2015-02-04-服务脚本编写/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/linux学习/2015/02/04/linux学习-2015-02-04-服务脚本编写/" itemprop="url">
+                  linux服务脚本编写
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-04T00:00:00+08:00">
+                2015-02-04
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux学习/" itemprop="url" rel="index">
+                    <span itemprop="name">linux学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  561
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<hr>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment">### BEGIN INIT INFO</span></div><div class="line"><span class="comment"># Provides:          应用程序开发者</span></div><div class="line"><span class="comment"># RequiRED-Start:    $all</span></div><div class="line"><span class="comment"># RequiRED-Stop:     $all</span></div><div class="line"><span class="comment"># Default-Start:     2 3 4 5</span></div><div class="line"><span class="comment"># Default-Stop:      0 1 6</span></div><div class="line"><span class="comment"># Short-Description: 简短应用程序描述</span></div><div class="line"><span class="comment"># Description:       详细应用程序描述</span></div><div class="line"><span class="comment">### END INIT INFO</span></div><div class="line"></div><div class="line"><span class="comment"># 程序文件目录</span></div><div class="line">ROOT=<span class="string">"/work/code/cusflo-server-moon"</span></div><div class="line"><span class="comment"># 程序文件</span></div><div class="line">APP=<span class="string">"./dog/client_update_dog.py"</span></div><div class="line"><span class="comment"># 程序配置文件</span></div><div class="line">CONFIG=<span class="string">"./server_config.ini"</span></div><div class="line"><span class="comment"># 服务日志</span></div><div class="line">DEFAULT_LOG_FILE=<span class="string">'./daodaoliang.log'</span></div><div class="line"></div><div class="line"><span class="comment"># 样式定制</span></div><div class="line">RED=<span class="string">"\\e[31m"</span></div><div class="line">GREEN=<span class="string">"\\e[32m"</span></div><div class="line">YELLOW=<span class="string">"\\e[33m"</span></div><div class="line">BLACK=<span class="string">"\\e[0m"</span></div><div class="line">POS=<span class="string">"\\e[60G"</span></div><div class="line"></div><div class="line"><span class="function"><span class="title">ok_msg</span></span>() &#123;</div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"<span class="variable">$&#123;1&#125;</span><span class="variable">$&#123;POS&#125;</span><span class="variable">$&#123;BLACK&#125;</span>[<span class="variable">$&#123;GREEN&#125;</span>  OK  <span class="variable">$&#123;BLACK&#125;</span>]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">failed_msg</span></span>() &#123;</div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"<span class="variable">$&#123;1&#125;</span><span class="variable">$&#123;POS&#125;</span><span class="variable">$&#123;BLACK&#125;</span>[<span class="variable">$&#123;RED&#125;</span>FAILED<span class="variable">$&#123;BLACK&#125;</span>]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># load process info of app</span></div><div class="line"><span class="comment"># exist return 0</span></div><div class="line"><span class="comment"># no exist return 1</span></div><div class="line"><span class="function"><span class="title">load_process_info</span></span>() &#123;</div><div class="line">    <span class="comment"># get pid</span></div><div class="line">    app_pid=$(ps -ef|grep <span class="variable">$&#123;APP&#125;</span>|gawk <span class="string">'$0 !~/grep/ &#123;print $2&#125;'</span> |tr <span class="_">-s</span> <span class="string">'\n'</span> <span class="string">' '</span>)</div><div class="line">    <span class="comment"># check pid again</span></div><div class="line">    ps -p <span class="variable">$&#123;app_pid&#125;</span> &gt;/dev/null 2&gt;/dev/null</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$ret</span> ]]; <span class="keyword">then</span> error_msg=<span class="string">"process <span class="variable">$app_pid</span> does not exists"</span>; <span class="built_in">return</span> 1; <span class="keyword">fi</span></div><div class="line">    <span class="built_in">return</span> 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">start</span></span>() &#123;</div><div class="line">    <span class="comment"># if exists, exit.</span></div><div class="line">    load_process_info</div><div class="line">    <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> $? ]]; <span class="keyword">then</span> failed_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> started(pid <span class="variable">$&#123;app_pid&#125;</span>), should not start it again."</span>; <span class="built_in">return</span> 0; <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    <span class="comment"># not exists, start server</span></div><div class="line">    ok_msg <span class="string">"Starting <span class="variable">$&#123;APP&#125;</span>..."</span></div><div class="line">    </div><div class="line">    <span class="comment"># get log file</span></div><div class="line">    log_file=`<span class="built_in">cd</span> <span class="variable">$&#123;ROOT&#125;</span> &amp;&amp; cat <span class="variable">$&#123;CONFIG&#125;</span> |grep <span class="string">'^log_file'</span>| awk <span class="string">'&#123;print $2&#125;'</span>| awk -F <span class="string">';'</span> <span class="string">'&#123;print $1&#125;'</span>`</div><div class="line">    <span class="keyword">if</span> [[ -z <span class="variable">$log_file</span> ]]; <span class="keyword">then</span> log_file=<span class="variable">$&#123;DEFAULT_LOG_FILE&#125;</span>; <span class="keyword">fi</span></div><div class="line">    <span class="comment"># get abs path</span></div><div class="line">    log_dir=`dirname <span class="variable">$log_file</span>`</div><div class="line">    log_file=`(<span class="built_in">cd</span> <span class="variable">$&#123;ROOT&#125;</span> &amp;&amp; <span class="built_in">cd</span> <span class="variable">$log_dir</span> &amp;&amp; <span class="built_in">pwd</span>)`/`basename <span class="variable">$log_file</span>`</div><div class="line">    </div><div class="line">    <span class="comment"># <span class="doctag">TODO:</span> <span class="doctag">FIXME:</span> set limit by, for instance, "ulimit -HSn 10000"</span></div><div class="line">    <span class="keyword">if</span> [[ -z <span class="variable">$log_file</span> ]]; <span class="keyword">then</span></div><div class="line">        (<span class="built_in">cd</span> <span class="variable">$&#123;ROOT&#125;</span>;nohup python <span class="variable">$&#123;APP&#125;</span>  &gt;/dev/null 2&gt;&amp;1 &amp;)</div><div class="line">    <span class="keyword">else</span></div><div class="line">        (<span class="built_in">cd</span> <span class="variable">$&#123;ROOT&#125;</span>;nohup python <span class="variable">$&#123;APP&#125;</span> &gt;/dev.null &gt;&gt; <span class="variable">$log_file</span> 2&gt;&amp;1 &amp;)</div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    <span class="comment"># check again after start server</span></div><div class="line">    <span class="keyword">for</span> ((i = 0; i &lt; 5; i++)); <span class="keyword">do</span></div><div class="line">        <span class="comment"># sleep a little while, for app may start then crash.</span></div><div class="line">        sleep 0.1</div><div class="line">        load_process_info</div><div class="line">        ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$ret</span> ]]; <span class="keyword">then</span> </div><div class="line">            failed_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> start failed"</span>; </div><div class="line">            failed_msg <span class="string">"see <span class="variable">$log_file</span>"</span>; </div><div class="line">            <span class="built_in">return</span> <span class="variable">$ret</span>; </div><div class="line">        <span class="keyword">fi</span></div><div class="line">    <span class="keyword">done</span></div><div class="line">    </div><div class="line">    <span class="comment"># check whether started.</span></div><div class="line">    load_process_info</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> $? ]]; <span class="keyword">then</span> ok_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> started(pid <span class="variable">$&#123;app_pid&#125;</span>)"</span>; <span class="built_in">return</span> 0; <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    failed_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> not started"</span></div><div class="line">    <span class="built_in">return</span> <span class="variable">$ret</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">stop</span></span>() &#123;</div><div class="line">    <span class="comment"># not start, exit</span></div><div class="line">    load_process_info</div><div class="line">    <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> $? ]]; <span class="keyword">then</span> failed_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> not start."</span>; <span class="built_in">return</span> 0; <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    ok_msg <span class="string">"Stopping <span class="variable">$&#123;APP&#125;</span>(pid <span class="variable">$&#123;app_pid&#125;</span>)..."</span></div><div class="line">    </div><div class="line">    <span class="comment"># process exists, try to kill to stop normally</span></div><div class="line">    <span class="keyword">for</span>((i=0;i&lt;30;i++)); <span class="keyword">do</span></div><div class="line">        load_process_info</div><div class="line">        <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> $? ]]; <span class="keyword">then</span></div><div class="line">            <span class="built_in">kill</span> <span class="_">-s</span> SIGTERM <span class="variable">$&#123;app_pid&#125;</span> 2&gt;/dev/null</div><div class="line">            ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$ret</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"send signal SIGTERM failed ret=<span class="variable">$ret</span>"</span>; <span class="built_in">return</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">            sleep 0.1</div><div class="line">        <span class="keyword">else</span></div><div class="line">            ok_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> stopped by SIGTERM"</span></div><div class="line">            <span class="comment"># delete the pid file when stop success.</span></div><div class="line">            rm <span class="_">-f</span> <span class="variable">$&#123;pid_file&#125;</span></div><div class="line">            <span class="built_in">break</span>;</div><div class="line">        <span class="keyword">fi</span></div><div class="line">    <span class="keyword">done</span></div><div class="line">    </div><div class="line">    <span class="comment"># process exists, use kill -9 to force to exit</span></div><div class="line">    load_process_info</div><div class="line">    <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> $? ]]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">kill</span> <span class="_">-s</span> SIGKILL <span class="variable">$&#123;app_pid&#125;</span> 2&gt;/dev/null</div><div class="line">        ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$ret</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"send signal SIGKILL failed ret=<span class="variable">$ret</span>"</span>; <span class="built_in">return</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">        ok_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> stopped by SIGKILL"</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="comment"># delete the pid file when stop success.</span></div><div class="line">        rm <span class="_">-f</span> <span class="variable">$&#123;pid_file&#125;</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    sleep 0.1</div><div class="line">    <span class="built_in">return</span> 0</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># get the status of srs process</span></div><div class="line"><span class="comment"># @return 0 if srs is running; otherwise, 1 for stopped.</span></div><div class="line"><span class="function"><span class="title">status</span></span>() &#123;</div><div class="line">    load_process_info</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> <span class="variable">$ret</span> ]]; <span class="keyword">then</span> <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;APP&#125;</span>(pid <span class="variable">$&#123;app_pid&#125;</span>) is running."</span>; <span class="built_in">return</span> 0; <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;APP&#125;</span> is stopped, <span class="variable">$error_msg</span>"</span></div><div class="line">    <span class="built_in">return</span> 1</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">menu</span></span>() &#123;</div><div class="line">    <span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></div><div class="line">        start)</div><div class="line">            start</div><div class="line">            ;;</div><div class="line">        stop)</div><div class="line">            stop</div><div class="line">            ;;</div><div class="line">        restart)</div><div class="line">            stop</div><div class="line">            start</div><div class="line">            ;;</div><div class="line">        status)</div><div class="line">            status</div><div class="line">            ;;</div><div class="line">        *)</div><div class="line">            <span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$0</span> &#123;start|stop|status|restart&#125;"</span></div><div class="line">            <span class="built_in">return</span> 1</div><div class="line">            ;;</div><div class="line">    <span class="keyword">esac</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">menu <span class="variable">$1</span></div><div class="line"></div><div class="line">code=$?</div><div class="line"><span class="built_in">exit</span> <span class="variable">$&#123;code&#125;</span></div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+	<div>
+      
+	</div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+	<div>
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/Python学习/2015/02/04/Python学习-2015-02-04-python管理包安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -409,8 +795,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -554,7 +940,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/02/04/linux学习-2015-02-04-服务脚本编写/">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/环境搭建/2015/02/03/环境搭建-2015-02-03-Linux下ffmpeg配置/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="daodaoliang">
@@ -576,8 +962,8 @@
             
               
                 
-                <a class="post-title-link" href="/linux学习/2015/02/04/linux学习-2015-02-04-服务脚本编写/" itemprop="url">
-                  linux服务脚本编写
+                <a class="post-title-link" href="/环境搭建/2015/02/03/环境搭建-2015-02-03-Linux下ffmpeg配置/" itemprop="url">
+                  Linux下ffmpeg安装与开发配置
                 </a>
               
             
@@ -593,8 +979,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-04T00:00:00+08:00">
-                2015-02-04
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-03T00:00:00+08:00">
+                2015-02-03
               </time>
             
 
@@ -609,8 +995,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -628,8 +1014,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux学习/" itemprop="url" rel="index">
-                    <span itemprop="name">linux学习</span>
+                  <a href="/categories/环境搭建/" itemprop="url" rel="index">
+                    <span itemprop="name">环境搭建</span>
                   </a>
                 </span>
 
@@ -659,7 +1045,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  561
+                  250
                 </span>
               
 
@@ -675,7 +1061,7 @@
                   <span class="post-meta-item-text">阅读时长</span>
                 
                 <span title="阅读时长">
-                  3
+                  1
                 </span>
               
             </div>
@@ -697,7 +1083,22 @@
           
             <a id="more"></a>
 <hr>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment">### BEGIN INIT INFO</span></div><div class="line"><span class="comment"># Provides:          应用程序开发者</span></div><div class="line"><span class="comment"># RequiRED-Start:    $all</span></div><div class="line"><span class="comment"># RequiRED-Stop:     $all</span></div><div class="line"><span class="comment"># Default-Start:     2 3 4 5</span></div><div class="line"><span class="comment"># Default-Stop:      0 1 6</span></div><div class="line"><span class="comment"># Short-Description: 简短应用程序描述</span></div><div class="line"><span class="comment"># Description:       详细应用程序描述</span></div><div class="line"><span class="comment">### END INIT INFO</span></div><div class="line"></div><div class="line"><span class="comment"># 程序文件目录</span></div><div class="line">ROOT=<span class="string">"/work/code/cusflo-server-moon"</span></div><div class="line"><span class="comment"># 程序文件</span></div><div class="line">APP=<span class="string">"./dog/client_update_dog.py"</span></div><div class="line"><span class="comment"># 程序配置文件</span></div><div class="line">CONFIG=<span class="string">"./server_config.ini"</span></div><div class="line"><span class="comment"># 服务日志</span></div><div class="line">DEFAULT_LOG_FILE=<span class="string">'./daodaoliang.log'</span></div><div class="line"></div><div class="line"><span class="comment"># 样式定制</span></div><div class="line">RED=<span class="string">"\\e[31m"</span></div><div class="line">GREEN=<span class="string">"\\e[32m"</span></div><div class="line">YELLOW=<span class="string">"\\e[33m"</span></div><div class="line">BLACK=<span class="string">"\\e[0m"</span></div><div class="line">POS=<span class="string">"\\e[60G"</span></div><div class="line"></div><div class="line"><span class="function"><span class="title">ok_msg</span></span>() &#123;</div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"<span class="variable">$&#123;1&#125;</span><span class="variable">$&#123;POS&#125;</span><span class="variable">$&#123;BLACK&#125;</span>[<span class="variable">$&#123;GREEN&#125;</span>  OK  <span class="variable">$&#123;BLACK&#125;</span>]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">failed_msg</span></span>() &#123;</div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"<span class="variable">$&#123;1&#125;</span><span class="variable">$&#123;POS&#125;</span><span class="variable">$&#123;BLACK&#125;</span>[<span class="variable">$&#123;RED&#125;</span>FAILED<span class="variable">$&#123;BLACK&#125;</span>]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># load process info of app</span></div><div class="line"><span class="comment"># exist return 0</span></div><div class="line"><span class="comment"># no exist return 1</span></div><div class="line"><span class="function"><span class="title">load_process_info</span></span>() &#123;</div><div class="line">    <span class="comment"># get pid</span></div><div class="line">    app_pid=$(ps -ef|grep <span class="variable">$&#123;APP&#125;</span>|gawk <span class="string">'$0 !~/grep/ &#123;print $2&#125;'</span> |tr <span class="_">-s</span> <span class="string">'\n'</span> <span class="string">' '</span>)</div><div class="line">    <span class="comment"># check pid again</span></div><div class="line">    ps -p <span class="variable">$&#123;app_pid&#125;</span> &gt;/dev/null 2&gt;/dev/null</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$ret</span> ]]; <span class="keyword">then</span> error_msg=<span class="string">"process <span class="variable">$app_pid</span> does not exists"</span>; <span class="built_in">return</span> 1; <span class="keyword">fi</span></div><div class="line">    <span class="built_in">return</span> 0;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">start</span></span>() &#123;</div><div class="line">    <span class="comment"># if exists, exit.</span></div><div class="line">    load_process_info</div><div class="line">    <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> $? ]]; <span class="keyword">then</span> failed_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> started(pid <span class="variable">$&#123;app_pid&#125;</span>), should not start it again."</span>; <span class="built_in">return</span> 0; <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    <span class="comment"># not exists, start server</span></div><div class="line">    ok_msg <span class="string">"Starting <span class="variable">$&#123;APP&#125;</span>..."</span></div><div class="line">    </div><div class="line">    <span class="comment"># get log file</span></div><div class="line">    log_file=`<span class="built_in">cd</span> <span class="variable">$&#123;ROOT&#125;</span> &amp;&amp; cat <span class="variable">$&#123;CONFIG&#125;</span> |grep <span class="string">'^log_file'</span>| awk <span class="string">'&#123;print $2&#125;'</span>| awk -F <span class="string">';'</span> <span class="string">'&#123;print $1&#125;'</span>`</div><div class="line">    <span class="keyword">if</span> [[ -z <span class="variable">$log_file</span> ]]; <span class="keyword">then</span> log_file=<span class="variable">$&#123;DEFAULT_LOG_FILE&#125;</span>; <span class="keyword">fi</span></div><div class="line">    <span class="comment"># get abs path</span></div><div class="line">    log_dir=`dirname <span class="variable">$log_file</span>`</div><div class="line">    log_file=`(<span class="built_in">cd</span> <span class="variable">$&#123;ROOT&#125;</span> &amp;&amp; <span class="built_in">cd</span> <span class="variable">$log_dir</span> &amp;&amp; <span class="built_in">pwd</span>)`/`basename <span class="variable">$log_file</span>`</div><div class="line">    </div><div class="line">    <span class="comment"># <span class="doctag">TODO:</span> <span class="doctag">FIXME:</span> set limit by, for instance, "ulimit -HSn 10000"</span></div><div class="line">    <span class="keyword">if</span> [[ -z <span class="variable">$log_file</span> ]]; <span class="keyword">then</span></div><div class="line">        (<span class="built_in">cd</span> <span class="variable">$&#123;ROOT&#125;</span>;nohup python <span class="variable">$&#123;APP&#125;</span>  &gt;/dev/null 2&gt;&amp;1 &amp;)</div><div class="line">    <span class="keyword">else</span></div><div class="line">        (<span class="built_in">cd</span> <span class="variable">$&#123;ROOT&#125;</span>;nohup python <span class="variable">$&#123;APP&#125;</span> &gt;/dev.null &gt;&gt; <span class="variable">$log_file</span> 2&gt;&amp;1 &amp;)</div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    <span class="comment"># check again after start server</span></div><div class="line">    <span class="keyword">for</span> ((i = 0; i &lt; 5; i++)); <span class="keyword">do</span></div><div class="line">        <span class="comment"># sleep a little while, for app may start then crash.</span></div><div class="line">        sleep 0.1</div><div class="line">        load_process_info</div><div class="line">        ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$ret</span> ]]; <span class="keyword">then</span> </div><div class="line">            failed_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> start failed"</span>; </div><div class="line">            failed_msg <span class="string">"see <span class="variable">$log_file</span>"</span>; </div><div class="line">            <span class="built_in">return</span> <span class="variable">$ret</span>; </div><div class="line">        <span class="keyword">fi</span></div><div class="line">    <span class="keyword">done</span></div><div class="line">    </div><div class="line">    <span class="comment"># check whether started.</span></div><div class="line">    load_process_info</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> $? ]]; <span class="keyword">then</span> ok_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> started(pid <span class="variable">$&#123;app_pid&#125;</span>)"</span>; <span class="built_in">return</span> 0; <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    failed_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> not started"</span></div><div class="line">    <span class="built_in">return</span> <span class="variable">$ret</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">stop</span></span>() &#123;</div><div class="line">    <span class="comment"># not start, exit</span></div><div class="line">    load_process_info</div><div class="line">    <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> $? ]]; <span class="keyword">then</span> failed_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> not start."</span>; <span class="built_in">return</span> 0; <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    ok_msg <span class="string">"Stopping <span class="variable">$&#123;APP&#125;</span>(pid <span class="variable">$&#123;app_pid&#125;</span>)..."</span></div><div class="line">    </div><div class="line">    <span class="comment"># process exists, try to kill to stop normally</span></div><div class="line">    <span class="keyword">for</span>((i=0;i&lt;30;i++)); <span class="keyword">do</span></div><div class="line">        load_process_info</div><div class="line">        <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> $? ]]; <span class="keyword">then</span></div><div class="line">            <span class="built_in">kill</span> <span class="_">-s</span> SIGTERM <span class="variable">$&#123;app_pid&#125;</span> 2&gt;/dev/null</div><div class="line">            ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$ret</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"send signal SIGTERM failed ret=<span class="variable">$ret</span>"</span>; <span class="built_in">return</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">            sleep 0.1</div><div class="line">        <span class="keyword">else</span></div><div class="line">            ok_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> stopped by SIGTERM"</span></div><div class="line">            <span class="comment"># delete the pid file when stop success.</span></div><div class="line">            rm <span class="_">-f</span> <span class="variable">$&#123;pid_file&#125;</span></div><div class="line">            <span class="built_in">break</span>;</div><div class="line">        <span class="keyword">fi</span></div><div class="line">    <span class="keyword">done</span></div><div class="line">    </div><div class="line">    <span class="comment"># process exists, use kill -9 to force to exit</span></div><div class="line">    load_process_info</div><div class="line">    <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> $? ]]; <span class="keyword">then</span></div><div class="line">        <span class="built_in">kill</span> <span class="_">-s</span> SIGKILL <span class="variable">$&#123;app_pid&#125;</span> 2&gt;/dev/null</div><div class="line">        ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$ret</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"send signal SIGKILL failed ret=<span class="variable">$ret</span>"</span>; <span class="built_in">return</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">        ok_msg <span class="string">"<span class="variable">$&#123;APP&#125;</span> stopped by SIGKILL"</span></div><div class="line">    <span class="keyword">else</span></div><div class="line">        <span class="comment"># delete the pid file when stop success.</span></div><div class="line">        rm <span class="_">-f</span> <span class="variable">$&#123;pid_file&#125;</span></div><div class="line">    <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    sleep 0.1</div><div class="line">    <span class="built_in">return</span> 0</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># get the status of srs process</span></div><div class="line"><span class="comment"># @return 0 if srs is running; otherwise, 1 for stopped.</span></div><div class="line"><span class="function"><span class="title">status</span></span>() &#123;</div><div class="line">    load_process_info</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> <span class="variable">$ret</span> ]]; <span class="keyword">then</span> <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;APP&#125;</span>(pid <span class="variable">$&#123;app_pid&#125;</span>) is running."</span>; <span class="built_in">return</span> 0; <span class="keyword">fi</span></div><div class="line">    </div><div class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$&#123;APP&#125;</span> is stopped, <span class="variable">$error_msg</span>"</span></div><div class="line">    <span class="built_in">return</span> 1</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">menu</span></span>() &#123;</div><div class="line">    <span class="keyword">case</span> <span class="string">"<span class="variable">$1</span>"</span> <span class="keyword">in</span></div><div class="line">        start)</div><div class="line">            start</div><div class="line">            ;;</div><div class="line">        stop)</div><div class="line">            stop</div><div class="line">            ;;</div><div class="line">        restart)</div><div class="line">            stop</div><div class="line">            start</div><div class="line">            ;;</div><div class="line">        status)</div><div class="line">            status</div><div class="line">            ;;</div><div class="line">        *)</div><div class="line">            <span class="built_in">echo</span> <span class="string">"Usage: <span class="variable">$0</span> &#123;start|stop|status|restart&#125;"</span></div><div class="line">            <span class="built_in">return</span> 1</div><div class="line">            ;;</div><div class="line">    <span class="keyword">esac</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">menu <span class="variable">$1</span></div><div class="line"></div><div class="line">code=$?</div><div class="line"><span class="built_in">exit</span> <span class="variable">$&#123;code&#125;</span></div></pre></td></tr></table></figure>
+<h3 id="ffmpeg安装"><a href="#ffmpeg安装" class="headerlink" title="ffmpeg安装"></a><strong><em>ffmpeg安装</em></strong></h3><p><strong><em>删除已安装的文件，避免冲突</em></strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get remove ffmpeg x264</div><div class="line">sudo apt-get autoremove</div></pre></td></tr></table></figure>
+<p><strong><em>安装需要的支持</em></strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install make automake g++ bzip2 python unzip patch subversion ruby build-essential git-core checkinstall yasm texi2html libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libsdl1.2-dev libtheora-dev libvdpau-dev libvorbis-dev libvpx-dev libx11-dev libxfixes-dev libxvidcore-dev zlib1g-dev</div></pre></td></tr></table></figure>
+<p><strong><em>安装 x264 （自己选择是否安装）</em></strong></p>
+<p>x264 依赖于yasm，而且版本较高。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo git <span class="built_in">clone</span> git://git.videolan.org/x264.git</div><div class="line"><span class="built_in">cd</span> x264</div><div class="line">sudo ./configure --enable-shared --prefix=/usr/<span class="built_in">local</span></div><div class="line">sudo make</div><div class="line">sudo make install</div><div class="line"><span class="built_in">cd</span> ..</div></pre></td></tr></table></figure>
+<p><strong><em>安装FFMPEG</em></strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo wget http://ffmpeg.org/releases/ffmpeg-2.5.3.tar.bz2</div><div class="line">sudo tar xvjf ffmpeg-2.5.3.tar.bz2</div><div class="line"><span class="built_in">cd</span> ffmpeg-2.5.3</div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-libfaac --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libxvid --enable-shared --prefix=/usr/<span class="built_in">local</span></div></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo make</div><div class="line">sudo make install</div><div class="line"><span class="built_in">cd</span> ..</div></pre></td></tr></table></figure>
+<p>configure过程根据自己的情况开启某部分功能。</p>
+<p><strong><em>常见错误</em></strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg: error <span class="keyword">while</span> loading shared libraries: libavdevice.so.53: cannot open shared object file: No such file or directory</div></pre></td></tr></table></figure>
+<p>解决办法：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vi /etc/ld.so.conf</div><div class="line">加入：/usr/<span class="built_in">local</span>/lib</div><div class="line">执行ldconfig</div></pre></td></tr></table></figure>
 
           
         
@@ -802,8 +1203,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -978,450 +1379,6 @@
 <figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">video</span> <span class="attr">width</span>=<span class="string">"640"</span> <span class="attr">height</span>=<span class="string">"360"</span></span></div><div class="line">	<span class="attr">autoplay</span> <span class="attr">controls</span> <span class="attr">autobuffer</span> </div><div class="line">	<span class="attr">src</span>=<span class="string">"http://127.0.0.1/live/livestream.m3u8"</span></div><div class="line">	<span class="attr">type</span>=<span class="string">"application/vnd.apple.mpegurl"</span>&gt;</div><div class="line"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></div></pre></td></tr></table></figure>
 <p><strong><em>10.2 IOS</em></strong></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://127.0.0.1/live/livestream.m3u8</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-	<div>
-      
-	</div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-	<div>
-	  
-	</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/环境搭建/2015/02/03/环境搭建-2015-02-03-Linux下ffmpeg配置/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="daodaoliang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刀刀亮的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/环境搭建/2015/02/03/环境搭建-2015-02-03-Linux下ffmpeg配置/" itemprop="url">
-                  Linux下ffmpeg安装与开发配置
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-03T00:00:00+08:00">
-                2015-02-03
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/环境搭建/" itemprop="url" rel="index">
-                    <span itemprop="name">环境搭建</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  250
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<hr>
-<h3 id="ffmpeg安装"><a href="#ffmpeg安装" class="headerlink" title="ffmpeg安装"></a><strong><em>ffmpeg安装</em></strong></h3><p><strong><em>删除已安装的文件，避免冲突</em></strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">sudo apt-get remove ffmpeg x264</div><div class="line">sudo apt-get autoremove</div></pre></td></tr></table></figure>
-<p><strong><em>安装需要的支持</em></strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo apt-get install make automake g++ bzip2 python unzip patch subversion ruby build-essential git-core checkinstall yasm texi2html libfaac-dev libmp3lame-dev libopencore-amrnb-dev libopencore-amrwb-dev libsdl1.2-dev libtheora-dev libvdpau-dev libvorbis-dev libvpx-dev libx11-dev libxfixes-dev libxvidcore-dev zlib1g-dev</div></pre></td></tr></table></figure>
-<p><strong><em>安装 x264 （自己选择是否安装）</em></strong></p>
-<p>x264 依赖于yasm，而且版本较高。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo git <span class="built_in">clone</span> git://git.videolan.org/x264.git</div><div class="line"><span class="built_in">cd</span> x264</div><div class="line">sudo ./configure --enable-shared --prefix=/usr/<span class="built_in">local</span></div><div class="line">sudo make</div><div class="line">sudo make install</div><div class="line"><span class="built_in">cd</span> ..</div></pre></td></tr></table></figure>
-<p><strong><em>安装FFMPEG</em></strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo wget http://ffmpeg.org/releases/ffmpeg-2.5.3.tar.bz2</div><div class="line">sudo tar xvjf ffmpeg-2.5.3.tar.bz2</div><div class="line"><span class="built_in">cd</span> ffmpeg-2.5.3</div></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --enable-gpl --enable-version3 --enable-nonfree --enable-postproc --enable-libfaac --enable-libmp3lame --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libtheora --enable-libvorbis --enable-libvpx --enable-libx264 --enable-libxvid --enable-shared --prefix=/usr/<span class="built_in">local</span></div></pre></td></tr></table></figure>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo make</div><div class="line">sudo make install</div><div class="line"><span class="built_in">cd</span> ..</div></pre></td></tr></table></figure>
-<p>configure过程根据自己的情况开启某部分功能。</p>
-<p><strong><em>常见错误</em></strong></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ffmpeg: error <span class="keyword">while</span> loading shared libraries: libavdevice.so.53: cannot open shared object file: No such file or directory</div></pre></td></tr></table></figure>
-<p>解决办法：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">vi /etc/ld.so.conf</div><div class="line">加入：/usr/<span class="built_in">local</span>/lib</div><div class="line">执行ldconfig</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-	<div>
-      
-	</div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-	<div>
-	  
-	</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/计算机网络/2015/02/02/计算机网络-NAT专题-2015-02-01-p2p的NAT穿越方案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="daodaoliang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刀刀亮的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/计算机网络/2015/02/02/计算机网络-NAT专题-2015-02-01-p2p的NAT穿越方案/" itemprop="url">
-                  P2P的NAT穿越方案
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-02T00:00:00+08:00">
-                2015-02-02
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
-                    <span itemprop="name">计算机网络</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  4,509
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  16
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<hr>
-<h3 id="NAT专题之P2P的NAT穿越方案"><a href="#NAT专题之P2P的NAT穿越方案" class="headerlink" title="NAT专题之P2P的NAT穿越方案"></a>NAT专题之P2P的NAT穿越方案</h3><h4 id="1-P2P简介"><a href="#1-P2P简介" class="headerlink" title="1.P2P简介"></a><strong><em>1.P2P简介</em></strong></h4><p>&gt;<br>P2P即点对点通信，或称为对等联网，与传统的服务器客户端模式有着明显的区别，传统的服务器客户端模型如图2所示。P2P这一术语在不同的上下文环境里可能有不同的内涵，它可以指一种通信模式、一种逻辑网络模型、一种技术、甚至一种理念。在P2P网络中如图1所示，所有通信节点的地位都是对等的，每个节点都扮演着客户机和服务器双重角色，节点之间通过直接通信实现文件信息、处理器运算能力、存储空间等资源的共享。P2P网络具有分散性、可扩展性、健壮性等特点，这使得P2P技术在信息共享、实时通信、协同工作、分布式计算、网络存储等领域都有广阔的应用;</p>
-<ul>
-<li><img src="/res/img/blog/计算机网络/2015-02-02-001.jpg" alt="P2P结构模型"></li>
-</ul>
-<p><strong><em>图1 P2P结构模型</em></strong></p>
-<ul>
-<li><img src="/res/img/blog/计算机网络/2015-02-02-002.jpg" alt="CS模式"></li>
-</ul>
-<p><strong><em>图2 CS模式</em></strong></p>
-<h4 id="2-NAT简介"><a href="#2-NAT简介" class="headerlink" title="2.NAT简介"></a><strong><em>2.NAT简介</em></strong></h4><p>目前,IPV4地址资源的紧缺使得NAT技术获得了广泛的应用，NAT技术是一种把内部网络(简称内网)私有IP地址转换为外部网络(简称为外网)公共IP地址的技术，它使得一定范围内的多台主机志李永一个公共IP地址链接到外网，可以在很大成都上缓解公网IP地址紧缺的问题。</p>
-<h4 id="3-NAT对P2P通信的影响"><a href="#3-NAT对P2P通信的影响" class="headerlink" title="3.NAT对P2P通信的影响"></a><strong><em>3.NAT对P2P通信的影响</em></strong></h4><p>NAT技术虽然在一定成都上解决了IPV4地址短缺的问题，在构建防火墙，保证网络安全方面都发挥了一定的作用，却破坏了端到段的网络通信，NAT阻碍朱姐进行p2p通信的主要原因时NAT不允许外网主机主动访问内网诸暨，因为NAT设备上没有先关转发表项，要在NAT网络环境中进行有效的p2p通信，就必须寻找相应的解决方案，本文就着重介绍几种常见的解决方案。</p>
-<h4 id="4-p2p穿越NAT的几种方案"><a href="#4-p2p穿越NAT的几种方案" class="headerlink" title="4.p2p穿越NAT的几种方案"></a><strong><em>4.p2p穿越NAT的几种方案</em></strong></h4><h5 id="4-1-反向链接技术"><a href="#4-1-反向链接技术" class="headerlink" title="4.1 反向链接技术"></a><strong><em>4.1 反向链接技术</em></strong></h5><p>　　当通信双方中一方位于NAT之后时，他们可以利用反向链接技术来进行p2p通信，图中的clientA(拥有内网地址10.0.0.1)位于NAT之后，它通过TCP端口1234连接到服务器(拥有外网IP地址)的TCP端口1235上,NAT设备(拥有外网地址:155.99.25.11)味这个链接重新分配了TCP端口62000，clientB(拥有外网IP地址138.76.29.7)叶通过TCP端口1234连接到服务器1235上，clientA和clientB从服务器除货值的对网的外网地址二元组{IP地址:端口号}分别为{138.76.29.7:1234}和{155.99.25.11:62000}.他们在各自的本地端口上进行侦听。<br>　　由于clientB拥有外网IP地址，所以clientA可以直接通过TCP发起与clientB的链接，但如果clientB尝试通过TCP链接到clientA进行P2P通信，则会失败，原因是clientA位于NAT设备后，虽然clientB发出的TCP SYN请求能够到达NAT设备的端口62000，但NAT设备会拒绝这个链接请求，要想与clientA通信，clientB要通过服务器给clientA转发一个链接请求，反过来请求clientA连接到clientB(即进行反向链接),从而建立起他们之间的TCP链接。</p>
-<ul>
-<li><img src="/res/img/blog/计算机网络/2015-02-02-003.jpg" alt="反向链接示意图"></li>
-</ul>
-<h4 id="4-2-UDP打洞技术"><a href="#4-2-UDP打洞技术" class="headerlink" title="4.2 UDP打洞技术"></a><strong><em>4.2 UDP打洞技术</em></strong></h4><p>　　如果两个客户端窦唯与NAT设备后面，想要进行P2P通信，那又该如何解决呢?UDP打洞技术就是为解决这个问题应运而生的，它能够通过中间服务器实现P2P客户端互联，该技术在在线游戏协议中已经的到了应用</p>
-<h5 id="4-2-1集中服务器"><a href="#4-2-1集中服务器" class="headerlink" title="4.2.1集中服务器"></a><strong><em>4.2.1集中服务器</em></strong></h5><p>　　打洞技术嘉定客户端A和客户端B都可以与公网内的已知集中服务器建立UDP链接，一个客户端在集中服务器上登陆的时候，服务器记录下改客户端的两对地址二元组信息{IP地址:UDP端口}，一对是该客户端与集中服务器进行通信的自身的地址和端口号，另外一对是集中服务器记录下的由服务器观察到的改客户端实际与自己所使用的地址和端口号，我们可以把前一对地址二元组看作是客户端的内网地址和端口号，把后一对地址二元组看作是客户端的内网地址和端口号经过NAT转换后的外网地址和端口号，集中服务器可以从客户端的登录消息中的到客户端内网相关信息，还可以通过消息的IP头和UDP头得到改客户端的外网相关信息，如果该客户端不是位于NAT设备后面，那么采用上述方法得到的两对地址二元组信息是完全相同的。</p>
-<h5 id="4-2-2建立p2p-session"><a href="#4-2-2建立p2p-session" class="headerlink" title="4.2.2建立p2p session"></a><strong><em>4.2.2建立p2p session</em></strong></h5><p>假定客户端A要发起客户端B的直接链接，具体的打洞过程如下:</p>
-<ul>
-<li>客户端A最初不知道如何向客户端B发起链接，于是客户端A向集中服务器发送消息，请求集中服务器帮助建立与客户端B的UDP链接。</li>
-<li>集中服务器将含有客户端B的外网和内网地址二元组发送给客户端A，同时，集中服务器将包含将包含有客户端A的外网和内网地址二元组信息发送给客户端B，这样以来,客户端A与客户端B就都知道对方外网和内网的地址二元组信息了。</li>
-<li>当客户端A收到有集中服务器发来的包含客户端B的外网和内网的地址二元组信息后，客户端A开始向客户端B的地址二元组发送UDP数据包，并且客户端A会自动锁定第一个给出相应的客户端B的地址二元组，同理，当客户端B收到由集中服务器发来的客户端A的地址二元组信息后，也会开始向客户端A的外网和内网的地址二元组发送UDP数据包，并且　自动锁定第一个得到的客户端A回应的二元组，由于客户端A与客户端B互相向对方发送UDP数据包的操作是异步的，所以客户端A和客户端B发送数据包的时间先后没有时序要求。</li>
-</ul>
-<p>下面来看下这三者之间时如何进行UDP打洞的,在这我们分三种具体情景来讨论：</p>
-<ul>
-<li>两个客户端都唯一同一个NAT设备后面，即位于同一个内网中；</li>
-<li>两个客户端分别位于不同的NAT设备后面，分属于不容的内网;</li>
-<li>两个客户端位于两层NAT设备之后,通常最上层的NAT是由网络提供商提供的，第二层NAT时家用的NAT路由器之类的设备提供的；</li>
-</ul>
-<h5 id="4-2-3-p2p的两个客户端位于同一个NAT设备后面"><a href="#4-2-3-p2p的两个客户端位于同一个NAT设备后面" class="headerlink" title="4.2.3 p2p的两个客户端位于同一个NAT设备后面"></a><strong><em>4.2.3 p2p的两个客户端位于同一个NAT设备后面</em></strong></h5><p>首先假设两个客户端位于同一个NAT后面，并且位于内网，如图所示，客户端A与集中服务器建立UDP链接，经过NAT转换后，A的公网端口被映射为62000，客户端B同样与集中服务器建立了UDP链接,公网端口映射为62005;</p>
-<p><img src="/res/img/blog/计算机网络/2015-02-02-004.png" alt="位于同一个NAT设备后的UDP打洞过程"></p>
-<p>　　假设客户端A向通过集中服务器，发起对客户端B的链接，客户端A向集中服务器发出消息请求与客户端B进行链接，集中服务器将客户端B的外网地址二元组以及内网地址二元组发送给客户端A,同时把客户端A的相关二元组信息发给B，。客户端A和客户端B发往对方公网地址二元组兵一定会被对方收到，这取决于当前的NAT设备是否支持不同端口之间的UDP数据包能够到达，即<code>Harrpin</code>转换特性，无论如何客户端Ａ发往客户端B的内网地址二元组的UDP数据包一定可以到达，内网数据包不需要路由，且速度更快，客户端A与客户端B推荐采用内网地址二元组信息进行常规p2p通信。<br>　　假定NAT设备支持<code>Hairpin</code>转换，具体的<code>Hairpin</code>转换详见其他文章，应用程序也应该忽略与内网地址二元组的链接，如果客户端A和客户端B采用外网的地址二元组作为p2p通信的链接，这势必会造成数据包无谓的经过NAT设备，这是一种对资源的浪费，就目前的网络情况而言，应用程序在”打洞”的时候，最好还是把外网和内网地址二元组都尝试一下，如果都能成功，有限以内网地址进行链接。</p>
-<h5 id="4-2-4-P2P客户端位于不同NAT设备后面"><a href="#4-2-4-P2P客户端位于不同NAT设备后面" class="headerlink" title="4.2.4 P2P客户端位于不同NAT设备后面"></a><strong><em>4.2.4 P2P客户端位于不同NAT设备后面</em></strong></h5><p>　　假定客户端A与客户端B在不容的NAT设备后面，分属于不同的内网，如图所示，客户端A与客户端B都经由个子的NAT设备与集中服务器建立了UDP链接，客户端A与客户端B的本地端口好均为4321，集中服务器的公网端口号为1234，在向外的回话中，客户端A的外网IP被映射为159.99.25.11，外网端口为62000，客户端B的外网IP被映射为138.76.29.7，外网端口为31000.</p>
-<p>　　如下图所示：</p>
-<ul>
-<li>客户端A -&gt; 本地IP:10.0.0.1,本地端口4321,　外网IP:155.99.25.11,外网端口62000</li>
-<li>客户端B -&gt; 本地IP:10.1.1.3,本地端口4321,  外网IP:138.76.29.7, 外网端口31000</li>
-</ul>
-<p><img src="/res/img/blog/计算机网络/2015-02-02-005.png" alt="位于不同的NAT设备后的UDP打洞过程"></p>
-<p>　　在客户端A或者B向集中服务器发送登陆消息时，服务器会记录下客户端的内外网的二元组信息，后期无论是A与B二者中的任何乙方向服务器发送P2P请求，服务器都会将记录下来的上述信息发送给A或B.<br>　　A,B分属于不同的内网，他们彼此的内网地址在外网中时没有路由的，所以发往各自内网地址的UDP数据包回发送到错误的主机或者根本不存在的主机上，现在假定A的第一个消息将发往B的外网地址，如图所示，该消息途径A的NAT设备，并在该设备上生成一个回话表项，该会话表项源地址二元组信息时{10.0.0.1:4321}，该地址二元组信息和客户端A与服务器建立连接的时候NAT生成的源地址二元组信息一样，但他的目的地址不同，如果A的NAT设备给出的响应是OK的，那么A的NAT设备将保留A的内网地址二元组信息，并且所有来自A的源地址二元组信息为{10.0.0.1:4321}的数据包都沿用A与集中服务器事先建立起来的回话，外网地址二元组信息均为{155.99.25.11:62000}.<br>　　A向B的外网地址发送消息的过程就是”打洞”的过程，从A的内网的角度来看应为从{10.0.0.1:4321}发往{138.76.29.7:31000},从A在其NAT设备上建立的回话来看，是从{155.99.25.11:62000}发到{138.76.29.7:31000}.<br>　　如果A发送给B的外网地址二元组的信息包在B向A发送消息包之前到达B的NAT设备，B的NAT设备会认为A发过来的消息是未授权的外网消息，会丢弃该数据包.B发往A的消息与上述过程一样，会在B的NAT设备上建立一个{10.1.1.3:4321,155.99.25.11:62000}的会话(通常也会沿用B与集中服务器链接时建立的会话，只是该会话现在不仅接受服务器发给B的消息，还接受从A的NAT设备155.99.25.11:62000发来的消息),一旦A与B都想对方的NAT设备在外网上的地址二元组发送了数据包，就打开了A与Ｂ之间的洞，A与B向对方的外网地址发送数据，等效为向对方的客户端直接发送UDP数据包了，一旦应用程序确认已经可以通过往对方的外网地址发送数据包的方式让数据到达NAT后面的目的应用程序，程序会自动停止继续发送用于打洞的数据包，转而开始真正的p2p数据传输；</p>
-<h5 id="4-2-5-P2P客户端位于多层NAT设备后面"><a href="#4-2-5-P2P客户端位于多层NAT设备后面" class="headerlink" title="4.2.5 P2P客户端位于多层NAT设备后面"></a><strong><em>4.2.5 P2P客户端位于多层NAT设备后面</em></strong></h5><p>　　有的网络拓扑结构包含了多个NAT设备，如果没有掌握该拓扑结构的详细信息，两个客户端之间是无法建立”最优化”的P2P路由的，现在我们来讨论最后一种情况。如图所示，假定NAT　C是由ISP提供的NAT设备，NAT C提供多个用户节点映射到有限的几个公网IP的服务，NAT A和NAT B作为NAT C的内网节点将把用户的家庭网络或内部网络接入NAT C的内网，然后用户的内部网络就可以经由NAT C访问公网了，从这种拓扑结构来看，只有服务器与NAT　C时真正拥有公网可路由IP地址的设备，而NAT A和NAT B所使用的公网IP地址，实际上石油ISP服务提供商设定的(相对于NAT C而言)内网地址(本文的后续部分把这个由ISP提供的内网地址相对于NAT C称之为”伪”公网地址)，同理隶属于NAT A与NAT B的客户端,相对于NAT A,NAT B而言，他们处于NAT A,NAT B的内网，以此类推，客户端可以放到多层NAT设备后面，客户端A和客户端B发去对于服务器S的链接的时候，就会以此在NAT A和NAT B上建立向外的Session，而NAT A，NAT B要联入公网的时候，会在NAT C上在建立想歪的Session;</p>
-<p><img src="/res/img/blog/计算机网络/2015-02-02-006.png" alt="多层NAT下的打洞过程"></p>
-<p>　　现在假定客户端A和B希望通过UDP”打洞”完成两个客户端的P2P直连，最优化的路由策略时客户端A向客户端B的伪公网IP上发送数据包，即ISP服务器提供商指定的内网IP,NAT B的伪公网地址二元组{10.0.1.2:55000},由于从服务器的角度只能观察到真正的公网地址，也就是 NAT A,NAT B在NAT C建立session的真正的公网地址{155.99.25.11:62000}以及{155.99.25.11:62005},非常不幸的时客户端A与客户端B是无法通过服务器知道这些伪公网地址，而且即使客户端A和B通过某种手段得到NAT A和NAT B的伪公网地址，我们仍然不建议采用上述的最优化的打洞方式，这是因为这些地址是由ISP服务器提供商提供的或许会存在与客户端本身所在的内网地址重复的可能性(例如：NAT A的内网的IP地址域恰好与NAT A 在NAT C的伪公网IP地址域重复，这样就导致打洞数据包无法发出的问题)，因此客户端别无选择，只能使用由公网服务器观察到的A,B二元组进行打洞操作，用于打洞的数据包将由NAT　C进行转发。<br>　　当客户端A向客户端B的公网地址二元组{155.99.25.11:62005}发送UDP数据包的时候，NAT A首先把数据包的源地址二元组由A的内网地址二元组{10.0.0.1:4321}转换为伪公网地址二元组{10.0.1.1:45000},现在数据包到了NAT C,NAT C应该可以是别处来该数据包是要发往自身转换过得公网地址二元组，如果NAT C可以给出”合理”相应的话，NAT C将把该数据包的源地址二元组改为{155.99.25.11:62000}，目的地址二元组改为{10.0.1.2:55000},即NAT B的”伪公网”地址二元组，NAT B最后会将数据包发往客户端B,同样，由B发往A的数据包也会经过类似的过程，目前也有很多NAT设备不支持类似这样的<code>Hairpin</code>转换，但是意境有越来越多的NAT设备商开始加入对该转换的支持中来。</p>
-<h5 id="4-2-6-UDP在空闲状态下的超时问题"><a href="#4-2-6-UDP在空闲状态下的超时问题" class="headerlink" title="4.2.6 UDP在空闲状态下的超时问题"></a><strong><em>4.2.6 UDP在空闲状态下的超时问题</em></strong></h5><p>由于UDP转换协议提供的“洞”不是绝对可靠的，多数NAT设备内部都有一个UDP转换的空闲状态计时器，如果在一段时间内没有UDP数据通信，NAT设备会关掉由“打洞”操作打出来的“洞”，作为应用程序来讲如果想要做到与设备无关，就最好在穿越NAT以后设定一个穿越的有效期。<br>很遗憾目前没有标准有效期，这个有效期与NAT设备内部的配置有关，某些设备上最短的只有20秒左右。在这个有效期内，即使没有P2P数据包需要传输，应用程序为了维持该“洞”可以正常工作，也必须向对方发送“打洞”心跳包。这个心跳包是需要双方应用程序都发送的，只有一方发送不会维持另一方的Session正常工作。除了频繁发送“打洞”心跳包以外，还有一个方法就是在当前的“洞”超时之前，P2P客户端双方重新“打洞”，丢弃原有的“洞”，这也不失为一个有效的方法。</p>
 
           
         
@@ -2267,28 +2224,6 @@
 
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
 
   
 

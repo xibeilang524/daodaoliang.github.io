@@ -354,6 +354,443 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/PHP学习/2015/01/15/PHP学习-2015-01-15-PHP运算逻辑符号说明/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/PHP学习/2015/01/15/PHP学习-2015-01-15-PHP运算逻辑符号说明/" itemprop="url">
+                  php运算符说明
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-15T00:00:00+08:00">
+                2015-01-15
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/PHP学习/" itemprop="url" rel="index">
+                    <span itemprop="name">PHP学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  491
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="PHP-算数运算符"><a href="#PHP-算数运算符" class="headerlink" title="PHP 算数运算符"></a>PHP 算数运算符</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">+</td>
+<td style="text-align:center">加法</td>
+<td style="text-align:center">$x + $y</td>
+<td style="text-align:center">$x 与 $y 求和</td>
+</tr>
+<tr>
+<td style="text-align:center">-</td>
+<td style="text-align:center">减法</td>
+<td style="text-align:center">$x - $y</td>
+<td style="text-align:center">$x 与 $y 的差值</td>
+</tr>
+<tr>
+<td style="text-align:center">*</td>
+<td style="text-align:center">乘法</td>
+<td style="text-align:center">$x * $y</td>
+<td style="text-align:center">$x 与 $y 的乘积</td>
+</tr>
+<tr>
+<td style="text-align:center">/</td>
+<td style="text-align:center">除法</td>
+<td style="text-align:center">$x / $y</td>
+<td style="text-align:center">$x 与 $y 的商数</td>
+</tr>
+<tr>
+<td style="text-align:center">%</td>
+<td style="text-align:center">模数</td>
+<td style="text-align:center">$X % $y</td>
+<td style="text-align:center">$x 与 $y 的模数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="PHP-赋值运算符"><a href="#PHP-赋值运算符" class="headerlink" title="PHP 赋值运算符"></a>PHP 赋值运算符</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">赋值</th>
+<th style="text-align:center">等同于</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">x = y</td>
+<td style="text-align:center">x = y</td>
+<td style="text-align:center">右侧表达式为左侧运算数设置数</td>
+</tr>
+<tr>
+<td style="text-align:center">x += y</td>
+<td style="text-align:center">x = x + y</td>
+<td style="text-align:center">加</td>
+</tr>
+<tr>
+<td style="text-align:center">x -= y</td>
+<td style="text-align:center">x = x - y</td>
+<td style="text-align:center">减</td>
+</tr>
+<tr>
+<td style="text-align:center">x *= y</td>
+<td style="text-align:center">x = x * y</td>
+<td style="text-align:center">乘</td>
+</tr>
+<tr>
+<td style="text-align:center">x /= y</td>
+<td style="text-align:center">x = x / y</td>
+<td style="text-align:center">除</td>
+</tr>
+<tr>
+<td style="text-align:center">x %= y</td>
+<td style="text-align:center">x = x % y</td>
+<td style="text-align:center">模数</td>
+</tr>
+</tbody>
+</table>
+<h2 id="PHP-字符串运算符"><a href="#PHP-字符串运算符" class="headerlink" title="PHP 字符串运算符"></a>PHP 字符串运算符</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">.</td>
+<td style="text-align:center">串接</td>
+<td style="text-align:center">$txt1 = “hello”; $txt2 = $txt1.”world”;</td>
+<td style="text-align:center">现在 $txt2 包含 “helloworld”</td>
+</tr>
+<tr>
+<td style="text-align:center">.=</td>
+<td style="text-align:center">串接赋值</td>
+<td style="text-align:center">$txt1 = “hello”; $txt1 .= “world”;</td>
+<td style="text-align:center">现在 $txt1 包含 “helloworld”</td>
+</tr>
+</tbody>
+</table>
+<h2 id="PHP-递增-递减运算符"><a href="#PHP-递增-递减运算符" class="headerlink" title="PHP 递增/递减运算符"></a>PHP 递增/递减运算符</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">++$x</td>
+<td style="text-align:center">前递增</td>
+<td style="text-align:center">$x 加一递增,然后返回$x</td>
+</tr>
+<tr>
+<td style="text-align:center">$x++</td>
+<td style="text-align:center">后递增</td>
+<td style="text-align:center">返回$x 然后$x 加一递增</td>
+</tr>
+<tr>
+<td style="text-align:center">–$x</td>
+<td style="text-align:center">前递减</td>
+<td style="text-align:center">$x 减一递减 然后返回$x</td>
+</tr>
+<tr>
+<td style="text-align:center">$x–</td>
+<td style="text-align:center">后递减</td>
+<td style="text-align:center">返回$x 然后$x 减一递减</td>
+</tr>
+</tbody>
+</table>
+<h2 id="PHP比较运算符"><a href="#PHP比较运算符" class="headerlink" title="PHP比较运算符"></a>PHP比较运算符</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">==</td>
+<td style="text-align:center">等于</td>
+<td style="text-align:center">$x == $y</td>
+<td style="text-align:center">如果 $x 等于 $y 则返回 true</td>
+</tr>
+<tr>
+<td style="text-align:center">===</td>
+<td style="text-align:center">全等(完全相同)</td>
+<td style="text-align:center">$x === $y</td>
+<td style="text-align:center">如果 $x 等于 $y 且他们类型相同则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">!=</td>
+<td style="text-align:center">不等于</td>
+<td style="text-align:center">$x != $y</td>
+<td style="text-align:center">如果 $x 不等于 $y 则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;&gt;</td>
+<td style="text-align:center">不等于</td>
+<td style="text-align:center">$x != $y</td>
+<td style="text-align:center">如果 $x 不等于 $y 则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">!==</td>
+<td style="text-align:center">不全等(完全不同)</td>
+<td style="text-align:center">$x !== $y</td>
+<td style="text-align:center">如果$x 不等于 $y 则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;</td>
+<td style="text-align:center">大于</td>
+<td style="text-align:center">$x &gt; $y</td>
+<td style="text-align:center">如果 $x 大于 $y 则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;</td>
+<td style="text-align:center">小于</td>
+<td style="text-align:center">$x &lt; $y</td>
+<td style="text-align:center">如果 $x 小于 $y 则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">&gt;=</td>
+<td style="text-align:center">大于等于</td>
+<td style="text-align:center">$x &gt;= $y</td>
+<td style="text-align:center">如果 $x 大于等于 $y 则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">&lt;=</td>
+<td style="text-align:center">小于或等</td>
+<td style="text-align:center">$x &lt;= $y</td>
+<td style="text-align:center">如果 $x 小于等于 $y 则返回true</td>
+</tr>
+</tbody>
+</table>
+<h2 id="PHP-逻辑运算符"><a href="#PHP-逻辑运算符" class="headerlink" title="PHP 逻辑运算符"></a>PHP 逻辑运算符</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">运算符</th>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">例子</th>
+<th style="text-align:center">结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">and</td>
+<td style="text-align:center">与</td>
+<td style="text-align:center">$x and $y</td>
+<td style="text-align:center">如果 $x 和 $y 都为true 则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">or</td>
+<td style="text-align:center">或</td>
+<td style="text-align:center">$x or $y</td>
+<td style="text-align:center">如果 $x 或者 $y 有一个为true 则返回 true</td>
+</tr>
+<tr>
+<td style="text-align:center">xor</td>
+<td style="text-align:center">异或</td>
+<td style="text-align:center">$x xor $y</td>
+<td style="text-align:center">如果$x和$y仅有一个为true则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">&amp;&amp;</td>
+<td style="text-align:center">与</td>
+<td style="text-align:center">$x &amp;&amp; $y</td>
+<td style="text-align:center">如果$x 和 $y 都为true 则返回true</td>
+</tr>
+<tr>
+<td style="text-align:center">!</td>
+<td style="text-align:center">非</td>
+<td style="text-align:center">!$x</td>
+<td style="text-align:center">如果$x不为true则返回true</td>
+</tr>
+</tbody>
+</table>
+
+          
+        
+      
+    </div>
+
+	<div>
+      
+	</div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+	<div>
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/Python学习/2015/01/14/Python学习-2015-01-14-python的Twisted框架学习之路之安装/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -409,8 +846,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -606,8 +1043,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -973,8 +1410,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -1325,8 +1762,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -1438,214 +1875,6 @@
 <p>例子2:</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> logging</div><div class="line"><span class="keyword">import</span> logging.config</div><div class="line"></div><div class="line">logging.config.fileConfig(<span class="string">"logger.conf"</span>)</div><div class="line">logger = logging.getLogger(<span class="string">"example02"</span>)</div><div class="line"></div><div class="line">logger.debug(<span class="string">'This is debug message'</span>)</div><div class="line">logger.info(<span class="string">'This is info message'</span>)</div><div class="line">logger.warning(<span class="string">'This is warning message'</span>)</div></pre></td></tr></table></figure>
 <h2 id="6-logging是线程安全的"><a href="#6-logging是线程安全的" class="headerlink" title="6.logging是线程安全的"></a><strong>6.logging是线程安全的</strong></h2>
-          
-        
-      
-    </div>
-
-	<div>
-      
-	</div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-	<div>
-	  
-	</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2014/12/21/linux学习-2014-12-22-根据进程名杀死进程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="daodaoliang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刀刀亮的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/linux学习/2014/12/21/linux学习-2014-12-22-根据进程名杀死进程/" itemprop="url">
-                  linux下进程的结束
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-12-21T00:00:00+08:00">
-                2014-12-21
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux学习/" itemprop="url" rel="index">
-                    <span itemprop="name">linux学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  311
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<h3 id="根据进程名杀死进程"><a href="#根据进程名杀死进程" class="headerlink" title="根据进程名杀死进程"></a>根据进程名杀死进程</h3><ul>
-<li><strong>方法一</strong></li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">kill</span> -9 $(ps -ef|grep 进程名关键字|gawk <span class="string">'$0 !~/grep/ &#123;print $2&#125;'</span> |tr <span class="_">-s</span> <span class="string">'\n'</span> <span class="string">' '</span>)</div></pre></td></tr></table></figure>
-<p>这个是利用管道和替换将 进程名对应的进程号提出来作为kill的参数。</p>
-<ul>
-<li><strong>方法二</strong></li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">killall 进程关键字</div></pre></td></tr></table></figure>
-<h3 id="停止和重启"><a href="#停止和重启" class="headerlink" title="停止和重启"></a>停止和重启</h3><p>有时候只想简单的停止和重启进程。如下：</p>
-<p>获取进程的PID或者PPID</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(ps -ef|grep 进程名关键字|gawk <span class="string">'$0 !~/grep/ &#123;print $2&#125;'</span> |tr <span class="_">-s</span> <span class="string">'\n'</span> <span class="string">' '</span>)</div></pre></td></tr></table></figure>
-<p>然后</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">kill</span> -HUP 进程PID</div></pre></td></tr></table></figure>
-<h3 id="绝杀"><a href="#绝杀" class="headerlink" title="绝杀"></a>绝杀</h3><p>这个强大和危险的命令迫使进程在运行时突然终止，进程在结束后不能自我清理。危害是导致系统资源无法正常释放，一般不推荐使用，除非其他办法都无效。</p>
-<p>当使用此命令时，一定要通过ps -ef确认没有剩下任何僵尸进程。只能通过终止父进程来消除僵尸进程。如果僵尸进程被init收养，问题就比较严重了。杀死init进程意味着关闭系统。</p>
-<p>如果系统中有僵尸进程，并且其父进程是init，而且僵尸进程占用了大量的系统资源，那么就需要在某个时候重</p>
-
           
         
       
@@ -2490,28 +2719,6 @@
 
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
 
   
 

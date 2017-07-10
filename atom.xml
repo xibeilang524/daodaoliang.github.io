@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://daodaoliang.com/"/>
-  <updated>2017-05-05T03:34:50.885Z</updated>
+  <updated>2017-05-11T10:33:32.512Z</updated>
   <id>http://daodaoliang.com/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://daodaoliang.com/%E5%BF%83%E4%B8%96%E7%95%8C/2099/04/14/%E6%96%B0%E4%B8%96%E7%95%8C-2015-04-14-%E6%A2%A6%E6%83%B3%E6%B8%85%E5%8D%95/"/>
     <id>http://daodaoliang.com/心世界/2099/04/14/新世界-2015-04-14-梦想清单/</id>
     <published>2099-04-13T16:00:00.000Z</published>
-    <updated>2017-05-05T03:34:50.885Z</updated>
+    <updated>2017-05-11T10:33:32.512Z</updated>
     
     <content type="html"><![CDATA[<blockquote class="blockquote-center"><p><img src="https://source.unsplash.com/random/800x300"></p>
 </blockquote>
@@ -60,11 +60,104 @@
   </entry>
   
   <entry>
+    <title>mysql用户账号操作</title>
+    <link href="http://daodaoliang.com/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/2017/07/10/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0-mysql%E4%B8%93%E9%A2%98-2014-12-21-Mysql%E7%94%A8%E6%88%B7%E8%B4%A6%E5%8F%B7%E6%93%8D%E4%BD%9C/"/>
+    <id>http://daodaoliang.com/数据库学习/2017/07/10/数据库学习-mysql专题-2014-12-21-Mysql用户账号操作/</id>
+    <published>2017-07-09T16:00:00.000Z</published>
+    <updated>2017-07-10T06:54:31.731Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>作者: daodaoliang
+日期: 2017-07-10
+版本: 0.0.3
+邮箱: daodaoliang@yeah.net
+</code></pre><a id="more"></a>
+<h3 id="0x01-新建用户"><a href="#0x01-新建用户" class="headerlink" title="0x01 新建用户"></a>0x01 <strong>新建用户</strong></h3><ul>
+<li>登陆mysql</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p</div></pre></td></tr></table></figure>
+<ul>
+<li>创建用户(5.7系列以前)</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">insert into mysql.user(Host,User,Password) values(<span class="string">"localhost"</span>,<span class="string">"用户名"</span>,password(<span class="string">"密码"</span>));</div><div class="line">mysql&gt;flush privileges;</div></pre></td></tr></table></figure>
+<ul>
+<li>创建用户(通用)</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CREATE USER <span class="string">'username'</span>@<span class="string">'host'</span> IDENTIFIED BY <span class="string">'password'</span>;</div><div class="line">flush privileges;</div></pre></td></tr></table></figure>
+<p>这样就创建了用户,可以登陆试一下;</p>
+<h3 id="0x02-为用户授权"><a href="#0x02-为用户授权" class="headerlink" title="0x02 为用户授权"></a>0x02 <strong>为用户授权</strong></h3><p>登陆mysql</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u root -p</div></pre></td></tr></table></figure>
+<p>授权用户拥有数据库的所有权限。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">grant all privileges on *.* to 用户名@<span class="string">'地址'</span> identified by <span class="string">'密码'</span>;</div><div class="line">flush privileges;</div></pre></td></tr></table></figure>
+<p>指定部分权限的话,可以这样子写:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">grant select,update on *.* to 用户名@<span class="string">'地址'</span> identified by <span class="string">'密码'</span>;</div><div class="line">flush privileges;</div></pre></td></tr></table></figure>
+<p><strong>特别注意:</strong></p>
+<blockquote>
+<p>格式：grant 权限 on 数据库名.表名 to 用户@登录主机 identified by “用户密码”;</p>
+<p>@ 后面是访问mysql的客户端IP地址（或是 主机名） % 代表任意的客户端，如果填写 localhost 为本地访问（那此用户就不能远程访问该mysql数据库了）。</p>
+</blockquote>
+<h3 id="0x03-删除用户"><a href="#0x03-删除用户" class="headerlink" title="0x03 删除用户"></a>0x03 <strong>删除用户</strong></h3><p>登陆mysql后</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mysql&gt;DELETE FROM user WHERE User=<span class="string">"phplamp"</span> and Host=<span class="string">"localhost"</span>;</div><div class="line">mysql&gt;flush privileges;</div></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">drop user daodaoliang@&apos;%&apos;</div></pre></td></tr></table></figure>
+<h3 id="0x04-修改指定用户密码"><a href="#0x04-修改指定用户密码" class="headerlink" title="0x04 修改指定用户密码"></a>0x04 <strong>修改指定用户密码</strong></h3><ul>
+<li><strong><em>用UPDATE直接编辑user表(5.7之前版本)</em></strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">update mysql.user <span class="built_in">set</span> password=password(<span class="string">'新密码'</span>) <span class="built_in">where</span> User=<span class="string">"phplamp"</span>;</div><div class="line">flush privileges;</div></pre></td></tr></table></figure>
+<ul>
+<li><strong><em>用UPDATE直接编辑user表(5.7之后版本)</em></strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">update user <span class="built_in">set</span> authentication_string=password(<span class="string">'新密码'</span>) <span class="built_in">where</span> user=<span class="string">'root'</span>;</div><div class="line">flush privileges;</div></pre></td></tr></table></figure>
+<ul>
+<li><strong><em>用mysqladmin</em></strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">mysqladmin -u root password <span class="string">"newpass"</span></div><div class="line"><span class="comment"># 若设置过root密码,采用如下方法</span></div><div class="line">mysqladmin -u root password oldpass <span class="string">"newpass"</span></div></pre></td></tr></table></figure>
+<ul>
+<li><strong><em>用SET PASSWORD命令(通用)</em></strong></li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">SET PASSWORD FOR <span class="string">'root@localhost'</span> = PASSWORD(<span class="string">'newpass'</span>);</div></pre></td></tr></table></figure>
+<h3 id="0x05-修改或者忘记ROOT密码"><a href="#0x05-修改或者忘记ROOT密码" class="headerlink" title="0x05 修改或者忘记ROOT密码"></a>0x05 修改或者忘记ROOT密码</h3><ul>
+<li>停止数据库服务</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/mysql stop</div></pre></td></tr></table></figure>
+<ul>
+<li>跳过权限表安全启动</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysqld_safe --user=mysql --skip-grant-tables --skip-networking &amp;</div></pre></td></tr></table></figure>
+<ul>
+<li>重新登录mysql</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mysql -u root mysql</div></pre></td></tr></table></figure>
+<ul>
+<li>修改root密码</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">SET PASSWORD FOR <span class="string">'root@%'</span> = PASSWORD(<span class="string">'newpass'</span>);</div><div class="line">   FLUSH PRIVILEGES;</div></pre></td></tr></table></figure>
+<ul>
+<li>重新启动mysql服务</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/etc/init.d/mysql restart</div></pre></td></tr></table></figure>
+<h3 id="0x06-重命名用户账号"><a href="#0x06-重命名用户账号" class="headerlink" title="0x06 重命名用户账号"></a>0x06 重命名用户账号</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rename user daodaoliang@&apos;%&apos; to nami@&apos;%&apos;</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;pre&gt;&lt;code&gt;作者: daodaoliang
+日期: 2017-07-10
+版本: 0.0.3
+邮箱: daodaoliang@yeah.net
+&lt;/code&gt;&lt;/pre&gt;
+    
+    </summary>
+    
+      <category term="数据库学习" scheme="http://daodaoliang.com/categories/%E6%95%B0%E6%8D%AE%E5%BA%93%E5%AD%A6%E4%B9%A0/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>CentOS下搭建IPv6环境</title>
     <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2017/06/22/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2017-06-22-CentOS%E4%B8%8B%E6%90%AD%E5%BB%BAipv6%E7%8E%AF%E5%A2%83/"/>
     <id>http://daodaoliang.com/环境搭建/2017/06/22/环境搭建-2017-06-22-CentOS下搭建ipv6环境/</id>
     <published>2017-06-21T16:00:00.000Z</published>
-    <updated>2017-06-22T01:57:12.744Z</updated>
+    <updated>2017-06-22T01:55:18.026Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">作者 : daodaoliang@yeah.net</div><div class="line">日期 : 2017-06-22</div><div class="line">版本 : 0.0.1</div></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -145,7 +238,7 @@
     <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2017/04/20/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2017-04-20-CentOS%E4%B8%8BNexus%E6%90%AD%E5%BB%BAMaven%E7%A7%81%E5%BA%93/"/>
     <id>http://daodaoliang.com/环境搭建/2017/04/20/环境搭建-2017-04-20-CentOS下Nexus搭建Maven私库/</id>
     <published>2017-04-19T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.961Z</updated>
+    <updated>2017-05-11T10:33:32.543Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">作者 : daodaoliang@yeah.net</div><div class="line">日期 : 2017-04-20</div><div class="line">版本 : 0.0.4</div></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -217,7 +310,7 @@
     <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2017/04/20/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2017-04-20-CentOS6%E5%8D%87%E7%BA%A7GCC%E7%89%88%E6%9C%AC/"/>
     <id>http://daodaoliang.com/环境搭建/2017/04/20/环境搭建-2017-04-20-CentOS6升级GCC版本/</id>
     <published>2017-04-19T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.961Z</updated>
+    <updated>2017-05-11T10:33:32.543Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">作者 : daodaoliang@yeah.net</div><div class="line">日期 : 2017-04-20</div><div class="line">版本 : 0.0.1</div></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -249,7 +342,7 @@
     <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2017/04/14/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2017-04-14-CentOS6-8%E4%B8%8B%E5%AE%89%E8%A3%85Maven/"/>
     <id>http://daodaoliang.com/环境搭建/2017/04/14/环境搭建-2017-04-14-CentOS6-8下安装Maven/</id>
     <published>2017-04-13T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.961Z</updated>
+    <updated>2017-05-11T10:33:32.543Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">作者 : daodaoliang@yeah.net</div><div class="line">日期 : 2017-04-13</div><div class="line">版本 : 0.0.4</div></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -309,7 +402,7 @@
     <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2017/04/13/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2014-10-17-Ubuntu14-04%E4%B8%8B%E9%85%8D%E7%BD%AEGitLab7/"/>
     <id>http://daodaoliang.com/环境搭建/2017/04/13/环境搭建-2014-10-17-Ubuntu14-04下配置GitLab7/</id>
     <published>2017-04-12T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.961Z</updated>
+    <updated>2017-05-11T10:33:32.512Z</updated>
     
     <content type="html"><![CDATA[<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">作者 : daodaoliang@yeah.net</div><div class="line">日期 : 2017-04-13</div><div class="line">版本 : 0.0.4</div></pre></td></tr></table></figure>
 <a id="more"></a>
@@ -453,7 +546,7 @@
     <link href="http://daodaoliang.com/windows%E5%AD%A6%E4%B9%A0/2017/04/12/windows%E5%AD%A6%E4%B9%A0-2017-04-12-windowsUAC/"/>
     <id>http://daodaoliang.com/windows学习/2017/04/12/windows学习-2017-04-12-windowsUAC/</id>
     <published>2017-04-11T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.964Z</updated>
+    <updated>2017-05-11T10:33:32.356Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">auther  =  <span class="string">'daodaoliang'</span></div><div class="line">version =  <span class="string">'V 0.0.1'</span></div><div class="line">date    =  <span class="string">'2017年04月12日'</span></div></pre></td></tr></table></figure>
@@ -480,7 +573,7 @@
     <link href="http://daodaoliang.com/c-%E5%AD%A6%E4%B9%A0/2017/03/08/c-%E5%AD%A6%E4%B9%A0-2017-03-08-HashAlgorithm/"/>
     <id>http://daodaoliang.com/c-学习/2017/03/08/c-学习-2017-03-08-HashAlgorithm/</id>
     <published>2017-03-07T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.963Z</updated>
+    <updated>2017-05-11T10:33:32.340Z</updated>
     
     <content type="html"><![CDATA[<pre><code>作者: daodaoliang
 版本: V 0.0.1
@@ -510,7 +603,7 @@
     <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2017/02/17/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2017-02-17-CentOS%E4%B8%8B%E5%8D%87%E7%BA%A7NodeJs/"/>
     <id>http://daodaoliang.com/环境搭建/2017/02/17/环境搭建-2017-02-17-CentOS下升级NodeJs/</id>
     <published>2017-02-16T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.961Z</updated>
+    <updated>2017-05-11T10:33:32.543Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <pre><code>作者: daodaoliang
@@ -581,7 +674,7 @@
     <link href="http://daodaoliang.com/linux%E5%AD%A6%E4%B9%A0/2017/02/06/linux%E5%AD%A6%E4%B9%A0-2017-02-06-linux%E5%86%85%E6%A0%B8%E6%BC%AB%E7%94%BB/"/>
     <id>http://daodaoliang.com/linux学习/2017/02/06/linux学习-2017-02-06-linux内核漫画/</id>
     <published>2017-02-05T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.964Z</updated>
+    <updated>2017-05-11T10:33:32.356Z</updated>
     
     <content type="html"><![CDATA[<pre><code>作者: daodaoliang
 版本: V 0.0.1
@@ -610,7 +703,7 @@
     <link href="http://daodaoliang.com/linux%E5%AD%A6%E4%B9%A0/2017/02/01/c-%E5%AD%A6%E4%B9%A0-2017-02-14-linux%E4%B8%8BC-%E7%9A%84%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/"/>
     <id>http://daodaoliang.com/linux学习/2017/02/01/c-学习-2017-02-14-linux下C-的编译过程/</id>
     <published>2017-01-31T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.963Z</updated>
+    <updated>2017-05-11T10:33:32.340Z</updated>
     
     <content type="html"><![CDATA[<pre><code>作者: daodaoliang
 版本: V 0.0.1
@@ -667,7 +760,7 @@
     <link href="http://daodaoliang.com/linux%E5%AD%A6%E4%B9%A0/2016/12/29/linux%E5%AD%A6%E4%B9%A0-2016-12-29-ssh%E8%B6%85%E6%97%B6%E6%97%B6%E9%97%B4%E8%AE%BE%E7%BD%AE/"/>
     <id>http://daodaoliang.com/linux学习/2016/12/29/linux学习-2016-12-29-ssh超时时间设置/</id>
     <published>2016-12-28T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.965Z</updated>
+    <updated>2017-05-11T10:33:32.356Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <pre><code>作者: daodaoliang
@@ -715,7 +808,7 @@
     <link href="http://daodaoliang.com/windows%E5%AD%A6%E4%B9%A0/2016/11/25/windows%E5%AD%A6%E4%B9%A0-2016-11-25-windows%E4%B8%8B%E8%8E%B7%E5%8F%96%E7%B3%BB%E7%BB%9F%E4%BF%A1%E6%81%AFVBS%E8%84%9A%E6%9C%AC/"/>
     <id>http://daodaoliang.com/windows学习/2016/11/25/windows学习-2016-11-25-windows下获取系统信息VBS脚本/</id>
     <published>2016-11-24T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.964Z</updated>
+    <updated>2017-05-11T10:33:32.356Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <pre><code>作者: daodaoliang
@@ -746,7 +839,7 @@
     <link href="http://daodaoliang.com/linux%E5%AD%A6%E4%B9%A0/2016/11/11/linux%E5%AD%A6%E4%B9%A0-2016-11-11-%E6%B8%85%E7%90%86%E7%99%BB%E5%BD%95%E5%92%8C%E6%93%8D%E4%BD%9C%E8%AE%B0%E5%BD%95/"/>
     <id>http://daodaoliang.com/linux学习/2016/11/11/linux学习-2016-11-11-清理登录和操作记录/</id>
     <published>2016-11-10T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.965Z</updated>
+    <updated>2017-05-11T10:33:32.356Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <pre><code>作者: daodaoliang
@@ -781,7 +874,7 @@
     <link href="http://daodaoliang.com/%E7%A7%81%E4%BA%BA%E5%B7%A5%E5%85%B7%E9%A1%B9%E7%9B%AE/2016/11/04/QDaoDaoLiang-2016-11-04-Qt%E5%BC%80%E6%BA%90%E9%A1%B9%E7%9B%AE%E8%AF%B4%E6%98%8E/"/>
     <id>http://daodaoliang.com/私人工具项目/2016/11/04/QDaoDaoLiang-2016-11-04-Qt开源项目说明/</id>
     <published>2016-11-03T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.964Z</updated>
+    <updated>2017-05-11T10:33:32.340Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <pre><code>作者: daodaoliang
@@ -851,7 +944,7 @@
     <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2016/11/02/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2016-11-02-Supervisor%E5%AE%89%E8%A3%85%E4%B8%8E%E9%85%8D%E7%BD%AE/"/>
     <id>http://daodaoliang.com/环境搭建/2016/11/02/环境搭建-2016-11-02-Supervisor安装与配置/</id>
     <published>2016-11-01T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.961Z</updated>
+    <updated>2017-05-11T10:33:32.543Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <pre><code>作者: daodaoliang
@@ -921,7 +1014,7 @@
     <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2016/10/28/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2016-10-28-nginx%E9%85%8D%E7%BD%AEhttps%E5%B9%B6%E8%87%AA%E7%AD%BE%E5%90%8D%E8%AF%81%E4%B9%A6/"/>
     <id>http://daodaoliang.com/环境搭建/2016/10/28/环境搭建-2016-10-28-nginx配置https并自签名证书/</id>
     <published>2016-10-27T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.961Z</updated>
+    <updated>2017-05-11T10:33:32.543Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <pre><code>作者: daodaoliang
@@ -991,7 +1084,7 @@
     <link href="http://daodaoliang.com/%E8%BD%AC%E8%BD%BD/2016/09/28/%E8%BD%AC%E8%BD%BD-2016-09-28-%E5%B8%B8%E7%94%A8%E7%9A%84%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F/"/>
     <id>http://daodaoliang.com/转载/2016/09/28/转载-2016-09-28-常用的正则表达式/</id>
     <published>2016-09-27T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.962Z</updated>
+    <updated>2017-05-11T10:33:32.543Z</updated>
     
     <content type="html"><![CDATA[<hr>
 <pre><code>原文出处: (http://www.jianshu.com/p/e7bb97218946)
@@ -1058,51 +1151,6 @@
     </summary>
     
       <category term="转载" scheme="http://daodaoliang.com/categories/%E8%BD%AC%E8%BD%BD/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>nginx 常用的配置</title>
-    <link href="http://daodaoliang.com/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/2016/09/20/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA-2016-03-14-nginx%E7%9A%84%E5%B8%B8%E7%94%A8%E9%85%8D%E7%BD%AE/"/>
-    <id>http://daodaoliang.com/环境搭建/2016/09/20/环境搭建-2016-03-14-nginx的常用配置/</id>
-    <published>2016-09-19T16:00:00.000Z</published>
-    <updated>2017-05-03T16:07:44.961Z</updated>
-    
-    <content type="html"><![CDATA[<hr>
-<p>安装请移步这里<a href="http://daodaoliang.github.io/blog/2015/05/12/CentOS6.5%E9%80%9A%E8%BF%87%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85nginx.html" target="_blank" rel="external">点击我</a></p>
-<a id="more"></a>
-<h2 id="1-nginx目录嵌套"><a href="#1-nginx目录嵌套" class="headerlink" title="1. nginx目录嵌套"></a><strong>1. nginx目录嵌套</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">http &#123;</div><div class="line"></div><div class="line">    .......</div><div class="line">    include /etc/nginx/conf.d/*.conf;</div><div class="line">    include sites/*.conf;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="2-gzip-on"><a href="#2-gzip-on" class="headerlink" title="2. gzip on"></a><strong>2. gzip on</strong></h2><p>加到http模块中, 开启gzip, 注意gzip_types配置得是压缩的资源类型</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">http &#123;</div><div class="line"></div><div class="line"></div><div class="line">    .....</div><div class="line"></div><div class="line"></div><div class="line">    gzip on;</div><div class="line">    gzip_min_length 1k;</div><div class="line">    gzip_comp_level 5;</div><div class="line">    gzip_proxied expired no-cache no-store private auth;</div><div class="line">    gzip_types text/plain text/css application/javascript text/javascript application/x-javascript text/xml application/xml application/xml+rss application/json image/x-icon image/png image/jpg image/jpeg application/font-woff;</div><div class="line">    gzip_vary on;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="3-多处理器"><a href="#3-多处理器" class="headerlink" title="3. 多处理器"></a><strong>3. 多处理器</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">worker_processes  4;</div><div class="line">events &#123;</div><div class="line">    worker_connections  2048;</div><div class="line">    use epoll;</div><div class="line">    multi_accept on;</div><div class="line">&#125;</div><div class="line"></div><div class="line">worker_rlimit_nofile 100000;</div></pre></td></tr></table></figure>
-<h2 id="4-静态文件缓存"><a href="#4-静态文件缓存" class="headerlink" title="4. 静态文件缓存"></a><strong>4. 静态文件缓存</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">location ~* \.(?:css|js)$ &#123;</div><div class="line">  expires 12h;</div><div class="line">  access_log off;</div><div class="line">  add_header Cache-Control &quot;public&quot;;</div><div class="line">  proxy_pass http://127.0.0.1:5000;</div><div class="line">  proxy_redirect off;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="5-代理"><a href="#5-代理" class="headerlink" title="5. 代理"></a><strong>5. 代理</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">location /</div><div class="line">&#123;</div><div class="line">    proxy_pass http://127.0.0.1:8000;</div><div class="line">    proxy_pass_header Server;</div><div class="line">    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</div><div class="line">    proxy_set_header X-Real-IP $remote_addr;</div><div class="line">    proxy_set_header X-Scheme $scheme;</div><div class="line">    proxy_set_header Host $http_host;</div><div class="line">    proxy_redirect off;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以设置超时时间</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">proxy_connect_timeout 500s;</div><div class="line">proxy_read_timeout 500s;</div><div class="line">proxy_send_timeout 500s;</div></pre></td></tr></table></figure>
-<h2 id="6-静态目录-or-文件"><a href="#6-静态目录-or-文件" class="headerlink" title="6. 静态目录 or 文件"></a><strong>6. 静态目录 or 文件</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">location /movies/ &#123;</div><div class="line">    alias /Volumes/Media/Movies/;</div><div class="line">    allow all;</div><div class="line">&#125;</div><div class="line"></div><div class="line">location = /abc.txt &#123;</div><div class="line">    alias /data/www/static/abc.txt;</div><div class="line">    expires  30d;</div><div class="line">    access_log off;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="7-静态站"><a href="#7-静态站" class="headerlink" title="7. 静态站"></a><strong>7. 静态站</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">server &#123;</div><div class="line">    listen       192.168.1.1:80;</div><div class="line">    server_name  www.abc.com;</div><div class="line"></div><div class="line">    client_max_body_size 1M;</div><div class="line">    access_log logs/blog_access.log;</div><div class="line">    error_log logs/blog_error.log;</div><div class="line"></div><div class="line">    root /data/static_site_dir;</div><div class="line">    index index.html;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="8-服务转发"><a href="#8-服务转发" class="headerlink" title="8. 服务转发"></a><strong>8. 服务转发</strong></h2><p>将收到的服务url/参数等, 原封不动转给另一个服务</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    listen 80;</div><div class="line">    server_name  www.xxxx.com;</div><div class="line">    location ~ ^/(.*)$ &#123;</div><div class="line">        proxy_pass http://192.168.1.1:80/another/service/$1$is_args$args;</div><div class="line">        proxy_read_timeout 90;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="9-return"><a href="#9-return" class="headerlink" title="9. return"></a><strong>9. return</strong></h2><p>语法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">return http_code;</div><div class="line">return http_code &quot;content&quot;;</div></pre></td></tr></table></figure>
-<p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">location /api/test/ &#123;</div><div class="line">    return 403;</div><div class="line">&#125;</div><div class="line"></div><div class="line">location /stat/ &#123;</div><div class="line">    return 204;</div><div class="line">&#125;</div><div class="line"></div><div class="line">location /ping/ &#123;</div><div class="line">    return 200;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="10-重定向到-www"><a href="#10-重定向到-www" class="headerlink" title="10. 重定向到 www"></a><strong>10. 重定向到 www</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">server &#123;</div><div class="line">    server_name  abc.com;</div><div class="line">    rewrite ^(.*) http://www.abc.com$1 permanent;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="11-允许或者拒绝"><a href="#11-允许或者拒绝" class="headerlink" title="11. 允许或者拒绝"></a><strong>11. 允许或者拒绝</strong></h2><p>访问ip控制</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">location /test/ &#123;</div><div class="line">    allow 192.168.1.1;</div><div class="line">    deny all;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="12-负载均衡"><a href="#12-负载均衡" class="headerlink" title="12. 负载均衡"></a><strong>12. 负载均衡</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">http &#123;</div><div class="line"></div><div class="line">    upstream test &#123;</div><div class="line">        server 192.168.1.1:5000;</div><div class="line">        server 192.168.1.2:5000;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">server &#123;</div><div class="line"></div><div class="line">    location / &#123;</div><div class="line">        proxy_pass test;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h2 id="13-配置文件检查"><a href="#13-配置文件检查" class="headerlink" title="13. 配置文件检查"></a><strong>13. 配置文件检查</strong></h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">检查配置文件正确性</div><div class="line">service nginx configtest</div><div class="line"></div><div class="line"></div><div class="line">重新加载配置</div><div class="line">service nginx reload</div></pre></td></tr></table></figure>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;hr&gt;
-&lt;p&gt;安装请移步这里&lt;a href=&quot;http://daodaoliang.github.io/blog/2015/05/12/CentOS6.5%E9%80%9A%E8%BF%87%E6%BA%90%E7%A0%81%E5%AE%89%E8%A3%85nginx.html&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;点击我&lt;/a&gt;&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="环境搭建" scheme="http://daodaoliang.com/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/"/>
     
     
   </entry>

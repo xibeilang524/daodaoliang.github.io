@@ -354,6 +354,204 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/数据库学习/2015/03/24/数据库学习-mysql专题-2015-03-24-linux下定时备份mysql数据库/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/数据库学习/2015/03/24/数据库学习-mysql专题-2015-03-24-linux下定时备份mysql数据库/" itemprop="url">
+                  linux下mysql定时备份
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-03-24T00:00:00+08:00">
+                2015-03-24
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/数据库学习/" itemprop="url" rel="index">
+                    <span itemprop="name">数据库学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  127
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h3 id="1-在服务器上建立备份文件的存放文件夹"><a href="#1-在服务器上建立备份文件的存放文件夹" class="headerlink" title="1. 在服务器上建立备份文件的存放文件夹"></a>1. 在服务器上建立备份文件的存放文件夹</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo mkdir /usr/local/dbbackup</div></pre></td></tr></table></figure>
+<h3 id="2-编写备份脚本"><a href="#2-编写备份脚本" class="headerlink" title="2. 编写备份脚本"></a>2. 编写备份脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi dbbackup.sh</div></pre></td></tr></table></figure>
+<p>在里面编写如下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">mysqldump -uroot -p1W8a6N0g1Y3i3F1a1N99 cusflo | gzip &gt; /usr/local/cusflo-dbback/cusflo`date +%Y-%m-%d_%H%M%S`.sql.gz</div><div class="line"></div><div class="line">cd  /usr/local/cusflo-dbback/</div><div class="line"></div><div class="line">rm -rf `find . -name &apos;*.sql.gz&apos; -mtime 30`</div></pre></td></tr></table></figure>
+<h3 id="3-更改备份脚本权限"><a href="#3-更改备份脚本权限" class="headerlink" title="3.更改备份脚本权限"></a>3.更改备份脚本权限</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chmod +x dbbackup.sh</div></pre></td></tr></table></figure>
+<h3 id="4-修改crontab定时执行脚本"><a href="#4-修改crontab定时执行脚本" class="headerlink" title="4.修改crontab定时执行脚本"></a>4.修改crontab定时执行脚本</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">crontab -e</div></pre></td></tr></table></figure>
+<h4 id="若每天晚上23点30备份，添加如下代码"><a href="#若每天晚上23点30备份，添加如下代码" class="headerlink" title="若每天晚上23点30备份，添加如下代码:"></a>若每天晚上23点30备份，添加如下代码:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">30 23 * * * /usr/local/dbbackscripts/dbbackup.sh</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+	<div>
+      
+	</div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+	<div>
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/03/23/linux学习-2015-03-23-gcc常见编译错误解决方案/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -409,8 +607,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -605,8 +803,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -800,8 +998,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -1001,8 +1199,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -1097,199 +1295,6 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">一身能擘两雕弧，虏骑千重只似无。</div><div class="line">偏坐金鞍调白羽，纷纷射杀五单于。</div></pre></td></tr></table></figure>
 <p><strong><em>其四</em></strong></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">汉家君臣欢宴终，高议云台论战功。</div><div class="line">天子临轩赐侯印，将军佩出明光宫。</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-	<div>
-      
-	</div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-	<div>
-	  
-	</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/02/05/linux学习-2015-02-05-安装脚本编写/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="daodaoliang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刀刀亮的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/linux学习/2015/02/05/linux学习-2015-02-05-安装脚本编写/" itemprop="url">
-                  linux安装脚本
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-05T00:00:00+08:00">
-                2015-02-05
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux学习/" itemprop="url" rel="index">
-                    <span itemprop="name">linux学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  524
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  3
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<hr>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"></div><div class="line"><span class="comment"># user can config the following configs, then package.</span></div><div class="line">INSTALL=/usr/<span class="built_in">local</span>/cusflo-server</div><div class="line"><span class="function"><span class="title">ok_msg</span></span>() &#123;</div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"<span class="variable">$&#123;1&#125;</span><span class="variable">$&#123;POS&#125;</span><span class="variable">$&#123;BLACK&#125;</span>[<span class="variable">$&#123;GREEN&#125;</span>  OK  <span class="variable">$&#123;BLACK&#125;</span>]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="title">failed_msg</span></span>() &#123;</div><div class="line">    <span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"<span class="variable">$&#123;1&#125;</span><span class="variable">$&#123;POS&#125;</span><span class="variable">$&#123;BLACK&#125;</span>[<span class="variable">$&#123;RED&#125;</span>FAILED<span class="variable">$&#123;BLACK&#125;</span>]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment"># discover the current work dir, the log and access.</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"argv[0]=<span class="variable">$0</span>"</span></div><div class="line"><span class="keyword">if</span> [[ ! <span class="_">-f</span> <span class="variable">$0</span> ]]; <span class="keyword">then</span> </div><div class="line">    <span class="built_in">echo</span> <span class="string">"directly execute the scripts on shell."</span>;</div><div class="line">    work_dir=`<span class="built_in">pwd</span>`</div><div class="line"><span class="keyword">else</span> </div><div class="line">    <span class="built_in">echo</span> <span class="string">"execute scripts in file: <span class="variable">$0</span>"</span>;</div><div class="line">    work_dir=`dirname <span class="variable">$0</span>`; work_dir=`(<span class="built_in">cd</span> <span class="variable">$&#123;work_dir&#125;</span> &amp;&amp; <span class="built_in">pwd</span>)`</div><div class="line"><span class="keyword">fi</span></div><div class="line">product_dir=<span class="variable">$work_dir</span></div><div class="line"></div><div class="line"><span class="comment"># user must stop service first.</span></div><div class="line">ok_msg <span class="string">"check previous install"</span></div><div class="line"><span class="keyword">if</span> [[ <span class="_">-f</span> /etc/init.d/cusflo-server-moon ]]; <span class="keyword">then</span></div><div class="line">    /etc/init.d/cusflo-server-moon status &gt;/dev/null 2&gt;&amp;1</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-eq</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> </div><div class="line">        failed_msg <span class="string">"you must stop the service first: sudo /etc/init.d/cusflo-server-moon stop"</span>; </div><div class="line">        <span class="built_in">exit</span> 1; </div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line">ok_msg <span class="string">"previous install checked"</span></div><div class="line"></div><div class="line"><span class="comment"># backup old srs</span></div><div class="line">ok_msg <span class="string">"backup old cusflo-server-moon"</span></div><div class="line">install_root=<span class="variable">$INSTALL</span></div><div class="line">install_bin=<span class="variable">$install_root</span>/</div><div class="line"><span class="keyword">if</span> [[ <span class="_">-d</span> <span class="variable">$install_root</span> ]]; <span class="keyword">then</span></div><div class="line">    backup_dir=<span class="variable">$&#123;install_root&#125;</span>.`date <span class="string">"+%Y-%m-%d_%H-%M-%S"</span>`</div><div class="line">    ok_msg <span class="string">"backup installed dir"</span></div><div class="line">    ok_msg <span class="string">"    to=<span class="variable">$backup_dir</span>"</span></div><div class="line">    mv <span class="variable">$install_root</span> <span class="variable">$backup_dir</span> 2&gt;&amp;1</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"backup installed dir failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">    ok_msg <span class="string">"backup installed dir success"</span></div><div class="line"><span class="keyword">fi</span></div><div class="line">ok_msg <span class="string">"old srs backuped"</span></div><div class="line"></div><div class="line"><span class="comment"># copy core files</span></div><div class="line">ok_msg <span class="string">"copy core components"</span></div><div class="line">(</div><div class="line">    mkdir -p <span class="variable">$install_root</span></div><div class="line">    cp -r <span class="variable">$work_dir</span>/conf <span class="variable">$install_root</span> &amp;&amp;</div><div class="line">    cp -r <span class="variable">$work_dir</span>/dog <span class="variable">$install_root</span> &amp;&amp;</div><div class="line">    cp -r <span class="variable">$work_dir</span>/<span class="built_in">log</span> <span class="variable">$install_root</span> &amp;&amp;</div><div class="line">    cp -r <span class="variable">$work_dir</span>/moon <span class="variable">$install_root</span> &amp;&amp;</div><div class="line">    cp -r <span class="variable">$work_dir</span>/scripts <span class="variable">$install_root</span></div><div class="line">) 2&gt;&amp;1</div><div class="line">ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"copy core components failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">ok_msg <span class="string">"copy core components success"</span></div><div class="line"></div><div class="line"><span class="comment"># install init.d scripts</span></div><div class="line">ok_msg <span class="string">"install init.d scripts"</span></div><div class="line">(</div><div class="line">    rm -rf /etc/init.d/cusflo-server-moon &amp;&amp;</div><div class="line">    ln -sf <span class="variable">$install_root</span>/scripts/cusflo-server-moon /etc/init.d/cusflo-server-moon</div><div class="line">) 2&gt;&amp;1</div><div class="line">ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"install init.d scripts failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">ok_msg <span class="string">"install init.d scripts success"</span></div><div class="line"></div><div class="line"><span class="comment"># install system service</span></div><div class="line">lsb_release --id|grep <span class="string">"CentOS"</span> &gt;/dev/null 2&gt;&amp;1; os_id_centos=$?</div><div class="line">lsb_release --id|grep <span class="string">"Ubuntu"</span> &gt;/dev/null 2&gt;&amp;1; os_id_ubuntu=$?</div><div class="line">lsb_release --id|grep <span class="string">"Debian"</span> &gt;/dev/null 2&gt;&amp;1; os_id_debian=$?</div><div class="line">lsb_release --id|grep <span class="string">"Raspbian"</span> &gt;/dev/null 2&gt;&amp;1; os_id_rasabian=$?</div><div class="line"><span class="keyword">if</span> [[ 0 <span class="_">-eq</span> <span class="variable">$os_id_centos</span> ]]; <span class="keyword">then</span></div><div class="line">    ok_msg <span class="string">"install system service for CentOS"</span></div><div class="line">    /sbin/chkconfig --add cusflo-server-moon &amp;&amp; /sbin/chkconfig cusflo-server-moon on</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"install system service failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">    ok_msg <span class="string">"install system service success"</span></div><div class="line"><span class="keyword">elif</span> [[ 0 <span class="_">-eq</span> <span class="variable">$os_id_ubuntu</span> ]]; <span class="keyword">then</span></div><div class="line">    ok_msg <span class="string">"install system service for Ubuntu"</span></div><div class="line">    update-rc.d cusflo-server-moon defaults</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"install system service failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">    ok_msg <span class="string">"install system service success"</span></div><div class="line"><span class="keyword">elif</span> [[ 0 <span class="_">-eq</span> <span class="variable">$os_id_debian</span> ]]; <span class="keyword">then</span></div><div class="line">    ok_msg <span class="string">"install system service for Debian"</span></div><div class="line">    update-rc.d cusflo-server-moon defaults</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"install system service failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">    ok_msg <span class="string">"install system service success"</span></div><div class="line"><span class="keyword">elif</span> [[ 0 <span class="_">-eq</span> <span class="variable">$os_id_rasabian</span> ]]; <span class="keyword">then</span></div><div class="line">    ok_msg <span class="string">"install system service for RaspberryPi"</span></div><div class="line">    update-rc.d cusflo-server-moon defaults</div><div class="line">    ret=$?; <span class="keyword">if</span> [[ 0 <span class="_">-ne</span> <span class="variable">$&#123;ret&#125;</span> ]]; <span class="keyword">then</span> failed_msg <span class="string">"install system service failed"</span>; <span class="built_in">exit</span> <span class="variable">$ret</span>; <span class="keyword">fi</span></div><div class="line">    ok_msg <span class="string">"install system service success"</span></div><div class="line"><span class="keyword">else</span></div><div class="line">    warn_msg <span class="string">"ignore and donot install system service for `lsb_release --id|awk '&#123;print <span class="variable">$3</span>&#125;'`."</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line"><span class="built_in">echo</span> <span class="string">""</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"install success, you can:"</span></div><div class="line"><span class="built_in">echo</span> <span class="_">-e</span> <span class="string">"<span class="variable">$&#123;GREEN&#125;</span>      sudo ./moon/scripts/cusflo-server-moon start<span class="variable">$&#123;BLACK&#125;</span>"</span></div><div class="line"><span class="built_in">echo</span> <span class="string">"cusflo-server-moon root is <span class="variable">$&#123;INSTALL&#125;</span>"</span></div><div class="line"></div><div class="line"><span class="built_in">exit</span> 0</div></pre></td></tr></table></figure>
 
           
         
@@ -2135,28 +2140,6 @@
 
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
 
   
 

@@ -354,6 +354,859 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/计算机网络/2015/02/02/计算机网络-NAT专题-2015-02-01-p2p的NAT穿越方案/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/计算机网络/2015/02/02/计算机网络-NAT专题-2015-02-01-p2p的NAT穿越方案/" itemprop="url">
+                  P2P的NAT穿越方案
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-02-02T00:00:00+08:00">
+                2015-02-02
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/计算机网络/" itemprop="url" rel="index">
+                    <span itemprop="name">计算机网络</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  4,509
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  16
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<hr>
+<h3 id="NAT专题之P2P的NAT穿越方案"><a href="#NAT专题之P2P的NAT穿越方案" class="headerlink" title="NAT专题之P2P的NAT穿越方案"></a>NAT专题之P2P的NAT穿越方案</h3><h4 id="1-P2P简介"><a href="#1-P2P简介" class="headerlink" title="1.P2P简介"></a><strong><em>1.P2P简介</em></strong></h4><p>&gt;<br>P2P即点对点通信，或称为对等联网，与传统的服务器客户端模式有着明显的区别，传统的服务器客户端模型如图2所示。P2P这一术语在不同的上下文环境里可能有不同的内涵，它可以指一种通信模式、一种逻辑网络模型、一种技术、甚至一种理念。在P2P网络中如图1所示，所有通信节点的地位都是对等的，每个节点都扮演着客户机和服务器双重角色，节点之间通过直接通信实现文件信息、处理器运算能力、存储空间等资源的共享。P2P网络具有分散性、可扩展性、健壮性等特点，这使得P2P技术在信息共享、实时通信、协同工作、分布式计算、网络存储等领域都有广阔的应用;</p>
+<ul>
+<li><img src="/res/img/blog/计算机网络/2015-02-02-001.jpg" alt="P2P结构模型"></li>
+</ul>
+<p><strong><em>图1 P2P结构模型</em></strong></p>
+<ul>
+<li><img src="/res/img/blog/计算机网络/2015-02-02-002.jpg" alt="CS模式"></li>
+</ul>
+<p><strong><em>图2 CS模式</em></strong></p>
+<h4 id="2-NAT简介"><a href="#2-NAT简介" class="headerlink" title="2.NAT简介"></a><strong><em>2.NAT简介</em></strong></h4><p>目前,IPV4地址资源的紧缺使得NAT技术获得了广泛的应用，NAT技术是一种把内部网络(简称内网)私有IP地址转换为外部网络(简称为外网)公共IP地址的技术，它使得一定范围内的多台主机志李永一个公共IP地址链接到外网，可以在很大成都上缓解公网IP地址紧缺的问题。</p>
+<h4 id="3-NAT对P2P通信的影响"><a href="#3-NAT对P2P通信的影响" class="headerlink" title="3.NAT对P2P通信的影响"></a><strong><em>3.NAT对P2P通信的影响</em></strong></h4><p>NAT技术虽然在一定成都上解决了IPV4地址短缺的问题，在构建防火墙，保证网络安全方面都发挥了一定的作用，却破坏了端到段的网络通信，NAT阻碍朱姐进行p2p通信的主要原因时NAT不允许外网主机主动访问内网诸暨，因为NAT设备上没有先关转发表项，要在NAT网络环境中进行有效的p2p通信，就必须寻找相应的解决方案，本文就着重介绍几种常见的解决方案。</p>
+<h4 id="4-p2p穿越NAT的几种方案"><a href="#4-p2p穿越NAT的几种方案" class="headerlink" title="4.p2p穿越NAT的几种方案"></a><strong><em>4.p2p穿越NAT的几种方案</em></strong></h4><h5 id="4-1-反向链接技术"><a href="#4-1-反向链接技术" class="headerlink" title="4.1 反向链接技术"></a><strong><em>4.1 反向链接技术</em></strong></h5><p>　　当通信双方中一方位于NAT之后时，他们可以利用反向链接技术来进行p2p通信，图中的clientA(拥有内网地址10.0.0.1)位于NAT之后，它通过TCP端口1234连接到服务器(拥有外网IP地址)的TCP端口1235上,NAT设备(拥有外网地址:155.99.25.11)味这个链接重新分配了TCP端口62000，clientB(拥有外网IP地址138.76.29.7)叶通过TCP端口1234连接到服务器1235上，clientA和clientB从服务器除货值的对网的外网地址二元组{IP地址:端口号}分别为{138.76.29.7:1234}和{155.99.25.11:62000}.他们在各自的本地端口上进行侦听。<br>　　由于clientB拥有外网IP地址，所以clientA可以直接通过TCP发起与clientB的链接，但如果clientB尝试通过TCP链接到clientA进行P2P通信，则会失败，原因是clientA位于NAT设备后，虽然clientB发出的TCP SYN请求能够到达NAT设备的端口62000，但NAT设备会拒绝这个链接请求，要想与clientA通信，clientB要通过服务器给clientA转发一个链接请求，反过来请求clientA连接到clientB(即进行反向链接),从而建立起他们之间的TCP链接。</p>
+<ul>
+<li><img src="/res/img/blog/计算机网络/2015-02-02-003.jpg" alt="反向链接示意图"></li>
+</ul>
+<h4 id="4-2-UDP打洞技术"><a href="#4-2-UDP打洞技术" class="headerlink" title="4.2 UDP打洞技术"></a><strong><em>4.2 UDP打洞技术</em></strong></h4><p>　　如果两个客户端窦唯与NAT设备后面，想要进行P2P通信，那又该如何解决呢?UDP打洞技术就是为解决这个问题应运而生的，它能够通过中间服务器实现P2P客户端互联，该技术在在线游戏协议中已经的到了应用</p>
+<h5 id="4-2-1集中服务器"><a href="#4-2-1集中服务器" class="headerlink" title="4.2.1集中服务器"></a><strong><em>4.2.1集中服务器</em></strong></h5><p>　　打洞技术嘉定客户端A和客户端B都可以与公网内的已知集中服务器建立UDP链接，一个客户端在集中服务器上登陆的时候，服务器记录下改客户端的两对地址二元组信息{IP地址:UDP端口}，一对是该客户端与集中服务器进行通信的自身的地址和端口号，另外一对是集中服务器记录下的由服务器观察到的改客户端实际与自己所使用的地址和端口号，我们可以把前一对地址二元组看作是客户端的内网地址和端口号，把后一对地址二元组看作是客户端的内网地址和端口号经过NAT转换后的外网地址和端口号，集中服务器可以从客户端的登录消息中的到客户端内网相关信息，还可以通过消息的IP头和UDP头得到改客户端的外网相关信息，如果该客户端不是位于NAT设备后面，那么采用上述方法得到的两对地址二元组信息是完全相同的。</p>
+<h5 id="4-2-2建立p2p-session"><a href="#4-2-2建立p2p-session" class="headerlink" title="4.2.2建立p2p session"></a><strong><em>4.2.2建立p2p session</em></strong></h5><p>假定客户端A要发起客户端B的直接链接，具体的打洞过程如下:</p>
+<ul>
+<li>客户端A最初不知道如何向客户端B发起链接，于是客户端A向集中服务器发送消息，请求集中服务器帮助建立与客户端B的UDP链接。</li>
+<li>集中服务器将含有客户端B的外网和内网地址二元组发送给客户端A，同时，集中服务器将包含将包含有客户端A的外网和内网地址二元组信息发送给客户端B，这样以来,客户端A与客户端B就都知道对方外网和内网的地址二元组信息了。</li>
+<li>当客户端A收到有集中服务器发来的包含客户端B的外网和内网的地址二元组信息后，客户端A开始向客户端B的地址二元组发送UDP数据包，并且客户端A会自动锁定第一个给出相应的客户端B的地址二元组，同理，当客户端B收到由集中服务器发来的客户端A的地址二元组信息后，也会开始向客户端A的外网和内网的地址二元组发送UDP数据包，并且　自动锁定第一个得到的客户端A回应的二元组，由于客户端A与客户端B互相向对方发送UDP数据包的操作是异步的，所以客户端A和客户端B发送数据包的时间先后没有时序要求。</li>
+</ul>
+<p>下面来看下这三者之间时如何进行UDP打洞的,在这我们分三种具体情景来讨论：</p>
+<ul>
+<li>两个客户端都唯一同一个NAT设备后面，即位于同一个内网中；</li>
+<li>两个客户端分别位于不同的NAT设备后面，分属于不容的内网;</li>
+<li>两个客户端位于两层NAT设备之后,通常最上层的NAT是由网络提供商提供的，第二层NAT时家用的NAT路由器之类的设备提供的；</li>
+</ul>
+<h5 id="4-2-3-p2p的两个客户端位于同一个NAT设备后面"><a href="#4-2-3-p2p的两个客户端位于同一个NAT设备后面" class="headerlink" title="4.2.3 p2p的两个客户端位于同一个NAT设备后面"></a><strong><em>4.2.3 p2p的两个客户端位于同一个NAT设备后面</em></strong></h5><p>首先假设两个客户端位于同一个NAT后面，并且位于内网，如图所示，客户端A与集中服务器建立UDP链接，经过NAT转换后，A的公网端口被映射为62000，客户端B同样与集中服务器建立了UDP链接,公网端口映射为62005;</p>
+<p><img src="/res/img/blog/计算机网络/2015-02-02-004.png" alt="位于同一个NAT设备后的UDP打洞过程"></p>
+<p>　　假设客户端A向通过集中服务器，发起对客户端B的链接，客户端A向集中服务器发出消息请求与客户端B进行链接，集中服务器将客户端B的外网地址二元组以及内网地址二元组发送给客户端A,同时把客户端A的相关二元组信息发给B，。客户端A和客户端B发往对方公网地址二元组兵一定会被对方收到，这取决于当前的NAT设备是否支持不同端口之间的UDP数据包能够到达，即<code>Harrpin</code>转换特性，无论如何客户端Ａ发往客户端B的内网地址二元组的UDP数据包一定可以到达，内网数据包不需要路由，且速度更快，客户端A与客户端B推荐采用内网地址二元组信息进行常规p2p通信。<br>　　假定NAT设备支持<code>Hairpin</code>转换，具体的<code>Hairpin</code>转换详见其他文章，应用程序也应该忽略与内网地址二元组的链接，如果客户端A和客户端B采用外网的地址二元组作为p2p通信的链接，这势必会造成数据包无谓的经过NAT设备，这是一种对资源的浪费，就目前的网络情况而言，应用程序在”打洞”的时候，最好还是把外网和内网地址二元组都尝试一下，如果都能成功，有限以内网地址进行链接。</p>
+<h5 id="4-2-4-P2P客户端位于不同NAT设备后面"><a href="#4-2-4-P2P客户端位于不同NAT设备后面" class="headerlink" title="4.2.4 P2P客户端位于不同NAT设备后面"></a><strong><em>4.2.4 P2P客户端位于不同NAT设备后面</em></strong></h5><p>　　假定客户端A与客户端B在不容的NAT设备后面，分属于不同的内网，如图所示，客户端A与客户端B都经由个子的NAT设备与集中服务器建立了UDP链接，客户端A与客户端B的本地端口好均为4321，集中服务器的公网端口号为1234，在向外的回话中，客户端A的外网IP被映射为159.99.25.11，外网端口为62000，客户端B的外网IP被映射为138.76.29.7，外网端口为31000.</p>
+<p>　　如下图所示：</p>
+<ul>
+<li>客户端A -&gt; 本地IP:10.0.0.1,本地端口4321,　外网IP:155.99.25.11,外网端口62000</li>
+<li>客户端B -&gt; 本地IP:10.1.1.3,本地端口4321,  外网IP:138.76.29.7, 外网端口31000</li>
+</ul>
+<p><img src="/res/img/blog/计算机网络/2015-02-02-005.png" alt="位于不同的NAT设备后的UDP打洞过程"></p>
+<p>　　在客户端A或者B向集中服务器发送登陆消息时，服务器会记录下客户端的内外网的二元组信息，后期无论是A与B二者中的任何乙方向服务器发送P2P请求，服务器都会将记录下来的上述信息发送给A或B.<br>　　A,B分属于不同的内网，他们彼此的内网地址在外网中时没有路由的，所以发往各自内网地址的UDP数据包回发送到错误的主机或者根本不存在的主机上，现在假定A的第一个消息将发往B的外网地址，如图所示，该消息途径A的NAT设备，并在该设备上生成一个回话表项，该会话表项源地址二元组信息时{10.0.0.1:4321}，该地址二元组信息和客户端A与服务器建立连接的时候NAT生成的源地址二元组信息一样，但他的目的地址不同，如果A的NAT设备给出的响应是OK的，那么A的NAT设备将保留A的内网地址二元组信息，并且所有来自A的源地址二元组信息为{10.0.0.1:4321}的数据包都沿用A与集中服务器事先建立起来的回话，外网地址二元组信息均为{155.99.25.11:62000}.<br>　　A向B的外网地址发送消息的过程就是”打洞”的过程，从A的内网的角度来看应为从{10.0.0.1:4321}发往{138.76.29.7:31000},从A在其NAT设备上建立的回话来看，是从{155.99.25.11:62000}发到{138.76.29.7:31000}.<br>　　如果A发送给B的外网地址二元组的信息包在B向A发送消息包之前到达B的NAT设备，B的NAT设备会认为A发过来的消息是未授权的外网消息，会丢弃该数据包.B发往A的消息与上述过程一样，会在B的NAT设备上建立一个{10.1.1.3:4321,155.99.25.11:62000}的会话(通常也会沿用B与集中服务器链接时建立的会话，只是该会话现在不仅接受服务器发给B的消息，还接受从A的NAT设备155.99.25.11:62000发来的消息),一旦A与B都想对方的NAT设备在外网上的地址二元组发送了数据包，就打开了A与Ｂ之间的洞，A与B向对方的外网地址发送数据，等效为向对方的客户端直接发送UDP数据包了，一旦应用程序确认已经可以通过往对方的外网地址发送数据包的方式让数据到达NAT后面的目的应用程序，程序会自动停止继续发送用于打洞的数据包，转而开始真正的p2p数据传输；</p>
+<h5 id="4-2-5-P2P客户端位于多层NAT设备后面"><a href="#4-2-5-P2P客户端位于多层NAT设备后面" class="headerlink" title="4.2.5 P2P客户端位于多层NAT设备后面"></a><strong><em>4.2.5 P2P客户端位于多层NAT设备后面</em></strong></h5><p>　　有的网络拓扑结构包含了多个NAT设备，如果没有掌握该拓扑结构的详细信息，两个客户端之间是无法建立”最优化”的P2P路由的，现在我们来讨论最后一种情况。如图所示，假定NAT　C是由ISP提供的NAT设备，NAT C提供多个用户节点映射到有限的几个公网IP的服务，NAT A和NAT B作为NAT C的内网节点将把用户的家庭网络或内部网络接入NAT C的内网，然后用户的内部网络就可以经由NAT C访问公网了，从这种拓扑结构来看，只有服务器与NAT　C时真正拥有公网可路由IP地址的设备，而NAT A和NAT B所使用的公网IP地址，实际上石油ISP服务提供商设定的(相对于NAT C而言)内网地址(本文的后续部分把这个由ISP提供的内网地址相对于NAT C称之为”伪”公网地址)，同理隶属于NAT A与NAT B的客户端,相对于NAT A,NAT B而言，他们处于NAT A,NAT B的内网，以此类推，客户端可以放到多层NAT设备后面，客户端A和客户端B发去对于服务器S的链接的时候，就会以此在NAT A和NAT B上建立向外的Session，而NAT A，NAT B要联入公网的时候，会在NAT C上在建立想歪的Session;</p>
+<p><img src="/res/img/blog/计算机网络/2015-02-02-006.png" alt="多层NAT下的打洞过程"></p>
+<p>　　现在假定客户端A和B希望通过UDP”打洞”完成两个客户端的P2P直连，最优化的路由策略时客户端A向客户端B的伪公网IP上发送数据包，即ISP服务器提供商指定的内网IP,NAT B的伪公网地址二元组{10.0.1.2:55000},由于从服务器的角度只能观察到真正的公网地址，也就是 NAT A,NAT B在NAT C建立session的真正的公网地址{155.99.25.11:62000}以及{155.99.25.11:62005},非常不幸的时客户端A与客户端B是无法通过服务器知道这些伪公网地址，而且即使客户端A和B通过某种手段得到NAT A和NAT B的伪公网地址，我们仍然不建议采用上述的最优化的打洞方式，这是因为这些地址是由ISP服务器提供商提供的或许会存在与客户端本身所在的内网地址重复的可能性(例如：NAT A的内网的IP地址域恰好与NAT A 在NAT C的伪公网IP地址域重复，这样就导致打洞数据包无法发出的问题)，因此客户端别无选择，只能使用由公网服务器观察到的A,B二元组进行打洞操作，用于打洞的数据包将由NAT　C进行转发。<br>　　当客户端A向客户端B的公网地址二元组{155.99.25.11:62005}发送UDP数据包的时候，NAT A首先把数据包的源地址二元组由A的内网地址二元组{10.0.0.1:4321}转换为伪公网地址二元组{10.0.1.1:45000},现在数据包到了NAT C,NAT C应该可以是别处来该数据包是要发往自身转换过得公网地址二元组，如果NAT C可以给出”合理”相应的话，NAT C将把该数据包的源地址二元组改为{155.99.25.11:62000}，目的地址二元组改为{10.0.1.2:55000},即NAT B的”伪公网”地址二元组，NAT B最后会将数据包发往客户端B,同样，由B发往A的数据包也会经过类似的过程，目前也有很多NAT设备不支持类似这样的<code>Hairpin</code>转换，但是意境有越来越多的NAT设备商开始加入对该转换的支持中来。</p>
+<h5 id="4-2-6-UDP在空闲状态下的超时问题"><a href="#4-2-6-UDP在空闲状态下的超时问题" class="headerlink" title="4.2.6 UDP在空闲状态下的超时问题"></a><strong><em>4.2.6 UDP在空闲状态下的超时问题</em></strong></h5><p>由于UDP转换协议提供的“洞”不是绝对可靠的，多数NAT设备内部都有一个UDP转换的空闲状态计时器，如果在一段时间内没有UDP数据通信，NAT设备会关掉由“打洞”操作打出来的“洞”，作为应用程序来讲如果想要做到与设备无关，就最好在穿越NAT以后设定一个穿越的有效期。<br>很遗憾目前没有标准有效期，这个有效期与NAT设备内部的配置有关，某些设备上最短的只有20秒左右。在这个有效期内，即使没有P2P数据包需要传输，应用程序为了维持该“洞”可以正常工作，也必须向对方发送“打洞”心跳包。这个心跳包是需要双方应用程序都发送的，只有一方发送不会维持另一方的Session正常工作。除了频繁发送“打洞”心跳包以外，还有一个方法就是在当前的“洞”超时之前，P2P客户端双方重新“打洞”，丢弃原有的“洞”，这也不失为一个有效的方法。</p>
+
+          
+        
+      
+    </div>
+
+	<div>
+      
+	</div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+	<div>
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/01/28/linux学习-2015-01-28-shell输出重定向详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/linux学习/2015/01/28/linux学习-2015-01-28-shell输出重定向详解/" itemprop="url">
+                  2>&1详解
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-28T00:00:00+08:00">
+                2015-01-28
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux学习/" itemprop="url" rel="index">
+                    <span itemprop="name">linux学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  316
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  1
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<hr>
+<h3 id="Shell-dev-null-2-gt-amp-1详解"><a href="#Shell-dev-null-2-gt-amp-1详解" class="headerlink" title="Shell: /dev/null 2&gt;&amp;1详解"></a><strong><em>Shell: /dev/null 2&gt;&amp;1详解</em></strong></h3><p>可以将/dev/null看作”黑洞”. 它非常等价于一个只写文件. 所有写入它的内容都会永远丢失. 而尝试从它那儿读取内容则什么也读不到. 然而, /dev/null对命令行和脚本都非常的有用. </p>
+<p>用处: </p>
+<ul>
+<li>禁止标准输出.    1 cat $filename &gt;/dev/null   # 文件内容丢失，而不会输出到标准输出. </li>
+<li>禁止标准错误.    2&gt;/dev/null 这样错误信息[标准错误]就被丢到太平洋去了. </li>
+</ul>
+<p><code>&gt;</code> 代表重定向到哪里，例如：echo “123” &gt; /home/123.txt </p>
+<ul>
+<li>1 表示stdout标准输出，系统默认值是1，所以”&gt;/dev/null”等同于”1&gt;/dev/null” </li>
+<li>2 表示stderr标准错误 </li>
+<li>&amp; 表示等同于的意思，2&gt;&amp;1，表示2的输出重定向等同于1 </li>
+</ul>
+<p>那么本文标题的语句： </p>
+<ul>
+<li>1&gt;/dev/null 首先表示标准输出重定向到空设备文件，也就是不输出任何信息到终端，说白了就是不显示任何信息。 </li>
+<li>2&gt;&amp;1 接着，标准错误输出重定向等同于 标准输出，因为之前标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+	<div>
+      
+	</div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+	<div>
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/环境搭建/2015/01/28/环境搭建-2015-01-28-CentOS6-5安装crtmpserver搭建RTMP流媒体服务/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/环境搭建/2015/01/28/环境搭建-2015-01-28-CentOS6-5安装crtmpserver搭建RTMP流媒体服务/" itemprop="url">
+                  CentOS6.5安装crtmpserver搭建RTMP流媒体服务器
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-28T00:00:00+08:00">
+                2015-01-28
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/环境搭建/" itemprop="url" rel="index">
+                    <span itemprop="name">环境搭建</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  467
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="1-crtmpserver简介"><a href="#1-crtmpserver简介" class="headerlink" title="1. crtmpserver简介"></a><strong><em>1. crtmpserver简介</em></strong></h2><ul>
+<li>支持推送给rtmp流的接受与播放器请求的分发；</li>
+<li>rtmp流媒体服务器树状网络集群的构建；</li>
+<li>支持 <figure class="highlight plain"><figcaption><span>和　```android```;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">PS:[官网应用介绍](http://www.rtmpd.com/)</div><div class="line"></div><div class="line">## ***2. crtmpserver流媒体服务器的搭建(centOS6.5)***</div><div class="line"></div><div class="line">### ***2.1 cmake的安装***</div><div class="line"></div><div class="line">下载最新的cmake</div><div class="line"></div><div class="line">```sh</div><div class="line">	yum install cmake</div></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="2-2-openssl的安装"><a href="#2-2-openssl的安装" class="headerlink" title="2.2 openssl的安装"></a><strong><em>2.2 openssl的安装</em></strong></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget -o openssl-0.9.8t.tar.gz http://www.openssl.org/<span class="built_in">source</span>/openssl-0.9.8ze.tar.gz</div><div class="line"><span class="built_in">cd</span> openssl-0.9.8t</div><div class="line">./config</div><div class="line">make .</div><div class="line">make install</div></pre></td></tr></table></figure>
+<h3 id="2-3-crtmpserver的编译与安装"><a href="#2-3-crtmpserver的编译与安装" class="headerlink" title="2.3 crtmpserver的编译与安装"></a><strong><em>2.3 crtmpserver的编译与安装</em></strong></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">svn co --username anonymous --password <span class="string">""</span> https://svn.rtmpd.com/crtmpserver/branches/1.0 crtmpserver</div><div class="line"><span class="built_in">cd</span> crtmpserver</div><div class="line">sh ./cleanup.sh</div><div class="line"><span class="built_in">cd</span> builders/cmake</div><div class="line">cmake .</div><div class="line">make</div><div class="line">./crtmpserver/crtmpserver ./crtmpserver/crtmpserver.lua</div></pre></td></tr></table></figure>
+<p><strong><em>PS:</em></strong> </p>
+<ul>
+<li>最后一行命令“”#./crtmpserver/crtmpserver ./crtmpserver/crtmpserver.lua”意思是：使用“./crtmpserver/crtmpserver.lua”为配置脚本，启动“crtmpserver”服务;</li>
+<li>最后一行命令的目录是在”builders/cmake”下;</li>
+</ul>
+<h2 id="3-脚本的自启动和静默运行"><a href="#3-脚本的自启动和静默运行" class="headerlink" title="3. 脚本的自启动和静默运行"></a><strong><em>3. 脚本的自启动和静默运行</em></strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup ./crtmpserver/crtmpserver ./crtmpserver/crtmpserver.lua &amp;</div></pre></td></tr></table></figure>
+<h3 id="4-JWPlayer直播方案搭建"><a href="#4-JWPlayer直播方案搭建" class="headerlink" title="4. JWPlayer直播方案搭建"></a><strong><em>4. JWPlayer直播方案搭建</em></strong></h3><h3 id="4-1-搭建http-server"><a href="#4-1-搭建http-server" class="headerlink" title="4.1 搭建http server"></a><strong><em>4.1 搭建http server</em></strong></h3><p>略</p>
+<h3 id="4-2-下载JWPlayer并部署到http-server上"><a href="#4-2-下载JWPlayer并部署到http-server上" class="headerlink" title="4.2 下载JWPlayer并部署到http server上"></a><strong><em>4.2 下载JWPlayer并部署到http server上</em></strong></h3><p><a href="http://www.longtailvideo.com/" target="_blank" rel="external">JWPlayer官网</a><br><a href="http://www.longtailvideo.com/jw-player/download/" target="_blank" rel="external">JWPlayer下载页面</a><br>以上链接不能用的话我自己网盘里面有ｏ（╯□╰）ｏ<br>下载解压后，将jwplayer整个文件夹内容放到网站指定目录下<br>如根目录下的jwplayer文件夹;</p>
+<h3 id="4-3-新建播放器的html页面"><a href="#4-3-新建播放器的html页面" class="headerlink" title="4.3 新建播放器的html页面"></a><strong><em>4.3 新建播放器的html页面</em></strong></h3><p><strong><em>test.html</em></strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/jwplayer/jwplayer.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'my-video'</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </div><div class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">'text/javascript'</span>&gt;</span><span class="undefined">    </span></div><div class="line"> 			jwplayer('my-video').setup(&#123;file:'rtmp://127.0.0.1/live/livestream',width: '640', height: '480'&#125;); </div><div class="line">		<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
+<h3 id="4-4-使用Flash-Media-Live-Encoder推送直播源"><a href="#4-4-使用Flash-Media-Live-Encoder推送直播源" class="headerlink" title="4.4 使用Flash Media Live Encoder推送直播源"></a><strong><em>4.4 使用Flash Media Live Encoder推送直播源</em></strong></h3><p><img src="/res/img/blog/环境搭建/crtspserver.jpg" alt="Flash Media Live Encoder"></p>
+<p>设置好后，点start即可</p>
+<h3 id="4-5-浏览器中查看"><a href="#4-5-浏览器中查看" class="headerlink" title="4.5 浏览器中查看"></a><strong><em>4.5 浏览器中查看</em></strong></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://127.0.0.1/jwplayer/test.html</div></pre></td></tr></table></figure>
+<h3 id="4-6-使用ffmpeg做为直播源"><a href="#4-6-使用ffmpeg做为直播源" class="headerlink" title="4.6 使用ffmpeg做为直播源"></a><strong><em>4.6 使用ffmpeg做为直播源</em></strong></h3><ul>
+<li>不能直接使用ffmpeg的rtmp模块进行流推送需要使用librtmp才能进行正常的流推送和观看；</li>
+<li>原始的lua可以不用做修改,示例命令如下：</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ffmpeg -re -i c1.flv -acodec copy -vcodec copy <span class="_">-f</span> flv rtmp://127.0.0.1/live/livestream</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+	<div>
+      
+	</div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+	<div>
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/Python学习/2015/01/28/Python学习-2015-01-28-python看门狗程序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/Python学习/2015/01/28/Python学习-2015-01-28-python看门狗程序/" itemprop="url">
+                  python 看门狗
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-28T00:00:00+08:00">
+                2015-01-28
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python学习/" itemprop="url" rel="index">
+                    <span itemprop="name">Python学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  993
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  6
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<h2 id="python看门狗"><a href="#python看门狗" class="headerlink" title="python看门狗"></a><strong><em>python看门狗</em></strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> signal</div><div class="line"><span class="keyword">import</span> socket</div><div class="line"></div><div class="line"><span class="comment"># set the default encoding to utf-8</span></div><div class="line"><span class="comment"># reload sys model to enable the getdefaultencoding method.</span></div><div class="line">reload(sys)</div><div class="line"><span class="comment"># using exec to set the encoding, to avoid error in IDE.</span></div><div class="line"><span class="keyword">exec</span> <span class="string">"sys.setdefaultencoding('utf-8')"</span></div><div class="line"><span class="keyword">assert</span> sys.getdefaultencoding().lower() == <span class="string">"utf-8"</span></div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">TODO:</span> check python version, &gt;=2.6 requires.</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">handler</span><span class="params">(signum, frame)</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">'usr press ctrl+c, exit'</span></div><div class="line">    sys.exit(<span class="number">0</span>)</div><div class="line"></div><div class="line"></div><div class="line">signal.signal(signal.SIGINT, handler)</div><div class="line"></div><div class="line"><span class="comment"># the command to get and check the My server status</span></div><div class="line">check_My_server_command = <span class="string">"sudo /etc/init.d/daodaoliang status"</span></div><div class="line"><span class="comment"># when server stopped, restart it.</span></div><div class="line">start_My_server_command = <span class="string">"sudo /etc/init.d/daodaoliang start"</span></div><div class="line"><span class="comment"># the interval to check the server.</span></div><div class="line">check_My_server_interval_seconds = <span class="number">5</span></div><div class="line"><span class="comment"># sleep seconds when main function exception</span></div><div class="line">main_function_exception_sleep_seconds = <span class="number">10</span></div><div class="line"><span class="comment"># email to user list</span></div><div class="line">to_user = [<span class="string">"88341189@qq.com"</span>, <span class="string">"wangxkww@163.com"</span>]</div><div class="line"></div><div class="line"><span class="comment"># consts</span></div><div class="line">My_server_dir = <span class="string">"/work/code//work/code/cusflo-server-moon"</span></div><div class="line">My_server_version_command = <span class="string">"%s/dog/client_update_dog.py"</span> % My_server_dir</div><div class="line">My_server_conf_file = <span class="string">"%s/conf/My_server.conf"</span> % My_server_dir</div><div class="line">My_server_log_prefix = <span class="string">"daodaoliang.log"</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> smtplib</div><div class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_mail</span><span class="params">(smtp_server, username, password, to_user, subject, content)</span>:</span></div><div class="line">    msg = MIMEText(content, _subtype=<span class="string">'html'</span>, _charset=<span class="string">'gb2312'</span>)</div><div class="line">    msg[<span class="string">'Subject'</span>] = subject</div><div class="line">    msg[<span class="string">'From'</span>] = username</div><div class="line">    msg[<span class="string">'To'</span>] = <span class="string">";"</span>.join(to_user)</div><div class="line"></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        smtp = smtplib.SMTP()</div><div class="line">        smtp.connect(smtp_server)</div><div class="line">        smtp.login(username, password)</div><div class="line">        smtp.sendmail(username, to_user, msg.as_string())</div><div class="line">        smtp.close()</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line">    <span class="keyword">except</span> Exception, ex:</div><div class="line">        <span class="keyword">print</span> <span class="string">"send email failed: %s"</span> % ex</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> len(sys.argv) &lt;= <span class="number">3</span>:</div><div class="line">    <span class="keyword">print</span> <span class="string">"""Usage: %s &lt;email_smtp_server&gt; &lt;email_username&gt; &lt;email_password&gt;</span></div><div class="line">        email_smtp_server the smtp server. eg. smtp.126.com</div><div class="line">        email_username    the email user to login to smtp server. eg. mymail@126.com</div><div class="line">        email_password    the email user password to login. e.g xxxxx</div><div class="line">For example:</div><div class="line">        %s smtp.126.com mymail@126.com xxxxx""" % (sys.argv[<span class="number">0</span>], sys.argv[<span class="number">0</span>])</div><div class="line">    sys.exit(<span class="number">1</span>)</div><div class="line"></div><div class="line">(email_smtp_server, email_username, email_password) = sys.argv[<span class="number">1</span>:]</div><div class="line"><span class="keyword">print</span> <span class="string">"email_smtp_server=%s, email_username=%s, email_password=%s"</span> % (</div><div class="line">    email_smtp_server, email_username, email_password)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">strip_execute_command_get_output</span><span class="params">(cmd)</span>:</span></div><div class="line">    output = execute_command_get_output(cmd)</div><div class="line">    output = [x.strip() <span class="keyword">for</span> x <span class="keyword">in</span> output]</div><div class="line">    <span class="keyword">return</span> output</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">execute_command_get_output</span><span class="params">(cmd)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        pipe = os.popen(cmd)</div><div class="line">        output = pipe.readlines()</div><div class="line">        pipe.close()</div><div class="line">        <span class="keyword">return</span> output</div><div class="line">    <span class="keyword">except</span> Exception, ex:</div><div class="line">        <span class="keyword">print</span> <span class="string">"execute cmd %s failed: %s"</span> % (cmd, ex)</div><div class="line">        <span class="keyword">return</span> <span class="string">"error"</span></div><div class="line"></div><div class="line"></div><div class="line">hostname = socket.gethostname()</div><div class="line">iplist = strip_execute_command_get_output(</div><div class="line">    <span class="string">'''ifconfig 2&gt;/dev/null |grep "inet addr"|awk '&#123;print $2&#125;'|awk -F ':' '&#123;print $2&#125;'|grep -v "127.0.0.1"'''</span>)</div><div class="line">sysinfo = <span class="string">"%s %s"</span> % (sys.platform, sys.version.replace(<span class="string">"\n"</span>, <span class="string">" "</span>))</div><div class="line"><span class="keyword">print</span> <span class="string">"hostname=%s, iplist=%s, sysinfo=%s"</span> % (hostname, iplist, sysinfo)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_content_then_start_server</span><span class="params">()</span>:</span></div><div class="line">    basic_cmd = time.strftime(<span class="string">'%Y-%m-%d %X'</span>, time.localtime())</div><div class="line">    basic_info = <span class="string">"%s\n%s\n%s"</span> % (hostname, <span class="string">" "</span>.join(iplist), sysinfo)</div><div class="line">    version_cmd = <span class="string">"%s -v 2&gt;&amp;1"</span> % My_server_version_command</div><div class="line">    version_info = execute_command_get_output(version_cmd)</div><div class="line">    ls_cmd = <span class="string">"ls -lh %s 2&gt;&amp;1; ls -lh %s/log 2&gt;&amp;1"</span> % (My_server_dir, My_server_dir)</div><div class="line">    ls_info = execute_command_get_output(ls_cmd)</div><div class="line">    lsbrelease_cmd = <span class="string">"lsb_release -a 2&gt;&amp;1"</span></div><div class="line">    lsbrelease_info = execute_command_get_output(lsbrelease_cmd)</div><div class="line">    uname_cmd = <span class="string">"uname -a 2&gt;&amp;1"</span></div><div class="line">    uname_info = execute_command_get_output(uname_cmd)</div><div class="line">    ccamr_cmd = <span class="string">"ccamr list 2&gt;&amp;1"</span></div><div class="line">    ccamr_info = execute_command_get_output(ccamr_cmd)</div><div class="line">    ps_cmd = <span class="string">"ps aux|grep My|grep -v Myd|grep -v grep 2&gt;&amp;1"</span></div><div class="line">    ps_info = execute_command_get_output(ps_cmd)</div><div class="line">    df_cmd = <span class="string">"df -h 2&gt;&amp;1"</span></div><div class="line">    df_info = execute_command_get_output(df_cmd)</div><div class="line">    free_cmd = <span class="string">"free -m 2&gt;&amp;1"</span></div><div class="line">    free_info = execute_command_get_output(free_cmd)</div><div class="line">    conf_cmd = <span class="string">"cat %s 2&gt;&amp;1"</span> % My_server_conf_file</div><div class="line">    conf_info = execute_command_get_output(conf_cmd)</div><div class="line">    top_cmd = <span class="string">"top -c -n 1 -b 2&gt;&amp;1"</span></div><div class="line">    top_info = execute_command_get_output(top_cmd)</div><div class="line">    vmstat_cmd = <span class="string">"vmstat 1 3 2&gt;&amp;1"</span></div><div class="line">    vmstat_info = execute_command_get_output(vmstat_cmd)</div><div class="line">    iostat_cmd = <span class="string">"iostat 1 3 2&gt;&amp;1"</span></div><div class="line">    iostat_info = execute_command_get_output(iostat_cmd)</div><div class="line"></div><div class="line">    <span class="keyword">print</span> <span class="string">"dump info success"</span></div><div class="line"></div><div class="line">    <span class="comment"># old logs</span></div><div class="line">    old_logs = strip_execute_command_get_output(</div><div class="line">        <span class="string">"(cd %s/log/ &amp;&amp; ls |grep %s) 2&gt;&amp;1"</span> % (My_server_dir, My_server_log_prefix))</div><div class="line"></div><div class="line">    <span class="comment"># start server.</span></div><div class="line">    start_cmd = <span class="string">"%s  2&gt;&amp;1"</span> % start_My_server_command</div><div class="line">    start_info = execute_command_get_output(start_cmd)</div><div class="line">    <span class="keyword">print</span> <span class="string">"try start server completed"</span></div><div class="line"></div><div class="line">    <span class="comment"># get the system start logs</span></div><div class="line">    newlogs_cmd = <span class="string">"(cd %s/log/ &amp;&amp; ls |grep %s"</span> % (My_server_dir, My_server_log_prefix)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> old_logs:</div><div class="line">        newlogs_cmd = <span class="string">"%s| grep -v %s"</span> % (newlogs_cmd, i)</div><div class="line">    newlogs_cmd = <span class="string">"%s| xargs cat) 2&gt;&amp;1"</span> % newlogs_cmd</div><div class="line">    newlogs_info = execute_command_get_output(newlogs_cmd)</div><div class="line"></div><div class="line">    content = <span class="string">'''</span></div><div class="line">        &lt;style&gt;</div><div class="line">            div.cmd&#123;</div><div class="line">                background-color: #00E000;</div><div class="line">                font-size: 15px;</div><div class="line">                font-weight: bold;</div><div class="line">                padding: 2px 3px 2px 5px;</div><div class="line">            &#125;</div><div class="line">            div.info&#123;</div><div class="line">                background-color: #CCCCCC;</div><div class="line">                margin-top: 0px;</div><div class="line">                margin-bottom: 10px;</div><div class="line">                margin-left: 10px;</div><div class="line">                font-size: 12px;</div><div class="line">                padding: 2px 3px 2px 5px;</div><div class="line">            &#125;</div><div class="line">        &lt;/style&gt;</div><div class="line">        &lt;!-- basic --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- version --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- ls --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- lsbrelease --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- uname --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- ccamr --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- ps --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- df --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- free --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- conf --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- top --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- vmstat --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- iostat --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- start server --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- server log --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">    ''' % (basic_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(basic_info),</div><div class="line">           version_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(version_info),</div><div class="line">           ls_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(ls_info),</div><div class="line">           lsbrelease_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(lsbrelease_info),</div><div class="line">           uname_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(uname_info),</div><div class="line">           ccamr_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(ccamr_info),</div><div class="line">           ps_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(ps_info),</div><div class="line">           df_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(df_info),</div><div class="line">           free_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(free_info),</div><div class="line">           conf_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(conf_info),</div><div class="line">           top_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(top_info),</div><div class="line">           vmstat_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(vmstat_info),</div><div class="line">           iostat_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(iostat_info),</div><div class="line">           start_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(start_info),</div><div class="line">           newlogs_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(newlogs_info)</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="comment"># print content;</span></div><div class="line">    <span class="keyword">return</span> content</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"start check server status"</span></div><div class="line">        ret = os.system(<span class="string">"%s  &gt; /dev/null 2&gt;&amp;1"</span> % check_My_server_command)</div><div class="line">        <span class="keyword">if</span> ret != <span class="number">0</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"server crash, ret=%s"</span> % ret</div><div class="line">            subject = <span class="string">"[MyServer] watchdog server %s crash"</span> % hostname</div><div class="line">            content = generate_content_then_start_server()</div><div class="line">            <span class="keyword">print</span> <span class="string">"email to %s"</span> % to_user</div><div class="line">            <span class="keyword">if</span> <span class="number">0</span> == send_mail(email_smtp_server, email_username, email_password, to_user, subject, content):</div><div class="line">                <span class="keyword">print</span> <span class="string">"email success"</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"server is ok"</span></div><div class="line">        time.sleep(check_My_server_interval_seconds)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        main()</div><div class="line">    <span class="keyword">except</span> Exception, ex:</div><div class="line">        <span class="keyword">print</span> <span class="string">"main function exception: %s"</span> % ex</div><div class="line">    time.sleep(main_function_exception_sleep_seconds)</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+	<div>
+      
+	</div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+	<div>
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/环境搭建/2015/01/28/环境搭建-2015-01-28-crtmpserver配置文件说明/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -409,8 +1262,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -791,815 +1644,6 @@
 </tr>
 </tbody>
 </table>
-
-          
-        
-      
-    </div>
-
-	<div>
-      
-	</div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-	<div>
-	  
-	</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/01/28/linux学习-2015-01-28-shell输出重定向详解/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="daodaoliang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刀刀亮的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/linux学习/2015/01/28/linux学习-2015-01-28-shell输出重定向详解/" itemprop="url">
-                  2>&1详解
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-28T00:00:00+08:00">
-                2015-01-28
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux学习/" itemprop="url" rel="index">
-                    <span itemprop="name">linux学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  316
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<hr>
-<h3 id="Shell-dev-null-2-gt-amp-1详解"><a href="#Shell-dev-null-2-gt-amp-1详解" class="headerlink" title="Shell: /dev/null 2&gt;&amp;1详解"></a><strong><em>Shell: /dev/null 2&gt;&amp;1详解</em></strong></h3><p>可以将/dev/null看作”黑洞”. 它非常等价于一个只写文件. 所有写入它的内容都会永远丢失. 而尝试从它那儿读取内容则什么也读不到. 然而, /dev/null对命令行和脚本都非常的有用. </p>
-<p>用处: </p>
-<ul>
-<li>禁止标准输出.    1 cat $filename &gt;/dev/null   # 文件内容丢失，而不会输出到标准输出. </li>
-<li>禁止标准错误.    2&gt;/dev/null 这样错误信息[标准错误]就被丢到太平洋去了. </li>
-</ul>
-<p><code>&gt;</code> 代表重定向到哪里，例如：echo “123” &gt; /home/123.txt </p>
-<ul>
-<li>1 表示stdout标准输出，系统默认值是1，所以”&gt;/dev/null”等同于”1&gt;/dev/null” </li>
-<li>2 表示stderr标准错误 </li>
-<li>&amp; 表示等同于的意思，2&gt;&amp;1，表示2的输出重定向等同于1 </li>
-</ul>
-<p>那么本文标题的语句： </p>
-<ul>
-<li>1&gt;/dev/null 首先表示标准输出重定向到空设备文件，也就是不输出任何信息到终端，说白了就是不显示任何信息。 </li>
-<li>2&gt;&amp;1 接着，标准错误输出重定向等同于 标准输出，因为之前标准输出已经重定向到了空设备文件，所以标准错误输出也重定向到空设备文件。</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-	<div>
-      
-	</div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-	<div>
-	  
-	</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/Python学习/2015/01/28/Python学习-2015-01-28-python看门狗程序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="daodaoliang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刀刀亮的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/Python学习/2015/01/28/Python学习-2015-01-28-python看门狗程序/" itemprop="url">
-                  python 看门狗
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-28T00:00:00+08:00">
-                2015-01-28
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python学习/" itemprop="url" rel="index">
-                    <span itemprop="name">Python学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  993
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  6
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<h2 id="python看门狗"><a href="#python看门狗" class="headerlink" title="python看门狗"></a><strong><em>python看门狗</em></strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div><div class="line">232</div><div class="line">233</div><div class="line">234</div><div class="line">235</div><div class="line">236</div><div class="line">237</div><div class="line">238</div><div class="line">239</div><div class="line">240</div><div class="line">241</div><div class="line">242</div><div class="line">243</div><div class="line">244</div><div class="line">245</div><div class="line">246</div><div class="line">247</div><div class="line">248</div><div class="line">249</div><div class="line">250</div><div class="line">251</div><div class="line">252</div><div class="line">253</div><div class="line">254</div><div class="line">255</div><div class="line">256</div><div class="line">257</div><div class="line">258</div><div class="line">259</div><div class="line">260</div><div class="line">261</div><div class="line">262</div><div class="line">263</div><div class="line">264</div><div class="line">265</div><div class="line">266</div><div class="line">267</div><div class="line">268</div><div class="line">269</div><div class="line">270</div><div class="line">271</div><div class="line">272</div><div class="line">273</div><div class="line">274</div><div class="line">275</div><div class="line">276</div><div class="line">277</div><div class="line">278</div><div class="line">279</div><div class="line">280</div><div class="line">281</div><div class="line">282</div><div class="line">283</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># -*- coding: utf-8 -*-</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> time</div><div class="line"><span class="keyword">import</span> os</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"><span class="keyword">import</span> signal</div><div class="line"><span class="keyword">import</span> socket</div><div class="line"></div><div class="line"><span class="comment"># set the default encoding to utf-8</span></div><div class="line"><span class="comment"># reload sys model to enable the getdefaultencoding method.</span></div><div class="line">reload(sys)</div><div class="line"><span class="comment"># using exec to set the encoding, to avoid error in IDE.</span></div><div class="line"><span class="keyword">exec</span> <span class="string">"sys.setdefaultencoding('utf-8')"</span></div><div class="line"><span class="keyword">assert</span> sys.getdefaultencoding().lower() == <span class="string">"utf-8"</span></div><div class="line"></div><div class="line"><span class="comment"># <span class="doctag">TODO:</span> check python version, &gt;=2.6 requires.</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">handler</span><span class="params">(signum, frame)</span>:</span></div><div class="line">    <span class="keyword">print</span> <span class="string">'usr press ctrl+c, exit'</span></div><div class="line">    sys.exit(<span class="number">0</span>)</div><div class="line"></div><div class="line"></div><div class="line">signal.signal(signal.SIGINT, handler)</div><div class="line"></div><div class="line"><span class="comment"># the command to get and check the My server status</span></div><div class="line">check_My_server_command = <span class="string">"sudo /etc/init.d/daodaoliang status"</span></div><div class="line"><span class="comment"># when server stopped, restart it.</span></div><div class="line">start_My_server_command = <span class="string">"sudo /etc/init.d/daodaoliang start"</span></div><div class="line"><span class="comment"># the interval to check the server.</span></div><div class="line">check_My_server_interval_seconds = <span class="number">5</span></div><div class="line"><span class="comment"># sleep seconds when main function exception</span></div><div class="line">main_function_exception_sleep_seconds = <span class="number">10</span></div><div class="line"><span class="comment"># email to user list</span></div><div class="line">to_user = [<span class="string">"88341189@qq.com"</span>, <span class="string">"wangxkww@163.com"</span>]</div><div class="line"></div><div class="line"><span class="comment"># consts</span></div><div class="line">My_server_dir = <span class="string">"/work/code//work/code/cusflo-server-moon"</span></div><div class="line">My_server_version_command = <span class="string">"%s/dog/client_update_dog.py"</span> % My_server_dir</div><div class="line">My_server_conf_file = <span class="string">"%s/conf/My_server.conf"</span> % My_server_dir</div><div class="line">My_server_log_prefix = <span class="string">"daodaoliang.log"</span></div><div class="line"></div><div class="line"><span class="keyword">import</span> smtplib</div><div class="line"><span class="keyword">from</span> email.mime.text <span class="keyword">import</span> MIMEText</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">send_mail</span><span class="params">(smtp_server, username, password, to_user, subject, content)</span>:</span></div><div class="line">    msg = MIMEText(content, _subtype=<span class="string">'html'</span>, _charset=<span class="string">'gb2312'</span>)</div><div class="line">    msg[<span class="string">'Subject'</span>] = subject</div><div class="line">    msg[<span class="string">'From'</span>] = username</div><div class="line">    msg[<span class="string">'To'</span>] = <span class="string">";"</span>.join(to_user)</div><div class="line"></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        smtp = smtplib.SMTP()</div><div class="line">        smtp.connect(smtp_server)</div><div class="line">        smtp.login(username, password)</div><div class="line">        smtp.sendmail(username, to_user, msg.as_string())</div><div class="line">        smtp.close()</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line">    <span class="keyword">except</span> Exception, ex:</div><div class="line">        <span class="keyword">print</span> <span class="string">"send email failed: %s"</span> % ex</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> len(sys.argv) &lt;= <span class="number">3</span>:</div><div class="line">    <span class="keyword">print</span> <span class="string">"""Usage: %s &lt;email_smtp_server&gt; &lt;email_username&gt; &lt;email_password&gt;</span></div><div class="line">        email_smtp_server the smtp server. eg. smtp.126.com</div><div class="line">        email_username    the email user to login to smtp server. eg. mymail@126.com</div><div class="line">        email_password    the email user password to login. e.g xxxxx</div><div class="line">For example:</div><div class="line">        %s smtp.126.com mymail@126.com xxxxx""" % (sys.argv[<span class="number">0</span>], sys.argv[<span class="number">0</span>])</div><div class="line">    sys.exit(<span class="number">1</span>)</div><div class="line"></div><div class="line">(email_smtp_server, email_username, email_password) = sys.argv[<span class="number">1</span>:]</div><div class="line"><span class="keyword">print</span> <span class="string">"email_smtp_server=%s, email_username=%s, email_password=%s"</span> % (</div><div class="line">    email_smtp_server, email_username, email_password)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">strip_execute_command_get_output</span><span class="params">(cmd)</span>:</span></div><div class="line">    output = execute_command_get_output(cmd)</div><div class="line">    output = [x.strip() <span class="keyword">for</span> x <span class="keyword">in</span> output]</div><div class="line">    <span class="keyword">return</span> output</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">execute_command_get_output</span><span class="params">(cmd)</span>:</span></div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        pipe = os.popen(cmd)</div><div class="line">        output = pipe.readlines()</div><div class="line">        pipe.close()</div><div class="line">        <span class="keyword">return</span> output</div><div class="line">    <span class="keyword">except</span> Exception, ex:</div><div class="line">        <span class="keyword">print</span> <span class="string">"execute cmd %s failed: %s"</span> % (cmd, ex)</div><div class="line">        <span class="keyword">return</span> <span class="string">"error"</span></div><div class="line"></div><div class="line"></div><div class="line">hostname = socket.gethostname()</div><div class="line">iplist = strip_execute_command_get_output(</div><div class="line">    <span class="string">'''ifconfig 2&gt;/dev/null |grep "inet addr"|awk '&#123;print $2&#125;'|awk -F ':' '&#123;print $2&#125;'|grep -v "127.0.0.1"'''</span>)</div><div class="line">sysinfo = <span class="string">"%s %s"</span> % (sys.platform, sys.version.replace(<span class="string">"\n"</span>, <span class="string">" "</span>))</div><div class="line"><span class="keyword">print</span> <span class="string">"hostname=%s, iplist=%s, sysinfo=%s"</span> % (hostname, iplist, sysinfo)</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">generate_content_then_start_server</span><span class="params">()</span>:</span></div><div class="line">    basic_cmd = time.strftime(<span class="string">'%Y-%m-%d %X'</span>, time.localtime())</div><div class="line">    basic_info = <span class="string">"%s\n%s\n%s"</span> % (hostname, <span class="string">" "</span>.join(iplist), sysinfo)</div><div class="line">    version_cmd = <span class="string">"%s -v 2&gt;&amp;1"</span> % My_server_version_command</div><div class="line">    version_info = execute_command_get_output(version_cmd)</div><div class="line">    ls_cmd = <span class="string">"ls -lh %s 2&gt;&amp;1; ls -lh %s/log 2&gt;&amp;1"</span> % (My_server_dir, My_server_dir)</div><div class="line">    ls_info = execute_command_get_output(ls_cmd)</div><div class="line">    lsbrelease_cmd = <span class="string">"lsb_release -a 2&gt;&amp;1"</span></div><div class="line">    lsbrelease_info = execute_command_get_output(lsbrelease_cmd)</div><div class="line">    uname_cmd = <span class="string">"uname -a 2&gt;&amp;1"</span></div><div class="line">    uname_info = execute_command_get_output(uname_cmd)</div><div class="line">    ccamr_cmd = <span class="string">"ccamr list 2&gt;&amp;1"</span></div><div class="line">    ccamr_info = execute_command_get_output(ccamr_cmd)</div><div class="line">    ps_cmd = <span class="string">"ps aux|grep My|grep -v Myd|grep -v grep 2&gt;&amp;1"</span></div><div class="line">    ps_info = execute_command_get_output(ps_cmd)</div><div class="line">    df_cmd = <span class="string">"df -h 2&gt;&amp;1"</span></div><div class="line">    df_info = execute_command_get_output(df_cmd)</div><div class="line">    free_cmd = <span class="string">"free -m 2&gt;&amp;1"</span></div><div class="line">    free_info = execute_command_get_output(free_cmd)</div><div class="line">    conf_cmd = <span class="string">"cat %s 2&gt;&amp;1"</span> % My_server_conf_file</div><div class="line">    conf_info = execute_command_get_output(conf_cmd)</div><div class="line">    top_cmd = <span class="string">"top -c -n 1 -b 2&gt;&amp;1"</span></div><div class="line">    top_info = execute_command_get_output(top_cmd)</div><div class="line">    vmstat_cmd = <span class="string">"vmstat 1 3 2&gt;&amp;1"</span></div><div class="line">    vmstat_info = execute_command_get_output(vmstat_cmd)</div><div class="line">    iostat_cmd = <span class="string">"iostat 1 3 2&gt;&amp;1"</span></div><div class="line">    iostat_info = execute_command_get_output(iostat_cmd)</div><div class="line"></div><div class="line">    <span class="keyword">print</span> <span class="string">"dump info success"</span></div><div class="line"></div><div class="line">    <span class="comment"># old logs</span></div><div class="line">    old_logs = strip_execute_command_get_output(</div><div class="line">        <span class="string">"(cd %s/log/ &amp;&amp; ls |grep %s) 2&gt;&amp;1"</span> % (My_server_dir, My_server_log_prefix))</div><div class="line"></div><div class="line">    <span class="comment"># start server.</span></div><div class="line">    start_cmd = <span class="string">"%s  2&gt;&amp;1"</span> % start_My_server_command</div><div class="line">    start_info = execute_command_get_output(start_cmd)</div><div class="line">    <span class="keyword">print</span> <span class="string">"try start server completed"</span></div><div class="line"></div><div class="line">    <span class="comment"># get the system start logs</span></div><div class="line">    newlogs_cmd = <span class="string">"(cd %s/log/ &amp;&amp; ls |grep %s"</span> % (My_server_dir, My_server_log_prefix)</div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> old_logs:</div><div class="line">        newlogs_cmd = <span class="string">"%s| grep -v %s"</span> % (newlogs_cmd, i)</div><div class="line">    newlogs_cmd = <span class="string">"%s| xargs cat) 2&gt;&amp;1"</span> % newlogs_cmd</div><div class="line">    newlogs_info = execute_command_get_output(newlogs_cmd)</div><div class="line"></div><div class="line">    content = <span class="string">'''</span></div><div class="line">        &lt;style&gt;</div><div class="line">            div.cmd&#123;</div><div class="line">                background-color: #00E000;</div><div class="line">                font-size: 15px;</div><div class="line">                font-weight: bold;</div><div class="line">                padding: 2px 3px 2px 5px;</div><div class="line">            &#125;</div><div class="line">            div.info&#123;</div><div class="line">                background-color: #CCCCCC;</div><div class="line">                margin-top: 0px;</div><div class="line">                margin-bottom: 10px;</div><div class="line">                margin-left: 10px;</div><div class="line">                font-size: 12px;</div><div class="line">                padding: 2px 3px 2px 5px;</div><div class="line">            &#125;</div><div class="line">        &lt;/style&gt;</div><div class="line">        &lt;!-- basic --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- version --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- ls --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- lsbrelease --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- uname --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- ccamr --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- ps --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- df --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- free --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- conf --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- top --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- vmstat --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- iostat --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- start server --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">        &lt;!-- server log --&gt;</div><div class="line">        &lt;div&gt;</div><div class="line">            &lt;div class='cmd'&gt;%s&lt;/div&gt;</div><div class="line">            &lt;div class='info'&gt;%s&lt;/div&gt;</div><div class="line">        &lt;/div&gt;</div><div class="line">    ''' % (basic_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(basic_info),</div><div class="line">           version_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(version_info),</div><div class="line">           ls_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(ls_info),</div><div class="line">           lsbrelease_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(lsbrelease_info),</div><div class="line">           uname_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(uname_info),</div><div class="line">           ccamr_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(ccamr_info),</div><div class="line">           ps_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(ps_info),</div><div class="line">           df_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(df_info),</div><div class="line">           free_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(free_info),</div><div class="line">           conf_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(conf_info),</div><div class="line">           top_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(top_info),</div><div class="line">           vmstat_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(vmstat_info),</div><div class="line">           iostat_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(iostat_info),</div><div class="line">           start_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(start_info),</div><div class="line">           newlogs_cmd, <span class="string">"&lt;pre&gt;%s&lt;/pre&gt;"</span> % <span class="string">""</span>.join(newlogs_info)</div><div class="line">    )</div><div class="line"></div><div class="line">    <span class="comment"># print content;</span></div><div class="line">    <span class="keyword">return</span> content</div><div class="line"></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        <span class="keyword">print</span> <span class="string">"start check server status"</span></div><div class="line">        ret = os.system(<span class="string">"%s  &gt; /dev/null 2&gt;&amp;1"</span> % check_My_server_command)</div><div class="line">        <span class="keyword">if</span> ret != <span class="number">0</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"server crash, ret=%s"</span> % ret</div><div class="line">            subject = <span class="string">"[MyServer] watchdog server %s crash"</span> % hostname</div><div class="line">            content = generate_content_then_start_server()</div><div class="line">            <span class="keyword">print</span> <span class="string">"email to %s"</span> % to_user</div><div class="line">            <span class="keyword">if</span> <span class="number">0</span> == send_mail(email_smtp_server, email_username, email_password, to_user, subject, content):</div><div class="line">                <span class="keyword">print</span> <span class="string">"email success"</span></div><div class="line">        <span class="keyword">else</span>:</div><div class="line">            <span class="keyword">print</span> <span class="string">"server is ok"</span></div><div class="line">        time.sleep(check_My_server_interval_seconds)</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">    <span class="keyword">try</span>:</div><div class="line">        main()</div><div class="line">    <span class="keyword">except</span> Exception, ex:</div><div class="line">        <span class="keyword">print</span> <span class="string">"main function exception: %s"</span> % ex</div><div class="line">    time.sleep(main_function_exception_sleep_seconds)</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-	<div>
-      
-	</div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-	<div>
-	  
-	</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/环境搭建/2015/01/28/环境搭建-2015-01-28-CentOS6-5安装crtmpserver搭建RTMP流媒体服务/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="daodaoliang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刀刀亮的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/环境搭建/2015/01/28/环境搭建-2015-01-28-CentOS6-5安装crtmpserver搭建RTMP流媒体服务/" itemprop="url">
-                  CentOS6.5安装crtmpserver搭建RTMP流媒体服务器
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-28T00:00:00+08:00">
-                2015-01-28
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/环境搭建/" itemprop="url" rel="index">
-                    <span itemprop="name">环境搭建</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  467
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  2
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<h2 id="1-crtmpserver简介"><a href="#1-crtmpserver简介" class="headerlink" title="1. crtmpserver简介"></a><strong><em>1. crtmpserver简介</em></strong></h2><ul>
-<li>支持推送给rtmp流的接受与播放器请求的分发；</li>
-<li>rtmp流媒体服务器树状网络集群的构建；</li>
-<li>支持 <figure class="highlight plain"><figcaption><span>和　```android```;</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">PS:[官网应用介绍](http://www.rtmpd.com/)</div><div class="line"></div><div class="line">## ***2. crtmpserver流媒体服务器的搭建(centOS6.5)***</div><div class="line"></div><div class="line">### ***2.1 cmake的安装***</div><div class="line"></div><div class="line">下载最新的cmake</div><div class="line"></div><div class="line">```sh</div><div class="line">	yum install cmake</div></pre></td></tr></table></figure></li>
-</ul>
-<h3 id="2-2-openssl的安装"><a href="#2-2-openssl的安装" class="headerlink" title="2.2 openssl的安装"></a><strong><em>2.2 openssl的安装</em></strong></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">wget -o openssl-0.9.8t.tar.gz http://www.openssl.org/<span class="built_in">source</span>/openssl-0.9.8ze.tar.gz</div><div class="line"><span class="built_in">cd</span> openssl-0.9.8t</div><div class="line">./config</div><div class="line">make .</div><div class="line">make install</div></pre></td></tr></table></figure>
-<h3 id="2-3-crtmpserver的编译与安装"><a href="#2-3-crtmpserver的编译与安装" class="headerlink" title="2.3 crtmpserver的编译与安装"></a><strong><em>2.3 crtmpserver的编译与安装</em></strong></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">svn co --username anonymous --password <span class="string">""</span> https://svn.rtmpd.com/crtmpserver/branches/1.0 crtmpserver</div><div class="line"><span class="built_in">cd</span> crtmpserver</div><div class="line">sh ./cleanup.sh</div><div class="line"><span class="built_in">cd</span> builders/cmake</div><div class="line">cmake .</div><div class="line">make</div><div class="line">./crtmpserver/crtmpserver ./crtmpserver/crtmpserver.lua</div></pre></td></tr></table></figure>
-<p><strong><em>PS:</em></strong> </p>
-<ul>
-<li>最后一行命令“”#./crtmpserver/crtmpserver ./crtmpserver/crtmpserver.lua”意思是：使用“./crtmpserver/crtmpserver.lua”为配置脚本，启动“crtmpserver”服务;</li>
-<li>最后一行命令的目录是在”builders/cmake”下;</li>
-</ul>
-<h2 id="3-脚本的自启动和静默运行"><a href="#3-脚本的自启动和静默运行" class="headerlink" title="3. 脚本的自启动和静默运行"></a><strong><em>3. 脚本的自启动和静默运行</em></strong></h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">nohup ./crtmpserver/crtmpserver ./crtmpserver/crtmpserver.lua &amp;</div></pre></td></tr></table></figure>
-<h3 id="4-JWPlayer直播方案搭建"><a href="#4-JWPlayer直播方案搭建" class="headerlink" title="4. JWPlayer直播方案搭建"></a><strong><em>4. JWPlayer直播方案搭建</em></strong></h3><h3 id="4-1-搭建http-server"><a href="#4-1-搭建http-server" class="headerlink" title="4.1 搭建http server"></a><strong><em>4.1 搭建http server</em></strong></h3><p>略</p>
-<h3 id="4-2-下载JWPlayer并部署到http-server上"><a href="#4-2-下载JWPlayer并部署到http-server上" class="headerlink" title="4.2 下载JWPlayer并部署到http server上"></a><strong><em>4.2 下载JWPlayer并部署到http server上</em></strong></h3><p><a href="http://www.longtailvideo.com/" target="_blank" rel="external">JWPlayer官网</a><br><a href="http://www.longtailvideo.com/jw-player/download/" target="_blank" rel="external">JWPlayer下载页面</a><br>以上链接不能用的话我自己网盘里面有ｏ（╯□╰）ｏ<br>下载解压后，将jwplayer整个文件夹内容放到网站指定目录下<br>如根目录下的jwplayer文件夹;</p>
-<h3 id="4-3-新建播放器的html页面"><a href="#4-3-新建播放器的html页面" class="headerlink" title="4.3 新建播放器的html页面"></a><strong><em>4.3 新建播放器的html页面</em></strong></h3><p><strong><em>test.html</em></strong></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">head</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"/jwplayer/jwplayer.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">head</span>&gt;</span></div><div class="line">	<span class="tag">&lt;<span class="name">body</span>&gt;</span></div><div class="line">		<span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">'my-video'</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </div><div class="line">		<span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">'text/javascript'</span>&gt;</span><span class="undefined">    </span></div><div class="line"> 			jwplayer('my-video').setup(&#123;file:'rtmp://127.0.0.1/live/livestream',width: '640', height: '480'&#125;); </div><div class="line">		<span class="tag">&lt;/<span class="name">script</span>&gt;</span></div><div class="line">	<span class="tag">&lt;/<span class="name">body</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></div></pre></td></tr></table></figure>
-<h3 id="4-4-使用Flash-Media-Live-Encoder推送直播源"><a href="#4-4-使用Flash-Media-Live-Encoder推送直播源" class="headerlink" title="4.4 使用Flash Media Live Encoder推送直播源"></a><strong><em>4.4 使用Flash Media Live Encoder推送直播源</em></strong></h3><p><img src="/res/img/blog/环境搭建/crtspserver.jpg" alt="Flash Media Live Encoder"></p>
-<p>设置好后，点start即可</p>
-<h3 id="4-5-浏览器中查看"><a href="#4-5-浏览器中查看" class="headerlink" title="4.5 浏览器中查看"></a><strong><em>4.5 浏览器中查看</em></strong></h3><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://127.0.0.1/jwplayer/test.html</div></pre></td></tr></table></figure>
-<h3 id="4-6-使用ffmpeg做为直播源"><a href="#4-6-使用ffmpeg做为直播源" class="headerlink" title="4.6 使用ffmpeg做为直播源"></a><strong><em>4.6 使用ffmpeg做为直播源</em></strong></h3><ul>
-<li>不能直接使用ffmpeg的rtmp模块进行流推送需要使用librtmp才能进行正常的流推送和观看；</li>
-<li>原始的lua可以不用做修改,示例命令如下：</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./ffmpeg -re -i c1.flv -acodec copy -vcodec copy <span class="_">-f</span> flv rtmp://127.0.0.1/live/livestream</div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-	<div>
-      
-	</div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-	<div>
-	  
-	</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/Python学习/2015/01/28/Python学习-2015-01-30-python-CRC32/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="daodaoliang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刀刀亮的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/Python学习/2015/01/28/Python学习-2015-01-30-python-CRC32/" itemprop="url">
-                  python CRC32
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-28T00:00:00+08:00">
-                2015-01-28
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Python学习/" itemprop="url" rel="index">
-                    <span itemprop="name">Python学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  34
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<h2 id="python-CRC32方法"><a href="#python-CRC32方法" class="headerlink" title="python CRC32方法"></a><strong>python CRC32方法</strong></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">_crc32</span><span class="params">(self, v)</span>:</span> </div><div class="line">   <span class="string">""" </span></div><div class="line">   Generates the crc32 hash of the v. </div><div class="line">   @return: str, the str value for the crc32 of the v </div><div class="line">   """ </div><div class="line">   <span class="keyword">return</span> <span class="string">'0x%x'</span> % (binascii.crc32(v) &amp; <span class="number">0xffffffff</span>)</div></pre></td></tr></table></figure>
 
           
         
@@ -2445,28 +2489,6 @@
 
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
 
   
 

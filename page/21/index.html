@@ -354,6 +354,279 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/linux学习/2015/01/22/linux学习-2015-01-22-linux定时任务/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="daodaoliang">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="刀刀亮的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/linux学习/2015/01/22/linux学习-2015-01-22-linux定时任务/" itemprop="url">
+                  linux下定时任务
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-22T00:00:00+08:00">
+                2015-01-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
+              </time>
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux学习/" itemprop="url" rel="index">
+                    <span itemprop="name">linux学习</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  526
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长</span>
+                
+                <span title="阅读时长">
+                  2
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <a id="more"></a>
+<p><strong><em>crontab 定时任务命令</em></strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">crontab命令选项</div><div class="line">	 -U指定一个用户</div><div class="line">	 <span class="_">-l</span>列出某个用户的任务计划</div><div class="line">	 -r删除某个用户的计划</div><div class="line">	 <span class="_">-e</span>编辑某个用户的任务(/var/)</div></pre></td></tr></table></figure>
+<p><strong><em>cron文件语法</em></strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">分</th>
+<th style="text-align:center">小时</th>
+<th style="text-align:center">日</th>
+<th style="text-align:center">月</th>
+<th style="text-align:center">星期</th>
+<th style="text-align:center">命令</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">0-59</td>
+<td style="text-align:center">0-23</td>
+<td style="text-align:center">1-12</td>
+<td style="text-align:center">0-6</td>
+<td style="text-align:center">command</td>
+</tr>
+</tbody>
+</table>
+<p>特殊符号含义:</p>
+<ul>
+<li>“*” 代表取值范围内的数字</li>
+<li>“/“ 代表每</li>
+<li>“-“ 代表从某个数字到某个数字</li>
+<li>“,” 分开几个离散的数字</li>
+</ul>
+<p><strong>每个字段代表的含义如下:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">字段</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">minute</td>
+<td style="text-align:center">每小时的第几分钟执行该任务</td>
+</tr>
+<tr>
+<td style="text-align:center">hour</td>
+<td style="text-align:center">每天的第几个小时执行该任务</td>
+</tr>
+<tr>
+<td style="text-align:center">day</td>
+<td style="text-align:center">每月第几天执行该任务</td>
+</tr>
+<tr>
+<td style="text-align:center">month</td>
+<td style="text-align:center">每年的第几个月执行该任务</td>
+</tr>
+<tr>
+<td style="text-align:center">dayofweek</td>
+<td style="text-align:center">每周第几天执行该任务</td>
+</tr>
+<tr>
+<td style="text-align:center">command</td>
+<td style="text-align:center">指定要执行的程序</td>
+</tr>
+</tbody>
+</table>
+<p><strong>例子:</strong></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">5 	* 	* 	* 	*  	ls      指定每小时的第五分钟执行一次ls命令</div><div class="line">30 	5	*	*	*	ls	指定每天5:30执行ls命令</div><div class="line">30	7	8	*	*	ls	执行每月8号7:30分执行ls命令</div><div class="line">30	5	8	6	*	ls	每年的6月8号5:30执行ls命令</div><div class="line">30	6	*	*	0	ls	指定每星期日的6:30执行ls命令[0代表星期天以此类推]</div><div class="line">30	3	10,20   *	*	ls	每月10号及20号的3:30执行命令ls[<span class="string">","</span>用来链接多个不连续的时段]</div><div class="line">25	8-11	*	*	*	ls	每天8-11点的第25分钟执行ls命令[<span class="string">"-"</span>用来链接连续的时段]</div><div class="line">*/15	*	*	*	*	ls	每15分钟执行一次ls命令[即每个小时的第0 15 30 45 60分钟执行ls命令]</div><div class="line">30	6	*/10	*	*	ls	每隔10天6:30执行一次ls命令[即每月1,11,21,31日的6:30执行一次ls]</div><div class="line">50	7	*	*	*	root run-parts /etc/cron.daily	&#123;run-parts 参数表示,执行后面目录中的所有可执行文件&#125;</div></pre></td></tr></table></figure>
+<p><strong><em>增加任务调度</em></strong></p>
+<ul>
+<li>在命令行输入:crontab -e 然后添加相应的任务,wq存盘退出;</li>
+<li>直接编辑 <code>/etc/crontab</code>文件,即<code>vi /etc/crontab</code>,添加相应的任务;</li>
+</ul>
+<p><strong><em>查看调度任务</em></strong></p>
+<ul>
+<li>crontab -l //列出当前的所有调度任务</li>
+<li>crontab -l u daodaoliang  //列出用户daodaoliang所有调度任务</li>
+</ul>
+<p><strong><em>删除调度任务</em></strong></p>
+<ul>
+<li>crontab -r //删除所有任务调度工作</li>
+</ul>
+
+          
+        
+      
+    </div>
+
+	<div>
+      
+	</div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+	<div>
+	  
+	</div>
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/PHP学习/2015/01/20/PHP学习-2015-01-20-PHP-Mysql数据库处理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -409,8 +682,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -642,8 +915,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -903,8 +1176,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -1095,8 +1368,8 @@
               
                 <span class="post-meta-item-text">更新于</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
+              <time title="更新于" itemprop="dateModified" datetime="2017-05-11T18:33:32+08:00">
+                2017-05-11
               </time>
             
           </span>
@@ -1229,224 +1502,6 @@
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">strtotime(time,now);</div></pre></td></tr></table></figure>
 <p>实例：</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">	$d=strtotime(<span class="string">"10:38pm April 15 2015"</span>);</div><div class="line">	<span class="keyword">echo</span> <span class="string">"创建的日期是："</span>.date(<span class="string">"y-m-d h:i:s"</span>,$d);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-
-	<div>
-      
-	</div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-	<div>
-	  
-	</div>
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://daodaoliang.com/PHP学习/2015/01/16/PHP学习-2015-01-16-PHP数组/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="daodaoliang">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="http://47.93.54.27/res/img/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="刀刀亮的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/PHP学习/2015/01/16/PHP学习-2015-01-16-PHP数组/" itemprop="url">
-                  php数组
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-01-16T00:00:00+08:00">
-                2015-01-16
-              </time>
-            
-
-            
-              <span class="post-meta-divider">|</span>
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-check-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">更新于</span>
-              
-              <time title="更新于" itemprop="dateModified" datetime="2017-05-04T00:07:44+08:00">
-                2017-05-04
-              </time>
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/PHP学习/" itemprop="url" rel="index">
-                    <span itemprop="name">PHP学习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  264
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长</span>
-                
-                <span title="阅读时长">
-                  1
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <a id="more"></a>
-<h3 id="在PHP-中创建数组"><a href="#在PHP-中创建数组" class="headerlink" title="在PHP 中创建数组"></a>在PHP 中创建数组</h3><p>在 PHP 中,array()函数用于创建数组:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">array</span>();</div></pre></td></tr></table></figure>
-<p>在 PHP 中,有三种数组类型:</p>
-<ul>
-<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">* ```关联数组```-带有指定键的是数组</div><div class="line">* ```多维数组```-包含一个或多个数组的数组</div><div class="line"></div><div class="line">索引数组示例:</div><div class="line"></div><div class="line">```php</div><div class="line">&lt;?php</div><div class="line">$cars=array(&quot;volvo&quot;,&quot;BMW&quot;,&quot;SAAB&quot;);</div><div class="line">?&gt;</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>或者</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$car[<span class="number">0</span>]=<span class="string">"volov"</span>;</div><div class="line">$car[<span class="number">2</span>]=<span class="string">"BMW"</span>;</div><div class="line">$car[<span class="number">3</span>]=<span class="string">"SAAB"</span>;</div></pre></td></tr></table></figure>
-<p>关联数组示例:</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$age=<span class="keyword">array</span>(<span class="string">"daodaolang"</span>=&gt;<span class="string">"10"</span>,<span class="string">"wangxiaowei"</span>=&gt;<span class="string">"12"</span>);</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$age[<span class="string">"daodaoliang"</span>] = <span class="string">"23"</span>;</div><div class="line">$age[<span class="string">"wangxiaowei"</span>] = <span class="number">22</span>;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<h3 id="遍历数组"><a href="#遍历数组" class="headerlink" title="遍历数组"></a>遍历数组</h3><p><strong>遍历索引数组</strong></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$test_array = <span class="keyword">array</span>(<span class="string">"daodaoliang"</span>,<span class="string">"test"</span>,<span class="string">"test2"</span>);</div><div class="line"><span class="keyword">foreach</span>($test_array <span class="keyword">as</span> $value)&#123;</div><div class="line"><span class="keyword">echo</span> $value;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p>或</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$test_array = <span class="keyword">array</span>(<span class="string">"test1"</span>,<span class="string">"test2"</span>,<span class="string">"test3"</span>);</div><div class="line"><span class="keyword">for</span>($index=<span class="number">0</span>;$index &lt; count($test_array);++$index)&#123;</div><div class="line">	<span class="keyword">echo</span> $test_array[$index];</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<p><strong>遍历索引数组</strong></p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&lt;?php</span></div><div class="line">$age=<span class="keyword">array</span>(<span class="string">"daodaoliang"</span>=&gt;<span class="number">23</span>,<span class="string">"wangxiaowei"</span>=&gt;<span class="number">34</span>);</div><div class="line"><span class="keyword">foreach</span>($age <span class="keyword">as</span> $key =&gt; $value)&#123;</div><div class="line">	<span class="keyword">echo</span> <span class="string">"key="</span>.$x.<span class="string">"value="</span>.$value;</div><div class="line">&#125;</div><div class="line"><span class="meta">?&gt;</span></div></pre></td></tr></table></figure>
-<h3 id="PHP-数据排序"><a href="#PHP-数据排序" class="headerlink" title="PHP 数据排序"></a>PHP 数据排序</h3><ul>
-<li>sort() 以剩下对数组进行排序</li>
-<li>rsprt() 以降序对数组排序</li>
-<li>asort() 根据值,以升序对关联数组进行排序</li>
-<li>ksort() 根据健,以升序对关联数组进行排序</li>
-<li>arosrt() 根据值,以降序对关联书序进行排序</li>
-<li>krsort() 根据健,以降序对关联数组进行排序</li>
-</ul>
 
           
         
@@ -2292,28 +2347,6 @@
 
 
   
-  
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Config({
-        tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-        }
-      });
-    </script>
-
-    <script type="text/x-mathjax-config">
-      MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for (i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-      });
-    </script>
-    <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-  
-
 
   
 
